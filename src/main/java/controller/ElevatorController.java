@@ -5,6 +5,7 @@ import view.ElevatorView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Created by HWILKHU on 02/05/2017.
@@ -14,7 +15,7 @@ public class ElevatorController {
     private Elevator elevator;
     private ElevatorView elevatorView;
     private Building building;
-    private int ticks;
+    private int ticks = 0;
     private Arraylist<ElevatorUser> buildingOccupants= new ArrayList<ElevatorUser>();
     private DoorStatus doorStatus;
     private Direction direction;
@@ -23,14 +24,33 @@ public class ElevatorController {
         this.elevator = elevator;
         this.elevatorView = elevatorView;
         this.building = building;
-
-
     }
 
     public void nextTick(){
 
+        ticks++;
+        int steps = 4;
 
-        elevatorView.updateView();
+        if (ticks % steps == 1){
+            openElevatorDoor();
+        } else if (ticks % steps == 2){
+            leaveElevator();
+
+            for (ElevatorUser person : building.getFloor(elevator.getFloor).getQueue;){
+                if (canAddPersonToElevator(person)){
+                    addPersonToElevator(person);
+                }
+            }
+
+            elevatorView.updateView(elevator.getFloor,elevator.getOccupants);
+        } else if (ticks % steps == 3){
+            closeElevatorDoor();
+        } else if (ticks % steps == 0){
+            moveElevator();
+            elevatorView.updateView(elevator.getFloor,elevator.getOccupants);
+        }
+
+
     }
 
     private void openElevatorDoor(){
@@ -48,7 +68,7 @@ public class ElevatorController {
     private int usedCapacity(){
         int usedCapacity = 0;
 
-        List<ElevatorUser> elevatorOccupants = elevator.getElevatorOccupants();
+        List<ElevatorUser> elevatorOccupants = elevator.getOccupants();
 
         for (ElevatorUser occupant : elevatorOccupants){
             usedCapacity = usedCapacity + occupant.getCapacity();
@@ -101,8 +121,8 @@ public class ElevatorController {
         return nextFloor;
     }
 
-    private void leaveEelevator(){
-        List<ElevatorUser> elevatorOccupants = elevator.getElevatorOccupants();
+    private void leaveElevator(){
+        List<ElevatorUser> elevatorOccupants = elevator.getOccupants();
 
         for (ElevatorUser occupant : elevatorOccupants){
             if (occupant.getDestFloor() == elevator.getFloor()){
