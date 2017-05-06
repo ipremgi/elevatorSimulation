@@ -7,13 +7,19 @@ public class Client extends ElevatorUser{
 
     private int duration;
 
+    public Client( Integer capacity, Integer destFloor, double probability ) {
+        this.setCapacity(capacity);
+        this.setProbabilty(probability);
+        this.setDestFloor(destFloor);
+        for (int i = 0; i <= getMaxFloors() / 2; i++) {
+            this.setFloorsAccessable(i);
+        }
+    }
 
 
     public void fileComplaint(){
 
     }
-
-
 
     public void leaveBuilding() {
         setDestFloor(0);
@@ -23,6 +29,8 @@ public class Client extends ElevatorUser{
         //will enter the building and go to one of the floors in the bottom half of the building
         // (which may include the ground floor). After they complete their business, they will return to the ground floor and leave.
 
+        int randomFloor = randomGenerator.nextInt(getFloorsAccessable().size());
+        Integer setDestFloor() = getFloorsAccessable().get(randomFloor);
     }
 
     public void shouldILeave(){
@@ -36,7 +44,7 @@ public class Client extends ElevatorUser{
 
     public void shouldIFileComplaint(){
         if (duration <= 60 ){
-        setDestFloor(0);
+        moveFloor(); //PRIORITY QUEUE
         else{
             fileComplaint();
             }
