@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class ElevatorUser {
 
+
     private Integer capacity;
     private Integer currentFloor = 0;
     private Integer destFloor;
@@ -17,6 +18,7 @@ public abstract class ElevatorUser {
     private double probabilty;
     private int maxFloors;
     private List<Integer> floorsAccessable = new ArrayList<Integer>();
+
 
 
 //maxFloors

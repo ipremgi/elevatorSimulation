@@ -5,12 +5,15 @@ package model.user;
  */
 public class Client extends ElevatorUser{
 
-    private double duration;
+    private int duration;
+
 
 
     public void fileComplaint(){
 
     }
+
+
 
     public void leaveBuilding() {
         setDestFloor(0);
@@ -22,9 +25,22 @@ public class Client extends ElevatorUser{
 
     }
 
+    public void shouldILeave(){
+      if (duration >= 10 && duration <= 90){
+          setDestFloor(0);
+      }
+      else
+    }
+}
 
-    public void shouldIleave(){
-        if duration >= ..
+
+    public void shouldIFileComplaint(){
+        if (duration <= 60 ){
+        setDestFloor(0);
+        else{
+            fileComplaint();
+            }
+
         //figure out how many ticks for that number of time
 
 
@@ -32,11 +48,10 @@ public class Client extends ElevatorUser{
 
 }
 
-1 tick is 10 secounds
-8 hour working day
-
-/* client has a method should i leave
-{calcutles number of ticks are there for the amount of time they are allowed to stay}
+1 tick is 10 sec
+ 6 tick is 60 sec
+        60 tick is 10 min
+        90 tick is 30 min
 
  */
 
