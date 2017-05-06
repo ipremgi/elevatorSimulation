@@ -3,11 +3,11 @@ package model.user;
 /**
  * Created by Aishwarya on 05/05/2017.
  */
-public class Client extends ElevatorUser{
+public class Client extends ElevatorUser {
 
     private int duration;
 
-    public Client( Integer capacity, Integer destFloor, double probability ) {
+    public Client(Integer capacity, Integer destFloor, double probability) {
         this.setCapacity(capacity);
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
@@ -17,7 +17,7 @@ public class Client extends ElevatorUser{
     }
 
 
-    public void fileComplaint(){
+    public void fileComplaint() {
 
     }
 
@@ -30,32 +30,32 @@ public class Client extends ElevatorUser{
         // (which may include the ground floor). After they complete their business, they will return to the ground floor and leave.
 
         int randomFloor = randomGenerator.nextInt(getFloorsAccessable().size());
-        Integer setDestFloor() = getFloorsAccessable().get(randomFloor);
+        Integer setDestFloor () = getFloorsAccessable().get(randomFloor);
     }
 
-    public void shouldILeave(){
-      if (duration >= 10 && duration <= 90){
-          setDestFloor(0);
-      }
-      else
+    public void shouldILeave() {
+        if (duration >= 10 && duration <= 90) {
+            setDestFloor(0);
+        } else
+
     }
-}
 
 
-    public void shouldIFileComplaint(){
-        if (duration <= 60 ){
-        moveFloor(); //PRIORITY QUEUE
+    public void shouldIFileComplaint() {
+        if (duration <= 60) {
+            moveFloor(); //PRIORITY QUEUE
         else{
-            fileComplaint();
+                fileComplaint();
             }
 
-        //figure out how many ticks for that number of time
+            //figure out how many ticks for that number of time
 
+
+        }
 
     }
-
 }
-
+/*
 1 tick is 10 sec
  6 tick is 60 sec
         60 tick is 10 min

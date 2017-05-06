@@ -34,7 +34,7 @@ public class MaintenanceCrew extends ElevatorUser {
     }
 
     public void shouldIleave(){
-        if duration >=
+        //if duration >=
         //figure out how many ticks for that number of time
 
 
