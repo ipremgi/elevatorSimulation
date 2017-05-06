@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class ElevatorUser {
 
-
+    //change Integer to int
     private Integer capacity;
     private Integer currentFloor = 0;
     private Integer destFloor;
@@ -22,7 +22,7 @@ public abstract class ElevatorUser {
 
 
 
-//maxFloors
+    //maxFloors
     public int getMaxFloors() {
         return maxFloors;
     }

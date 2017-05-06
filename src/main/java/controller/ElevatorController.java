@@ -1,5 +1,10 @@
 package controller;
 
+import model.building.Building;
+import model.building.Direction;
+import model.building.DoorStatus;
+import model.building.Elevator;
+import model.user.ElevatorUser;
 import view.ElevatorView;
 
 import java.util.ArrayList;
@@ -19,7 +24,7 @@ public class ElevatorController {
     private Building building;
     private int ticks = 0;
     //move to building model?
-    private Arraylist<ElevatorUser> buildingOccupants= new ArrayList<ElevatorUser>();
+    private ArrayList<ElevatorUser> buildingOccupants= new ArrayList<ElevatorUser>();
     private DoorStatus doorStatus;
     private Direction direction;
 
@@ -45,7 +50,7 @@ public class ElevatorController {
         } else if (ticks % steps == 2){
             leaveElevator();
 
-            for (ElevatorUser person : building.getFloor(elevator.getFloor).getWaitingForLift()){
+            for (ElevatorUser person : building.getFloor(elevator.getFloor()).getWaitingForLift()){
                 if (canAddPersonToElevator(person)){
                     addPersonToElevator(person);
                 }
@@ -96,6 +101,7 @@ public class ElevatorController {
     private void addPersonToElevator(ElevatorUser person){
         elevator.addPerson(person);
         //need a remove user from the waiting list
+        //remove by id
         building.getFloor(person.getFloor).removeUser(person);
     }
 

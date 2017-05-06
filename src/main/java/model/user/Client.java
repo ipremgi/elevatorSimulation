@@ -18,6 +18,8 @@ public class Client extends ElevatorUser {
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
 
+
+        //seperate to method
         List<Integer> floorsAccessible = new ArrayList<Integer>();
 
         for (int i = 0; i <= getMaxFloors() / 2; i++) {
