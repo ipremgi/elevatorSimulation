@@ -1,5 +1,7 @@
 package simulator;
 
+import controller.ElevatorController;
+import model.building.Elevator;
 import model.user.ElevatorUser;
 
 /**
@@ -7,33 +9,38 @@ import model.user.ElevatorUser;
  */
 public class EvelatorSimulator implements ISimulator {
 
+    private SimulatorTick simulatorTick;
+    private ElevatorController elevatorController;
 
     public void simulate() {
+        simulatorTick = new SimulatorTick();
+        elevatorController = new ElevatorController();
 
     }
 
     public void nextTick(){
 
-        ticks++;
+        simulatorTick.nextTick();
         int steps = 4;
+        int ticks = simulatorTick.getTick();
 
         if (ticks % steps == 1){
-            openElevatorDoor();
+            elevatorController.openElevatorDoor();
         } else if (ticks % steps == 2){
-            leaveElevator();
+            elevatorController.leaveElevator();
 
             for (ElevatorUser person : building.getFloor(elevator.getFloor()).getWaitingForLift()){
-                if (canAddPersonToElevator(person)){
-                    addPersonToElevator(person);
+                if (elevatorController.canAddPersonToElevator(person)){
+                    elevatorController.addPersonToElevator(person);
                 }
             }
 
-            updateView();
+            elevatorController.updateView();
         } else if (ticks % steps == 3){
-            closeElevatorDoor();
+            elevatorController.closeElevatorDoor();
         } else if (ticks % steps == 0){
-            moveElevator(calculateNextFloor());
-            updateView();
+            elevatorController.moveElevator(elevatorController.calculateNextFloor());
+            elevatorController.updateView();
         }
 
 
