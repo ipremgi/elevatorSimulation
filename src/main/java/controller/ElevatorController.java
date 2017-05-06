@@ -31,49 +31,20 @@ public class ElevatorController {
     public void addElevatorUser(ElevatorUser elevatorUser){
         buildingOccupants.add(elevatorUser);
     }
-
-
-    //move to simulator class?
-    public void nextTick(){
-
-        ticks++;
-        int steps = 4;
-
-        if (ticks % steps == 1){
-            openElevatorDoor();
-        } else if (ticks % steps == 2){
-            leaveElevator();
-
-            for (ElevatorUser person : building.getFloor(elevator.getFloor()).getWaitingForLift()){
-                if (canAddPersonToElevator(person)){
-                    addPersonToElevator(person);
-                }
-            }
-
-            updateView();
-        } else if (ticks % steps == 3){
-            closeElevatorDoor();
-        } else if (ticks % steps == 0){
-            moveElevator(calculateNextFloor());
-            updateView();
-        }
-
-
-    }
-
-    private void openElevatorDoor(){
+    
+    public void openElevatorDoor(){
         elevator.setDoorStatus(DoorStatus.OPEN);
     }
 
-    private void closeElevatorDoor(){
+    public void closeElevatorDoor(){
         elevator.setDoorStatus(DoorStatus.CLOSED);
     }
 
-    private void moveElevator(int floor){
+    public void moveElevator(int floor){
         elevator.setFloor(floor);
     }
 
-    private int usedCapacity(){
+    public int usedCapacity(){
         int usedCapacity = 0;
 
         for (ElevatorUser occupant : elevator.getOccupants()){
@@ -83,7 +54,7 @@ public class ElevatorController {
         return usedCapacity;
     }
 
-    private boolean canAddPersonToElevator(ElevatorUser person){
+    public boolean canAddPersonToElevator(ElevatorUser person){
 
         if ((person.getCapacity() + usedCapacity()) > elevator.getMAX_CAPACITY()){
             return false;
@@ -92,7 +63,7 @@ public class ElevatorController {
         return true;
     }
 
-    private void addPersonToElevator(ElevatorUser person){
+    public void addPersonToElevator(ElevatorUser person){
         List<ElevatorUser> elevatorOccupants = elevator.getUsers();
         elevatorOccupants.add(person);
         elevator.setUsers(elevatorOccupants);
@@ -104,7 +75,7 @@ public class ElevatorController {
 
 
 
-    private int calculateNextFloor(){
+    public int calculateNextFloor(){
         ArrayList<Integer> requests = checkForRequests();
         int nextFloor = 0;
 
@@ -135,7 +106,7 @@ public class ElevatorController {
         return nextFloor;
     }
 
-    private void leaveElevator(){
+    public void leaveElevator(){
         List<ElevatorUser> elevatorOccupants = elevator.getUsers();
 
         for (ElevatorUser occupant : elevatorOccupants){
@@ -146,7 +117,7 @@ public class ElevatorController {
 
     }
 
-    private ArrayList<Integer> checkForRequests(){
+    public ArrayList<Integer> checkForRequests(){
 
         for (ElevatorUser occupant : buildingOccupants){
             if (occupant instanceof Employee || occupant instanceof Developer){
@@ -175,7 +146,7 @@ public class ElevatorController {
         return floorRequests;
     }
 
-    private void updateView(){
+    public void updateView(){
         elevatorView.updateView(elevator.getFloor(),elevator.getUsers());
     }
 
