@@ -1,5 +1,7 @@
 package model.building;
 
+import model.user.ElevatorUser;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ public class Elevator {
     private int floor; // what floor the elevator is in
     private final int MAX_CAPACITY; // number of capacity in elevator
     private Direction direction; // direction elevator is travelling
-    private List<Object> users; // list of people in the elevator
+    private List<ElevatorUser> users; // list of people in the elevator
     private DoorStatus doorStatus; // status of the door
 
 
@@ -45,11 +47,11 @@ public class Elevator {
         this.direction = direction;
     }
 
-    public List<Object> getUsers() {
+    public List<ElevatorUser> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Object> users) {
+    public void setUsers(List<ElevatorUser> users) {
         this.users = users;
     }
 

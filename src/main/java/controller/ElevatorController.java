@@ -1,16 +1,12 @@
 package controller;
 
-import model.building.Building;
-import model.building.Direction;
-import model.building.DoorStatus;
-import model.building.Elevator;
+import model.building.*;
+import model.user.Developer;
 import model.user.ElevatorUser;
+import model.user.Employee;
 import view.ElevatorView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * Created by HWILKHU on 02/05/2017.
@@ -23,10 +19,8 @@ public class ElevatorController {
     private ElevatorView elevatorView;
     private Building building;
     private int ticks = 0;
-    //move to building model?
     private ArrayList<ElevatorUser> buildingOccupants= new ArrayList<ElevatorUser>();
-    private DoorStatus doorStatus;
-    private Direction direction;
+    private Random random;
 
     public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building) {
         this.elevator = elevator;
@@ -68,15 +62,15 @@ public class ElevatorController {
     }
 
     private void openElevatorDoor(){
-        elevator.setDoorStatus(doorStatus.OPEN);
+        elevator.setDoorStatus(DoorStatus.OPEN);
     }
 
     private void closeElevatorDoor(){
-        elevator.setDoorStatus(doorStatus.CLOSED);
+        elevator.setDoorStatus(DoorStatus.CLOSED);
     }
 
     private void moveElevator(int floor){
-        elevator.setFloor=floor;
+        elevator.setFloor(floor);
     }
 
     private int usedCapacity(){
@@ -99,10 +93,13 @@ public class ElevatorController {
     }
 
     private void addPersonToElevator(ElevatorUser person){
-        elevator.addPerson(person);
+        List<ElevatorUser> elevatorOccupants = elevator.getUsers();
+        elevatorOccupants.add(person);
+        elevator.setUsers(elevatorOccupants);
+
         //need a remove user from the waiting list
         //remove by id
-        building.getFloor(person.getFloor).removeUser(person);
+        building.getFloor(person.getCurrentFloor()).removeUser(person);
     }
 
 
@@ -111,11 +108,11 @@ public class ElevatorController {
         ArrayList<Integer> requests = checkForRequests();
         int nextFloor = 0;
 
-        for (ElevatorUser occupant : elevator.getOccupants()){
-            requests.add(occupant.getDestFloor);
+        for (ElevatorUser occupant : elevator.getUsers()){
+            requests.add(occupant.getDestFloor());
         }
 
-        if (elevator.getDirection = direction.UP){
+        if (elevator.getDirection() == Direction.UP){
             for (int floorNumber : requests){
                 if(floorNumber < elevator.getFloor()){
                     requests.remove(floorNumber);
@@ -124,7 +121,7 @@ public class ElevatorController {
 
             nextFloor = requests.indexOf(Collections.min(requests));
 
-        } else if (elevator.getDirection = direction.DOWN){
+        } else if (elevator.getDirection() == Direction.DOWN){
             for (int floorNumber : requests){
                 if(floorNumber > elevator.getFloor()){
                     requests.remove(floorNumber);
@@ -139,7 +136,7 @@ public class ElevatorController {
     }
 
     private void leaveElevator(){
-        List<ElevatorUser> elevatorOccupants = elevator.getOccupants();
+        List<ElevatorUser> elevatorOccupants = elevator.getUsers();
 
         for (ElevatorUser occupant : elevatorOccupants){
             if (occupant.getDestFloor() == elevator.getFloor()){
@@ -149,40 +146,37 @@ public class ElevatorController {
 
     }
 
-
-    //probably don't need this
-    private void noRequsts(){
-        elevator.setFloor(0);
-    }
-
     private ArrayList<Integer> checkForRequests(){
 
-        List<ElevatorUser> buildingOccupants = building.getOccupants();
-
         for (ElevatorUser occupant : buildingOccupants){
-            if (occupant.shouldIMove()){
-                occupant.moveFloor();
-                building.getFloor(occupant.getFloor).setBtnPressed(true);
-                building.getFloor(occupant.getFloor).addUser(occupant);
+            if (occupant instanceof Employee || occupant instanceof Developer){
+                if (random.nextBoolean()){
+                    occupant.moveFloor();
+                    building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
+                    building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
+                }
             }
         }
 
 
-        List<Floor> floors = buiilding.getFloors();
+        List<Floor> floors = building.getFloors();
 
         ArrayList<Integer> floorRequests = new ArrayList<Integer>();
 
+        int index = 0;
+
         for (Floor floor : floors){
             if (floor.isBtnPressed()){
-                floorRequests.add(floor.getFloorNumber());
+                floorRequests.add(index);
             }
+            index++;
         }
 
         return floorRequests;
     }
 
     private void updateView(){
-        elevatorView.updateView(elevator.getFloor,elevator.getOccupants);
+        elevatorView.updateView(elevator.getFloor(),elevator.getUsers());
     }
 
 }

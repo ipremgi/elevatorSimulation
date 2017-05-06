@@ -1,24 +1,26 @@
 package model.building;
 
+import model.user.ElevatorUser;
+
 import java.util.PriorityQueue;
 /**
  * Created by IPREMGI on 02/05/2017.
  */
 public class Floor {
 
-    private PriorityQueue<Object> waitingForLift;
+    private PriorityQueue<ElevatorUser> waitingForLift;
     private boolean btnPressed;
 
     public Floor() {
-        waitingForLift = new PriorityQueue<Object>();
+        waitingForLift = new PriorityQueue<ElevatorUser>();
         btnPressed = false;
     }
 
-    public void addUser(Object person){
+    public void addUser(ElevatorUser person){
         waitingForLift.add(person);
     }
 
-    public PriorityQueue<Object> getWaitingForLift() {
+    public PriorityQueue<ElevatorUser> getWaitingForLift() {
         return waitingForLift;
     }
 

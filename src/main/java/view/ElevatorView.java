@@ -1,5 +1,7 @@
 package view;
 
+import model.user.ElevatorUser;
+
 import java.util.List;
 
 /**
