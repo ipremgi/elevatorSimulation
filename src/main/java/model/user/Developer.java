@@ -1,4 +1,6 @@
 package model.user;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,10 +16,14 @@ public class Developer extends ElevatorUser {
         this.setCapacity(capacity);
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
-        for (int i = getMaxFloors(); i <= getMaxFloors() / 2; i--) {
-            this.setFloorsAccessable(i);
 
+        List<Integer> floorsAccessible = new ArrayList<Integer>();
+
+        for (int i = getMaxFloors(); i <= getMaxFloors() / 2; i--) {
+            floorsAccessible.add(i);
         }
+
+        this.setFloorsAccessable(floorsAccessible);
     }
 
     public void leaveBuilding() {
@@ -28,7 +34,7 @@ public class Developer extends ElevatorUser {
     public void moveFloor() {
 
         int randomFloor = randomGenerator.nextInt(getFloorsAccessable().size());
-        Integer setDestFloor() = getFloorsAccessable().get(randomFloor);
+        this.setDestFloor( getFloorsAccessable().get(randomFloor));
 
         //only work in the top half of the building. Developers may randomly decide to move to another floor in the top half.
     }

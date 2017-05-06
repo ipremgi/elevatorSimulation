@@ -17,6 +17,7 @@ public abstract class ElevatorUser {
     private static AtomicInteger nextID;
     private double probabilty;
     private int maxFloors;
+    //typo Accessible
     private List<Integer> floorsAccessable = new ArrayList<Integer>();
 
 

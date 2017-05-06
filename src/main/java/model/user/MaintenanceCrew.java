@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Aishwarya on 05/05/2017.
@@ -11,12 +12,16 @@ public class MaintenanceCrew extends ElevatorUser {
     private int duration;
     private  int minFloor;
 
-    public MaintenanceCrew (Integer capacity, Integer destFloor, double probability ) {
+    public MaintenanceCrew (Integer capacity, Integer destFloor, double probability, int maxFloors ) {
 
         this.setCapacity(capacity);
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
-        this.setFloorsAccessable(Collections.min(number), Collections.max(getFloorsAccessable()));
+        this.setMaxFloors(maxFloors);
+        List<Integer> floorsAccessible = new ArrayList<Integer>();
+        floorsAccessible.add(0);
+        floorsAccessible.add(this.getMaxFloors());
+        this.setFloorsAccessable(floorsAccessible);
 
     }
 

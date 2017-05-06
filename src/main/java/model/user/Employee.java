@@ -1,5 +1,7 @@
 package model.user;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,10 +16,14 @@ public class Employee extends ElevatorUser {
         this.setCapacity(capacity);
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
-        for (int i = 0; i <= getMaxFloors(); i++) {
-            this.setFloorsAccessable(i);
 
+        List<Integer> floorsAccessible = new ArrayList<Integer>();
+
+        for (int i = 0; i <= getMaxFloors(); i++) {
+            floorsAccessible.add(i);
         }
+
+        this.setFloorsAccessable(floorsAccessible);
     }
 
     public void leaveBuilding() {
@@ -28,7 +34,7 @@ public class Employee extends ElevatorUser {
 
     public void moveFloor() {
         int randomFloor = randomGenerator.nextInt(getFloorsAccessable().size());
-        Integer setDestFloor() = getFloorsAccessable().get(randomFloor);
+        setDestFloor(getFloorsAccessable().get(randomFloor));
 
         //any floor same probability
 
