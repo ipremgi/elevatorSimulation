@@ -31,4 +31,8 @@ public class Floor {
     public void setBtnPressed(boolean btnPressed) {
         this.btnPressed = btnPressed;
     }
+
+    public void removeUser(ElevatorUser user){
+        waitingForLift.remove(user);
+    }
 }

@@ -62,4 +62,8 @@ public class Elevator {
     public void setDoorStatus(DoorStatus doorStatus) {
         this.doorStatus = doorStatus;
     }
+
+    public void removePerson(ElevatorUser person){
+        users.remove(person);
+    }
 }
