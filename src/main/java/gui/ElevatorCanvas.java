@@ -37,7 +37,6 @@ public class ElevatorCanvas extends JPanel implements ActionListener{
         g2.fill(person3);
         g2.setColor(Color.YELLOW);
         Rectangle2D person4 = new Rectangle2D.Double(85, y + 55, 35.0, 35.0);
-        System.out.println(person4.);
         g2.fill(person4);
 
 
