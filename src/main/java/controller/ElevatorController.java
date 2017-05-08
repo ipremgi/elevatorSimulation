@@ -47,7 +47,7 @@ public class ElevatorController {
     public int usedCapacity(){
         int usedCapacity = 0;
 
-        for (ElevatorUser occupant : elevator.getOccupants()){
+        for (ElevatorUser occupant : elevator.getUsers()){
             usedCapacity = usedCapacity + occupant.getCapacity();
         }
 
