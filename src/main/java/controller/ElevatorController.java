@@ -19,7 +19,7 @@ public class ElevatorController {
     private ElevatorView elevatorView;
     private Building building;
     private int ticks = 0;
-    private ArrayList<ElevatorUser> buildingOccupants= new ArrayList<ElevatorUser>();
+    private ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>();
     private Random random;
 
     public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building) {
@@ -44,23 +44,28 @@ public class ElevatorController {
         elevator.setFloor(floor);
     }
 
+    /**
+     * Getting how many capacity is used up in the elevator
+     * @return - number of capacity used
+     */
     public int usedCapacity(){
         int usedCapacity = 0;
 
-        for (ElevatorUser occupant : elevator.getOccupants()){
+        for (ElevatorUser occupant : elevator.getUsers()){
             usedCapacity = usedCapacity + occupant.getCapacity();
         }
 
         return usedCapacity;
     }
 
+    /**
+     * Check if the person can be added to the elevator based on the capacity
+     * @param person - person to add to the elevator
+     * @return true if they can be added
+     *         false if they cannot
+     */
     public boolean canAddPersonToElevator(ElevatorUser person){
-
-        if ((person.getCapacity() + usedCapacity()) > elevator.getMAX_CAPACITY()){
-            return false;
-        }
-
-        return true;
+        return (person.getCapacity() + usedCapacity()) <= elevator.getMAX_CAPACITY();
     }
 
     public void addPersonToElevator(ElevatorUser person){
@@ -73,8 +78,11 @@ public class ElevatorController {
         building.getFloor(person.getCurrentFloor()).removeUser(person);
     }
 
-
-
+    /**
+     * Calculate the next floor to travel to
+     * Based on the people in the elevator and direction of elevator travelling
+     * @return - the floor number
+     */
     public int calculateNextFloor(){
         ArrayList<Integer> requests = checkForRequests();
         int nextFloor = 0;
@@ -106,6 +114,9 @@ public class ElevatorController {
         return nextFloor;
     }
 
+    /**
+     * User leaving the elevator
+     */
     public void leaveElevator(){
         List<ElevatorUser> elevatorOccupants = elevator.getUsers();
 

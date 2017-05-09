@@ -87,4 +87,7 @@ public abstract class ElevatorUser {
 
     }
 
+    public Integer getID() {
+        return ID;
+    }
 }

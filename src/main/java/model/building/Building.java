@@ -55,4 +55,8 @@ public class Building {
     public Floor getFloor(int floor) {
         return floors.get(floor);
     }
+
+    public List<Floor> getFloors() {
+        return floors;
+    }
 }
