@@ -66,4 +66,8 @@ public class Elevator {
     public void removePerson(ElevatorUser person){
         users.remove(person);
     }
+
+    public void addUser(ElevatorUser user){
+        users.add(user);
+    }
 }
