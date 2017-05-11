@@ -18,7 +18,6 @@ public class ElevatorController {
     private Elevator elevator;
     private ElevatorView elevatorView;
     private Building building;
-    private int ticks = 0;
     private ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>();
     private Random random;
 
@@ -68,14 +67,12 @@ public class ElevatorController {
         return (person.getCapacity() + usedCapacity()) <= elevator.getMAX_CAPACITY();
     }
 
-    public void addPersonToElevator(ElevatorUser person){
-        List<ElevatorUser> elevatorOccupants = elevator.getUsers();
-        elevatorOccupants.add(person);
-        elevator.setUsers(elevatorOccupants);
+    public void addPersonToElevator(ElevatorUser user){
+        elevator.addUser(user);
 
         //need a remove user from the waiting list
         //remove by id
-        building.getFloor(person.getCurrentFloor()).removeUser(person);
+        building.getFloor(user.getCurrentFloor()).removeUser(user);
     }
 
     /**

@@ -1,8 +1,10 @@
 package simulator;
 
 import controller.ElevatorController;
+import model.building.Building;
 import model.building.Elevator;
 import model.user.ElevatorUser;
+import view.ElevatorView;
 
 /**
  * Created by IPREMGI on 02/05/2017.
@@ -11,14 +13,40 @@ public class EvelatorSimulator implements ISimulator {
 
     private SimulatorTick simulatorTick;
     private ElevatorController elevatorController;
+    private int numberOfGoggle;
+    private int numberOfMugtone;
+    private int ticks;
+
+    public EvelatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks) {
+        this.numberOfGoggle=numberOfGoggles;
+        this.numberOfMugtone=numberOfMugtones;
+        this.ticks=ticks;
+    }
 
     public void simulate() {
         simulatorTick = new SimulatorTick();
-        elevatorController = new ElevatorController();
+        Building building = new Building(10,5);
+        Elevator elevator = new Elevator(4);
+        ElevatorView elevatorView = new ElevatorView();
+
+        elevatorController = new ElevatorController(elevator,elevatorView,building);
+
+        for (int i = 0; i < numberOfGoggle; i++){
+            elevatorController.addElevatorUser();
+        }
+
+        for (int i = 0; i < numberOfMugtone; i++){
+            elevatorController.addElevatorUser();
+        }
+
+        for (int i = 0; i < ticks; i++){
+            nextTick(building,elevator);
+        }
+
 
     }
 
-    public void nextTick(){
+    public void nextTick(Building building, Elevator elevator){
 
         simulatorTick.nextTick();
         int steps = 4;
