@@ -11,10 +11,9 @@ public class MaintenanceCrew extends ElevatorUser {
     private int duration;
     private  int minFloor;
 
-    public MaintenanceCrew (int capacity, int destFloor, double probability, int maxFloors, int priority ) {
+    public MaintenanceCrew (int capacity, int destFloor, int maxFloors, int priority ) {
         super("maintenancecrew");
         this.setCapacity(capacity);
-        this.setProbabilty(probability);
         this.setDestFloor(destFloor);
         this.setMaxFloors(maxFloors);
         this.setPriority(priority);
@@ -28,6 +27,8 @@ public class MaintenanceCrew extends ElevatorUser {
         return floorsAccessible;
     }
 
+    //Between 20 and 40 minutes after
+    //they arrive at their desired floor, they will also go to the ground floor and leave the building - ticks
     public void leaveBuilding() {
         setDestFloor(0);
     }

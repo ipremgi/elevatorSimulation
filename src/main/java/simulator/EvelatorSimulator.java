@@ -11,6 +11,7 @@ public class EvelatorSimulator implements ISimulator {
 
     private SimulatorTick simulatorTick;
     private ElevatorController elevatorController;
+    private Elevator elevator;
 
     public void simulate() {
         simulatorTick = new SimulatorTick();

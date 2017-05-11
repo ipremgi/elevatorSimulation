@@ -11,6 +11,15 @@ public class Employee extends ElevatorUser {
 
     private Random randomGenerator;
 
+
+    /**
+     *
+     * @param capacity
+     * @param destFloor
+     * @param probability - variable p in requirements
+     * @param priority
+     * @param maxFloors
+     */
     public Employee (int capacity, int destFloor, double probability , int priority, int maxFloors ) {
         super("employee");
         this.setCapacity(capacity);

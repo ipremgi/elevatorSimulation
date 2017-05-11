@@ -18,10 +18,9 @@ public class Client extends ElevatorUser {
     private int tickDuration;
 
 
-    public Client(int capacity, int destFloor, double probability, SimulatorTick tick,int priority) {
+    public Client(int capacity, int destFloor, SimulatorTick tick,int priority) {
         super("client");
         this.setCapacity(capacity);
-        this.setProbabilty(probability);
         this.setDestFloor(destFloor);
         this.tick=tick;
         this.setPriority(priority);
@@ -58,6 +57,7 @@ public class Client extends ElevatorUser {
 
     }
 
+   // in here?
     public boolean shouldIFileComplaint() {
         if (tick.getTick() <= 60) {
             //moveFloor(); //PRIORITY QUEUE
