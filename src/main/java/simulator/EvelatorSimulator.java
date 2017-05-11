@@ -16,17 +16,21 @@ public class EvelatorSimulator implements ISimulator {
     private int numberOfGoggle;
     private int numberOfMugtone;
     private int ticks;
+    private int noOfFloors;
+    private int maxCapacity;
 
-    public EvelatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks) {
+    public EvelatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity) {
         this.numberOfGoggle=numberOfGoggles;
         this.numberOfMugtone=numberOfMugtones;
         this.ticks=ticks;
+        this.noOfFloors=noOfFloors;
+        this.maxCapacity=maxCapacity;
     }
 
     public void simulate() {
         simulatorTick = new SimulatorTick();
-        Building building = new Building(10,5);
-        Elevator elevator = new Elevator(4);
+        Building building = new Building(noOfFloors,maxCapacity);
+        Elevator elevator = building.getElevator();
         ElevatorView elevatorView = new ElevatorView();
 
         elevatorController = new ElevatorController(elevator,elevatorView,building);
