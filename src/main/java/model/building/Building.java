@@ -37,6 +37,8 @@ public class Building {
             f.add(new Floor());
         }
 
+        System.out.println();
+
         return f;
     }
 
@@ -53,6 +55,7 @@ public class Building {
     }
 
     public Floor getFloor(int floor) {
+        //System.out.println("floor being requested : " + floor);
         return floors.get(floor);
     }
 

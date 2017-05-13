@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Aishwarya on 03/05/2017.
  */
-public abstract class ElevatorUser implements  Comparable<ElevatorUser> {
+public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
     private int capacity;
     private int currentFloor = 0;

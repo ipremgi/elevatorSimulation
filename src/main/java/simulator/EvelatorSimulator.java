@@ -1,5 +1,6 @@
 package simulator;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controller.ElevatorController;
 import model.building.Building;
 import model.building.Elevator;
@@ -50,20 +51,20 @@ public class EvelatorSimulator implements ISimulator {
         for (int i = 0; i < numberOfGoggle; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,5,0.05,2,10));
+            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,1,0.05,2,9));
         }
 
         //creates mugtone developers
         for (int i = 0; i < numberOfMugtone; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,5,0.05,2,10));
+            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,0.05,2,9));
         }
 
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
 
-            elevatorController.addElevatorUser(new Employee(1,3,0.07,2,10));
+            elevatorController.addElevatorUser(new Employee(1,1,0.07,2,9));
         }
 
         for (int i = 0; i < ticks; i++){
@@ -80,11 +81,12 @@ public class EvelatorSimulator implements ISimulator {
         //create client
         if (random.nextDouble() <= q){
             elevatorController.addElevatorUser(new Client(1,2,simulatorTick,1));
+            System.out.println("*** CLIENT CREATED! ***");
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(1,10,10,2));
+            elevatorController.addElevatorUser(new MaintenanceCrew(1,9,9,2));
         }
 
 
@@ -102,7 +104,7 @@ public class EvelatorSimulator implements ISimulator {
 
             PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
             //System.out.println("waiting list: " + tmpWaitingList);
-            System.out.println(tmpWaitingList.peek());
+            //System.out.println(tmpWaitingList.peek());
             for (ElevatorUser person : tmpWaitingList){
                 if (elevatorController.canAddPersonToElevator(person)){
                     elevatorController.addPersonToElevator(person);

@@ -17,7 +17,7 @@ public class Developer extends ElevatorUser {
         this.setCapacity(capacity);
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
-        this.setMaxFloors(10);
+        this.setMaxFloors(9);
         this.setFloorsAccessible(determineFloorsAccessible());
     }
 

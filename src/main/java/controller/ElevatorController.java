@@ -76,6 +76,7 @@ public class ElevatorController {
         //need a remove user from the waiting list
         //remove by id
         building.getFloor(user.getCurrentFloor()).removeUser(user);
+        //buildingOccupants.remove(user);
     }
 
     /**
@@ -87,47 +88,56 @@ public class ElevatorController {
         elevator.setDirection(Direction.UP);
 
         ArrayList<Integer> requests = checkForRequests();
-        System.out.println(requests);
-        int nextFloor = 0;
+        ArrayList<Integer> tmpRequests = new ArrayList<>(checkForRequests());
+
+        //System.out.println(requests);
 
         for (ElevatorUser occupant : elevator.getUsers()){
             requests.add(occupant.getDestFloor());
+            tmpRequests.add(occupant.getDestFloor());
         }
 
-        System.out.println(requests);
+        //System.out.println("tmp requests:"+tmpRequests);
 
         if (elevator.getDirection() == Direction.UP){
             for (int floorNumber : requests){
                 if(floorNumber <= elevator.getFloor()){
-                    requests.remove(floorNumber);
+                    tmpRequests.remove(new Integer(floorNumber));
                 }
             }
-            System.out.println(requests);
-            nextFloor = requests.indexOf(Collections.min(requests));
+            //System.out.println("tmp requests:"+tmpRequests);
+            //nextFloor = tmpRequests.indexOf(Collections.min(tmpRequests));
+            Collections.sort(tmpRequests);
+            //System.out.println("next floor:"+nextFloor);
 
         } else if (elevator.getDirection() == Direction.DOWN){
             for (int floorNumber : requests){
                 if(floorNumber >= elevator.getFloor()){
-                    requests.remove(floorNumber);
+                    requests.remove(new Integer(floorNumber));
                 }
             }
-
-            nextFloor = requests.indexOf(Collections.max(requests));
-
+            Collections.sort(tmpRequests,Collections.reverseOrder());
         }
 
-        return nextFloor;
+        if(tmpRequests.size() == 0){
+            tmpRequests.add(0);
+        }
+
+        return tmpRequests.get(0);
     }
 
     /**
      * User leaving the elevator
      */
     public void leaveElevator(){
-        List<ElevatorUser> elevatorOccupants = elevator.getUsers();
+        List<ElevatorUser> elevatorOccupants = new ArrayList<>(elevator.getUsers());
 
         for (ElevatorUser occupant : elevatorOccupants){
+
             if (occupant.getDestFloor() == elevator.getFloor()){
+                System.out.println("Leaving elevator : "+occupant.getID());
                 elevator.removePerson(occupant);
+                buildingOccupants.add(occupant);
             }
         }
 
@@ -135,12 +145,15 @@ public class ElevatorController {
 
     public ArrayList<Integer> checkForRequests(){
 
+        ArrayList<ElevatorUser> buildingOccupants = new ArrayList<>(this.buildingOccupants);
+
         for (ElevatorUser occupant : buildingOccupants){
             if (occupant instanceof Employee || occupant instanceof Developer){
                 if (random.nextBoolean() || occupant.getCurrentFloor() == 0){
                     occupant.moveFloor();
                     building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
                     building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
+                    this.buildingOccupants.remove(occupant);
                 }
             }
         }
@@ -163,7 +176,7 @@ public class ElevatorController {
     }
 
     public void updateView(){
-        elevatorView.updateView(elevator.getFloor(),elevator.getUsers());
+        elevatorView.updateView(elevator.getFloor(),elevator.getDoorStatus(),elevator.getUsers());
     }
 
 }

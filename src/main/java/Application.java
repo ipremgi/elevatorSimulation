@@ -14,7 +14,7 @@ public class Application {
      * @param args
      */
     public static void main(String[] args) {
-        ISimulator simulator = new EvelatorSimulator(10,10,1000,10,4,0.005,10);
+        ISimulator simulator = new EvelatorSimulator(10,10,20000,10,4,0.005,10);
 
         simulator.simulate();
     }
