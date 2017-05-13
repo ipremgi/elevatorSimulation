@@ -19,15 +19,20 @@ public class ElevatorController {
     private ElevatorView elevatorView;
     private Building building;
     private ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>();
-    private Random random;
+    private Random random = new Random();
 
     public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building) {
+        System.out.println("elevator controller instantiated");
+
         this.elevator = elevator;
         this.elevatorView = elevatorView;
         this.building = building;
     }
 
     public void addElevatorUser(ElevatorUser elevatorUser){
+        System.out.println("adding person");
+
+
         buildingOccupants.add(elevatorUser);
     }
     
