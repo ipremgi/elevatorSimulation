@@ -1,26 +1,39 @@
 package model.user;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Aishwarya on 03/05/2017.
  */
-public abstract class ElevatorUser {
+public abstract class ElevatorUser implements  Comparable<ElevatorUser> {
 
-    //change Integer to int
-    private Integer capacity;
-    private Integer currentFloor = 0;
-    private Integer destFloor;
-    private Integer ID;
-    private static AtomicInteger nextID;
+    private int capacity;
+    private int currentFloor = 0;
+    private int destFloor;
+    private static AtomicInteger nextID = new AtomicInteger();
     private double probabilty;
-    private int maxFloors;
-    //typo Accessible
-    private List<Integer> floorsAccessable = new ArrayList<Integer>();
+    private int maxFloors;//change name
+    private int priority;
+    private String ID;
 
+    public ElevatorUser(String className){
+        ID = className + nextID.incrementAndGet();
+    }
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    private List<Integer> floorsAccessible = new ArrayList<Integer>();
+
+    public int getPriority() {
+        return priority;}
 
     //maxFloors
     public int getMaxFloors() {
@@ -33,7 +46,7 @@ public abstract class ElevatorUser {
 
     // Capacity
 
-    public Integer getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
@@ -43,7 +56,7 @@ public abstract class ElevatorUser {
 
     //currentFloor
 
-    public Integer getCurrentFloor() {
+    public int getCurrentFloor() {
         return currentFloor;
     }
 
@@ -52,7 +65,7 @@ public abstract class ElevatorUser {
     }
 
     //Destination floor
-    public Integer getDestFloor() {
+    public int getDestFloor() {
         return destFloor;
     }
 
@@ -70,13 +83,17 @@ public abstract class ElevatorUser {
     }
 
     //flooraccess
-    public List<Integer> getFloorsAccessable() {
-        return floorsAccessable;
+    public List<Integer> getFloorsAccessible() {
+        return floorsAccessible;
     }
 
-    public void setFloorsAccessable(List<Integer> floorsAccessable) {
-        this.floorsAccessable = floorsAccessable;
+    public void setFloorsAccessible(List<Integer> floorsAccessible) {
+        this.floorsAccessible = floorsAccessible;
     }
+
+    //    public boolean fileComplaint() {
+    //    }
+    protected abstract List<Integer> determineFloorsAccessible();
 
     //leave or move
     public void leaveBuilding(){
@@ -84,10 +101,18 @@ public abstract class ElevatorUser {
 
     }
     public  void moveFloor(){
-
     }
 
-    public Integer getID() {
-        return ID;
+    public int compareTo(ElevatorUser otherUser){
+        if (this.getPriority() == otherUser.getPriority()){
+            return 0;
+        } else if (this.priority > otherUser.getPriority()){
+            return 1;
+        } else if (this.priority < otherUser.getPriority()){
+            return -1;
+        }
+
+        return priority;
     }
+
 }

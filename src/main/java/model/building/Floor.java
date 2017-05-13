@@ -24,6 +24,10 @@ public class Floor {
         return waitingForLift;
     }
 
+    public void setWaitingForLift(PriorityQueue<ElevatorUser> waitingForLift) {
+        this.waitingForLift = waitingForLift;
+    }
+
     public boolean isBtnPressed() {
         return btnPressed;
     }

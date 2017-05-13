@@ -22,7 +22,6 @@ public class ElevatorController {
     private Random random = new Random();
 
     public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building) {
-        System.out.println("elevator controller instantiated");
 
         this.elevator = elevator;
         this.elevatorView = elevatorView;
@@ -30,7 +29,6 @@ public class ElevatorController {
     }
 
     public void addElevatorUser(ElevatorUser elevatorUser){
-        System.out.println("adding person");
 
 
         buildingOccupants.add(elevatorUser);
@@ -86,25 +84,30 @@ public class ElevatorController {
      * @return - the floor number
      */
     public int calculateNextFloor(){
+        elevator.setDirection(Direction.UP);
+
         ArrayList<Integer> requests = checkForRequests();
+        System.out.println(requests);
         int nextFloor = 0;
 
         for (ElevatorUser occupant : elevator.getUsers()){
             requests.add(occupant.getDestFloor());
         }
 
+        System.out.println(requests);
+
         if (elevator.getDirection() == Direction.UP){
             for (int floorNumber : requests){
-                if(floorNumber < elevator.getFloor()){
+                if(floorNumber <= elevator.getFloor()){
                     requests.remove(floorNumber);
                 }
             }
-
+            System.out.println(requests);
             nextFloor = requests.indexOf(Collections.min(requests));
 
         } else if (elevator.getDirection() == Direction.DOWN){
             for (int floorNumber : requests){
-                if(floorNumber > elevator.getFloor()){
+                if(floorNumber >= elevator.getFloor()){
                     requests.remove(floorNumber);
                 }
             }
@@ -134,7 +137,7 @@ public class ElevatorController {
 
         for (ElevatorUser occupant : buildingOccupants){
             if (occupant instanceof Employee || occupant instanceof Developer){
-                if (random.nextBoolean()){
+                if (random.nextBoolean() || occupant.getCurrentFloor() == 0){
                     occupant.moveFloor();
                     building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
                     building.getFloor(occupant.getCurrentFloor()).addUser(occupant);

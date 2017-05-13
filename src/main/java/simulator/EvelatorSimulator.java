@@ -6,6 +6,7 @@ import model.building.Elevator;
 import model.user.*;
 import view.ElevatorView;
 
+import java.util.PriorityQueue;
 import java.util.Random;
 
 /**
@@ -15,6 +16,7 @@ public class EvelatorSimulator implements ISimulator {
 
     private SimulatorTick simulatorTick;
     private ElevatorController elevatorController;
+
     private int numberOfGoggle;
     private int numberOfMugtone;
     private int numberOfEmployees;
@@ -46,22 +48,22 @@ public class EvelatorSimulator implements ISimulator {
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){
-            System.out.println("creating goggle developer");
 
-            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,5,0.05));
+
+            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,5,0.05,2,10));
         }
 
         //creates mugtone developers
         for (int i = 0; i < numberOfMugtone; i++){
-            System.out.println("creating mugtone developer");
 
-            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,5,0.05));
+
+            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,5,0.05,2,10));
         }
 
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
-            System.out.println("creating employee");
-            elevatorController.addElevatorUser(new Employee(1,3,0.07));
+
+            elevatorController.addElevatorUser(new Employee(1,3,0.07,2,10));
         }
 
         for (int i = 0; i < ticks; i++){
@@ -73,20 +75,21 @@ public class EvelatorSimulator implements ISimulator {
 
     public void nextTick(Building building, Elevator elevator){
 
-        System.out.println("next tick is being called");
+
 
         //create client
         if (random.nextDouble() <= q){
-            elevatorController.addElevatorUser(new Client(1,2,0.005));
+            elevatorController.addElevatorUser(new Client(1,2,simulatorTick,1));
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(1,10,0.005,10));
+            elevatorController.addElevatorUser(new MaintenanceCrew(1,10,10,2));
         }
 
 
         simulatorTick.nextTick();
+        //System.out.println(simulatorTick.getTick());
         int steps = 4;
         int ticks = simulatorTick.getTick();
 
@@ -95,7 +98,12 @@ public class EvelatorSimulator implements ISimulator {
         } else if (ticks % steps == 2){
             elevatorController.leaveElevator();
 
-            for (ElevatorUser person : building.getFloor(elevator.getFloor()).getWaitingForLift()){
+            elevatorController.checkForRequests();
+
+            PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
+            //System.out.println("waiting list: " + tmpWaitingList);
+            System.out.println(tmpWaitingList.peek());
+            for (ElevatorUser person : tmpWaitingList){
                 if (elevatorController.canAddPersonToElevator(person)){
                     elevatorController.addPersonToElevator(person);
                 }
