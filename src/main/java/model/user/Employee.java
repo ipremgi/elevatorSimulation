@@ -11,32 +11,41 @@ public class Employee extends ElevatorUser {
 
     private Random randomGenerator;
 
-    public Employee (Integer capacity, Integer destFloor, double probability ) {
 
+    /**
+     *
+     * @param capacity
+     * @param destFloor
+     * @param probability - variable p in requirements
+     * @param priority
+     * @param maxFloors
+     */
+    public Employee (int capacity, int destFloor, double probability , int priority, int maxFloors ) {
+        super("employee");
         this.setCapacity(capacity);
         this.setProbabilty(probability);
         this.setDestFloor(destFloor);
+        this.setPriority(priority);
+        this.setMaxFloors(maxFloors);
+    }
+
+    @Override
+    protected List<Integer> determineFloorsAccessible() {
 
         List<Integer> floorsAccessible = new ArrayList<Integer>();
-
         for (int i = 0; i <= getMaxFloors(); i++) {
             floorsAccessible.add(i);
         }
-
-        this.setFloorsAccessable(floorsAccessible);
+        return floorsAccessible;
     }
 
     public void leaveBuilding() {
         setDestFloor(0);
-
     }
 
-
     public void moveFloor() {
-        int randomFloor = randomGenerator.nextInt(getFloorsAccessable().size());
-        setDestFloor(getFloorsAccessable().get(randomFloor));
-
+        int randomFloor = randomGenerator.nextInt(getFloorsAccessible().size());
+        setDestFloor(getFloorsAccessible().get(randomFloor));
         //any floor same probability
-
     }
 }

@@ -13,6 +13,7 @@ public class EvelatorSimulator implements ISimulator {
 
     private SimulatorTick simulatorTick;
     private ElevatorController elevatorController;
+
     private int numberOfGoggle;
     private int numberOfMugtone;
     private int ticks;
