@@ -14,7 +14,7 @@ import java.util.Random;
 /**
  * Created by IPREMGI on 02/05/2017.
  */
-public class EvelatorSimulator implements ISimulator {
+public class ElevatorSimulator implements ISimulator {
 
     private SimulatorTick simulatorTick;
     private ElevatorController elevatorController;
@@ -29,7 +29,7 @@ public class EvelatorSimulator implements ISimulator {
     private double q;
     private double p;
 
-    public EvelatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees) {
+    public ElevatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees) {
         this.numberOfGoggle=numberOfGoggles;
         this.numberOfMugtone=numberOfMugtones;
         this.ticks=ticks;
