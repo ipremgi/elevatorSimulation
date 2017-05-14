@@ -26,6 +26,8 @@ public class Elevator {
         MAX_CAPACITY = max_capacity;
         floor = 0;
         users = new ArrayList<>();
+        setDirection(Direction.UP);
+        setDoorStatus(DoorStatus.CLOSED);
     }
 
 

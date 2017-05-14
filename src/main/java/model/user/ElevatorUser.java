@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -17,6 +18,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private int maxFloors;//change name
     private int priority;
     private String ID;
+    protected Random randomGenerator = new Random();
 
     public ElevatorUser(String className){
         ID = className + nextID.incrementAndGet();
@@ -100,8 +102,8 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         destFloor = 0;
 
     }
-    public  void moveFloor(){
-    }
+
+    public abstract void moveFloor();
 
     public int compareTo(ElevatorUser otherUser){
         if (this.getPriority() == otherUser.getPriority()){

@@ -8,10 +8,6 @@ import java.util.Random;
  * Created by Aishwarya on 05/05/2017.
  */
 public class Employee extends ElevatorUser {
-
-    private Random randomGenerator = new Random();
-
-
     /**
      *
      * @param capacity

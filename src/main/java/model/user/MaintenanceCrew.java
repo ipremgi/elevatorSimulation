@@ -1,5 +1,7 @@
 package model.user;
 
+import simulator.SimulatorTick;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +11,18 @@ import java.util.List;
 public class MaintenanceCrew extends ElevatorUser {
 
     private int duration;
-    private  int minFloor;
+    private int minFloor;
+    private int tickDuration;
+    private SimulatorTick tick;
 
-    public MaintenanceCrew (int capacity, int destFloor, int maxFloors, int priority ) {
+    public MaintenanceCrew (int capacity, int destFloor, int maxFloors, int priority, SimulatorTick tick) {
         super("maintenancecrew");
         this.setCapacity(capacity);
         this.setDestFloor(destFloor);
         this.setMaxFloors(maxFloors);
         this.setPriority(priority);
+        this.tick=tick;
+        this.tickDuration =tick.getTick() + randomGenerator.nextInt(120)+120;
     }
 
     @Override
@@ -25,6 +31,13 @@ public class MaintenanceCrew extends ElevatorUser {
         floorsAccessible.add(0);
         floorsAccessible.add(this.getMaxFloors());
         return floorsAccessible;
+    }
+
+    public void shouldILeave() {
+        //check that they have reached their randomly assigned time
+        if (tick.getTick() == tickDuration) {
+            leaveBuilding();
+        }
     }
 
     //Between 20 and 40 minutes after
