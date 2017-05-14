@@ -83,8 +83,6 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         this.floorsAccessible = floorsAccessible;
     }
 
-    //    public boolean fileComplaint() {
-    //    }
     protected abstract List<Integer> determineFloorsAccessible();
 
     public abstract void moveFloor();

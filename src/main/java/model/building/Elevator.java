@@ -55,10 +55,6 @@ public class Elevator {
         return users;
     }
 
-    public void setUsers(List<ElevatorUser> users) {
-        this.users = users;
-    }
-
     public DoorStatus getDoorStatus() {
         return doorStatus;
     }
