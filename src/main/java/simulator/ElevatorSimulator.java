@@ -101,8 +101,6 @@ public class ElevatorSimulator implements ISimulator {
 
                 PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
 
-                System.out.println(tmpWaitingList);
-
                 for (ElevatorUser person : tmpWaitingList){
                     if (elevatorController.canAddPersonToElevator(person)){
                         elevatorController.addPersonToElevator(person);

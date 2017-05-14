@@ -91,9 +91,9 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         if (this.getPriority() == otherUser.getPriority()){
             return 0;
         } else if (this.priority > otherUser.getPriority()){
-            return 1;
-        } else if (this.priority < otherUser.getPriority()){
             return -1;
+        } else if (this.priority < otherUser.getPriority()){
+            return 1;
         }
         return priority;
     }
