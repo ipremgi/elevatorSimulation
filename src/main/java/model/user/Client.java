@@ -22,15 +22,15 @@ public class Client extends Leaves {
         this.setPriority(priority);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());
-        this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt((this.getFloorsAccessible().size() - 1))));
-        this.setTickDuration(randomGenerator.nextInt(30)+60);//other classes
+        this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt((this.getFloorsAccessible().size()))));
+        this.setTickDuration(randomGenerator.nextInt(31)+60);//other classes
     }
 
     @Override
     protected List<Integer> determineFloorsAccessible(){
         List<Integer> floorsAccessible = new ArrayList<Integer>();
 
-        for (int i = 0; i < (getNumberOfFloors() - 1) / 2; i++) {
+        for (int i = 0; i < (getNumberOfFloors()) / 2; i++) {
             floorsAccessible.add(i);
         }
 

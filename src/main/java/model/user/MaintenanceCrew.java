@@ -14,7 +14,7 @@ public class MaintenanceCrew extends Leaves {
         this.setNumberOfFloors(numberOfFloors);
         this.setDestFloor(determineFloorsAccessible().get(0) - 1);
         this.setPriority(priority);
-        this.setTickDuration(randomGenerator.nextInt(120)+120);
+        this.setTickDuration(randomGenerator.nextInt(121)+120);
     }
 
     @Override

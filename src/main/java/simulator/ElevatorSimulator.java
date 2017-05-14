@@ -25,7 +25,7 @@ public class ElevatorSimulator implements ISimulator {
     private int ticks;
     private int noOfFloors;
     private int maxCapacity;
-    private Random random = new Random();
+    private Random random = new Random(50);
     private double q;
     private double p;
 
@@ -101,6 +101,8 @@ public class ElevatorSimulator implements ISimulator {
 
                 PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
 
+                System.out.println(tmpWaitingList);
+
                 for (ElevatorUser person : tmpWaitingList){
                     if (elevatorController.canAddPersonToElevator(person)){
                         elevatorController.addPersonToElevator(person);
@@ -128,13 +130,13 @@ public class ElevatorSimulator implements ISimulator {
     private void createRandomElevatorUsers(int numberOfFloors){
         //create client
         if (random.nextDouble() <= q){
-            elevatorController.addElevatorUser(new Client(1,1,numberOfFloors));
+            elevatorController.addElevatorUser(new Client(1,2,numberOfFloors));
             System.out.println("*** CLIENT CREATED! ***");
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,2));
+            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1));
             System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
     }
