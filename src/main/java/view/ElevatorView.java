@@ -1,5 +1,7 @@
 package view;
 
+import model.building.Direction;
+import model.building.DoorStatus;
 import model.user.ElevatorUser;
 
 import java.util.List;
@@ -9,10 +11,16 @@ import java.util.List;
  */
 public class ElevatorView {
 
-    public void updateView(int elevatorfloor, List<ElevatorUser> elevatorOccupants){
+    public void updateView(int elevatorfloor, DoorStatus doorStatus, List<ElevatorUser> elevatorOccupants, int tick, Direction direction, int numberOfComplaints){
+        System.out.println("\n**************************************************************\n");
+        System.out.println("Tick: " + tick);
+        System.out.println("Number of complaints: "+numberOfComplaints);
+        System.out.println("Elevator direction: " + direction);
         System.out.println("Elevator is on floor: " + elevatorfloor);
+        System.out.println("Door Status: " + doorStatus);
         for (ElevatorUser occupant : elevatorOccupants){
-            System.out.println(occupant.getID() + " is currently on the elevator");
+            System.out.println(occupant.getID() + " dest floor " + occupant.getDestFloor());
         }
+        System.out.println("\n**************************************************************");
     }
 }

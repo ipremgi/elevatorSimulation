@@ -1,7 +1,6 @@
 package model.user;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Aishwarya on 03/05/2017.
@@ -9,35 +8,31 @@ import java.util.Random;
 public class Developer extends ElevatorUser {
 
     private Company company;
-    private Random randomGenerator;
 
-    public Developer(Company company, int capacity, int destFloor, double probability, int priority, int maxFloors  ) {
+    public Developer(Company company, int capacity, int priority,int numberOfFloors) {
         super("developer" + company.name());
         this.company = company;
         this.setCapacity(capacity);
-        this.setProbabilty(probability);
-        this.setDestFloor(destFloor);
-        this.setPriority(priority);
-        this.setMaxFloors(maxFloors);//for rest of the classes
+        this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());
+        this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size() - 1)));
+        this.setPriority(priority);
     }
 
     @Override
     protected List<Integer> determineFloorsAccessible(){
         List<Integer> floorsAccessible = new ArrayList<Integer>();
-        for (int i = getMaxFloors(); i <= getMaxFloors() / 2; i--) {
+
+        for (int i = (getNumberOfFloors() - 1); i > ((getNumberOfFloors() - 1) / 2); i--) {
             floorsAccessible.add(i);
         }
+        System.out.println(floorsAccessible);
         return floorsAccessible;
     }
 
-    public void leaveBuilding() {
-        setDestFloor(0);
-    }
-
     public void moveFloor() {
-        int randomFloor = randomGenerator.nextInt(getFloorsAccessible().size());
-        this.setDestFloor( getFloorsAccessible().get(randomFloor));
+
+        this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size())));
         //only work in the top half of the building. Developers may randomly decide to move to another floor in the top half.
     }
 

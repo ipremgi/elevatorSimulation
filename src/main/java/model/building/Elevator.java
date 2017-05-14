@@ -2,6 +2,7 @@ package model.building;
 
 import model.user.ElevatorUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,9 @@ public class Elevator {
     public Elevator(int max_capacity) {
         MAX_CAPACITY = max_capacity;
         floor = 0;
+        users = new ArrayList<>();
+        setDirection(Direction.UP);
+        setDoorStatus(DoorStatus.CLOSED);
     }
 
 

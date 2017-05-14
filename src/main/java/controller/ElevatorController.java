@@ -1,9 +1,7 @@
 package controller;
 
 import model.building.*;
-import model.user.Developer;
-import model.user.ElevatorUser;
-import model.user.Employee;
+import model.user.*;
 import view.ElevatorView;
 
 import java.util.*;
@@ -19,12 +17,15 @@ public class ElevatorController {
     private ElevatorView elevatorView;
     private Building building;
     private ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>();
-    private Random random;
+    private double p;
+    private Random random = new Random();
+    private ArrayList<Integer> requests = new ArrayList<>();
 
-    public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building) {
+    public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building,double p) {
         this.elevator = elevator;
         this.elevatorView = elevatorView;
         this.building = building;
+        this.p=p;
     }
 
     public void addElevatorUser(ElevatorUser elevatorUser){
@@ -64,15 +65,23 @@ public class ElevatorController {
      *         false if they cannot
      */
     public boolean canAddPersonToElevator(ElevatorUser person){
-        return (person.getCapacity() + usedCapacity()) <= elevator.getMAX_CAPACITY();
+        return ((person.getCapacity() + usedCapacity()) <= elevator.getMAX_CAPACITY()) && (elevator.getDoorStatus() == DoorStatus.OPEN);
     }
 
     public void addPersonToElevator(ElevatorUser user){
         elevator.addUser(user);
 
+        if (user instanceof Client){
+            ((Client) user).setWaiting(false);
+        }
+
         //need a remove user from the waiting list
         //remove by id
         building.getFloor(user.getCurrentFloor()).removeUser(user);
+        //buildingOccupants.remove(user);
+        if(building.getFloor(user.getCurrentFloor()).getWaitingForLift().isEmpty()){
+            building.getFloor(user.getCurrentFloor()).setBtnPressed(false);
+        }
     }
 
     /**
@@ -81,59 +90,89 @@ public class ElevatorController {
      * @return - the floor number
      */
     public int calculateNextFloor(){
-        ArrayList<Integer> requests = checkForRequests();
-        int nextFloor = 0;
+        ArrayList<Integer> tmpRequests = new ArrayList<>(requests);
+
+        //System.out.println(requests);
 
         for (ElevatorUser occupant : elevator.getUsers()){
             requests.add(occupant.getDestFloor());
+            tmpRequests.add(occupant.getDestFloor());
         }
+
+        //System.out.println("tmp requests:"+tmpRequests);
 
         if (elevator.getDirection() == Direction.UP){
             for (int floorNumber : requests){
-                if(floorNumber < elevator.getFloor()){
-                    requests.remove(floorNumber);
+                if(floorNumber <= elevator.getFloor()){
+                    tmpRequests.remove(new Integer(floorNumber));
                 }
             }
-
-            nextFloor = requests.indexOf(Collections.min(requests));
+            //System.out.println("tmp requests:"+tmpRequests);
+            //nextFloor = tmpRequests.indexOf(Collections.min(tmpRequests));
+            Collections.sort(tmpRequests);
+            //System.out.println("next floor:"+nextFloor);
 
         } else if (elevator.getDirection() == Direction.DOWN){
             for (int floorNumber : requests){
-                if(floorNumber > elevator.getFloor()){
-                    requests.remove(floorNumber);
+                if(floorNumber >= elevator.getFloor()){
+                    tmpRequests.remove(new Integer(floorNumber));
                 }
             }
+            Collections.sort(tmpRequests,Collections.reverseOrder());
+        }
 
-            nextFloor = requests.indexOf(Collections.max(requests));
+        if(tmpRequests.size() == 0){
+            tmpRequests.add(0);
 
         }
 
-        return nextFloor;
+        return tmpRequests.get(0);
     }
 
     /**
      * User leaving the elevator
      */
     public void leaveElevator(){
-        List<ElevatorUser> elevatorOccupants = elevator.getUsers();
+        List<ElevatorUser> elevatorOccupants = new ArrayList<>(elevator.getUsers());
 
         for (ElevatorUser occupant : elevatorOccupants){
+
             if (occupant.getDestFloor() == elevator.getFloor()){
+                System.out.println("Leaving elevator : "+occupant.getID());
+                occupant.setCurrentFloor(elevator.getFloor());
                 elevator.removePerson(occupant);
+                //System.out.println("adding to building occupants");
+                buildingOccupants.add(occupant);
+                //System.out.println(buildingOccupants);
             }
         }
 
     }
 
-    public ArrayList<Integer> checkForRequests(){
+    public void checkForRequests(){
+
+        ArrayList<ElevatorUser> buildingOccupants = new ArrayList<>(this.buildingOccupants);
 
         for (ElevatorUser occupant : buildingOccupants){
-            if (occupant instanceof Employee || occupant instanceof Developer){
-                if (random.nextBoolean()){
-                    occupant.moveFloor();
-                    building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
-                    building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
+            if (occupant.getCurrentFloor() == 0 && occupant.getDestFloor() != 0) {
+                requestElevator(occupant);
+                if (occupant instanceof Client){
+                    ((Client) occupant).setWaiting(true);
                 }
+            }else if (occupant instanceof Employee || occupant instanceof Developer){
+                if (random.nextDouble() <= p){
+                    occupant.moveFloor();
+                    requestElevator(occupant);
+                }
+            }
+            else if (occupant instanceof Client){
+                if (((Client) occupant).isRemoveMe()){
+                    System.out.println("removing client " + occupant.getID());
+                    this.buildingOccupants.remove(occupant);
+                }
+                ((Client) occupant).shouldILeave();
+            }else if (occupant instanceof MaintenanceCrew){
+                ((MaintenanceCrew) occupant).shouldILeave();
             }
         }
 
@@ -151,11 +190,31 @@ public class ElevatorController {
             index++;
         }
 
-        return floorRequests;
+        requests = floorRequests;
     }
 
-    public void updateView(){
-        elevatorView.updateView(elevator.getFloor(),elevator.getUsers());
+    public void updateView(int tick){
+        elevatorView.updateView(elevator.getFloor(),elevator.getDoorStatus(),elevator.getUsers(),tick,elevator.getDirection(), building.getNoOfComplaints());
+    }
+
+    public void requestElevator(ElevatorUser occupant){
+        building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
+        building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
+        this.buildingOccupants.remove(occupant);
+    }
+
+    public void checkForComplaints(){
+        for (Floor floor : building.getFloors()){
+            Iterator<ElevatorUser> iterator = floor.getWaitingForLift().iterator();
+            while (iterator.hasNext()){
+                ElevatorUser user = iterator.next();
+                if (user instanceof Client){
+                    if(((Client) user).shouldIComplain()){
+                     building.addComplaint();
+                    }
+                }
+            }
+        }
     }
 
 }
