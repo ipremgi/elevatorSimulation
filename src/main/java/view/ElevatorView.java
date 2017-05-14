@@ -11,9 +11,10 @@ import java.util.List;
  */
 public class ElevatorView {
 
-    public void updateView(int elevatorfloor, DoorStatus doorStatus, List<ElevatorUser> elevatorOccupants, int tick, Direction direction){
+    public void updateView(int elevatorfloor, DoorStatus doorStatus, List<ElevatorUser> elevatorOccupants, int tick, Direction direction, int numberOfComplaints){
         System.out.println("\n**************************************************************\n");
         System.out.println("Tick: " + tick);
+        System.out.println("Number of complaints: "+numberOfComplaints);
         System.out.println("Elevator direction: " + direction);
         System.out.println("Elevator is on floor: " + elevatorfloor);
         System.out.println("Door Status: " + doorStatus);
