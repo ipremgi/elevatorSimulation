@@ -2,7 +2,6 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Aishwarya on 05/05/2017.
@@ -12,24 +11,24 @@ public class Employee extends ElevatorUser {
      *
      * @param capacity
      * @param destFloor
-     * @param probability - variable p in requirements
      * @param priority
-     * @param maxFloors
+     * @param numberOfFloors
      */
-    public Employee (int capacity, int destFloor, double probability , int priority, int maxFloors ) {
+    public Employee (int capacity, int destFloor , int priority, int numberOfFloors ) {
         super("employee");
         this.setCapacity(capacity);
-        this.setProbabilty(probability);
-        this.setDestFloor(destFloor);
+        this.setNumberOfFloors(numberOfFloors);
+        this.setFloorsAccessible(determineFloorsAccessible());
+        this.setDestFloor(randomGenerator.nextInt(numberOfFloors));
         this.setPriority(priority);
-        this.setMaxFloors(maxFloors);
+
     }
 
     @Override
     protected List<Integer> determineFloorsAccessible() {
 
         List<Integer> floorsAccessible = new ArrayList<Integer>();
-        for (int i = 0; i <= getMaxFloors(); i++) {
+        for (int i = 0; i <= getNumberOfFloors(); i++) {
             floorsAccessible.add(i);
         }
         return floorsAccessible;
@@ -40,8 +39,8 @@ public class Employee extends ElevatorUser {
     }
 
     public void moveFloor() {
-        //int randomFloor = randomGenerator.nextInt(getMaxFloors());
-        setDestFloor(randomGenerator.nextInt(getMaxFloors()));
+        //int randomFloor = randomGenerator.nextInt(getNumberOfFloors());
+        setDestFloor(randomGenerator.nextInt(getNumberOfFloors()));
         //any floor same probability
     }
 }

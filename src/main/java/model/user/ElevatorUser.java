@@ -14,8 +14,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private int currentFloor = 0;
     private int destFloor;
     private static AtomicInteger nextID = new AtomicInteger();
-    private double probabilty;
-    private int maxFloors;//change name
+    private int numberOfFloors;//change name
     private int priority;
     private String ID;
     protected Random randomGenerator = new Random();
@@ -37,13 +36,13 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     public int getPriority() {
         return priority;}
 
-    //maxFloors
-    public int getMaxFloors() {
-        return maxFloors;
+    //numberOfFloors
+    public int getNumberOfFloors() {
+        return numberOfFloors;
     }
 
-    public void setMaxFloors(int maxFloors) {
-        this.maxFloors = maxFloors;
+    public void setNumberOfFloors(int numberOfFloors) {
+        this.numberOfFloors = numberOfFloors;
     }
 
     // Capacity
@@ -75,15 +74,6 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         this.destFloor = destFloor;
     }
 
-    //probability of moving
-    public double getProbabilty() {
-        return probabilty;
-    }
-
-    public void setProbabilty(double probabilty) {
-        this.probabilty = probabilty;
-    }
-
     //flooraccess
     public List<Integer> getFloorsAccessible() {
         return floorsAccessible;
@@ -96,12 +86,6 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     //    public boolean fileComplaint() {
     //    }
     protected abstract List<Integer> determineFloorsAccessible();
-
-    //leave or move
-    public void leaveBuilding(){
-        destFloor = 0;
-
-    }
 
     public abstract void moveFloor();
 

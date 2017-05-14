@@ -1,6 +1,5 @@
 package simulator;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controller.ElevatorController;
 import model.building.Building;
 import model.building.Direction;
@@ -28,14 +27,16 @@ public class EvelatorSimulator implements ISimulator {
     private int maxCapacity;
     private Random random = new Random();
     private double q;
+    private double p;
 
-    public EvelatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, int numberOfEmployees) {
+    public EvelatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees) {
         this.numberOfGoggle=numberOfGoggles;
         this.numberOfMugtone=numberOfMugtones;
         this.ticks=ticks;
         this.noOfFloors=noOfFloors;
         this.maxCapacity=maxCapacity;
         this.q=q;
+        this.p=p;
         this.numberOfEmployees=numberOfEmployees;
     }
 
@@ -47,26 +48,26 @@ public class EvelatorSimulator implements ISimulator {
         Elevator elevator = building.getElevator();
         ElevatorView elevatorView = new ElevatorView();
 
-        elevatorController = new ElevatorController(elevator,elevatorView,building);
+        elevatorController = new ElevatorController(elevator,elevatorView,building,p);
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,1,0.05,2,9));
+            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size()));
         }
 
         //creates mugtone developers
         for (int i = 0; i < numberOfMugtone; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,0.05,2,9));
+            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size()));
         }
 
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
 
-            elevatorController.addElevatorUser(new Employee(1,1,0.07,2,9));
+            elevatorController.addElevatorUser(new Employee(1,1,2,9));
         }
 
         for (int i = 0; i < ticks; i++){
@@ -80,9 +81,10 @@ public class EvelatorSimulator implements ISimulator {
         //increment tick
         simulatorTick.nextTick();
         //creates clients and maintenance crews
-        createRandomElevatorUsers();
+        createRandomElevatorUsers(building.getFloors().size());
         //checks for new requests
         elevatorController.checkForRequests();
+        elevatorController.checkForComplaints();
 
         //System.out.println(simulatorTick.getTick());
         int steps = 4;
@@ -105,6 +107,7 @@ public class EvelatorSimulator implements ISimulator {
                     }
                 }
 
+                elevatorChangeDirection(elevator);
                 elevatorController.updateView(ticks);
             }
         } else if (ticks % steps == 3){
@@ -114,7 +117,6 @@ public class EvelatorSimulator implements ISimulator {
             }
         } else if (ticks % steps == 0){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
-                elevatorChangeDirection(elevator);
                 elevatorController.moveElevator(elevatorController.calculateNextFloor());
                 elevatorController.updateView(ticks);
             }
@@ -123,16 +125,16 @@ public class EvelatorSimulator implements ISimulator {
 
     }
 
-    private void createRandomElevatorUsers(){
+    private void createRandomElevatorUsers(int numberOfFloors){
         //create client
         if (random.nextDouble() <= q){
-            elevatorController.addElevatorUser(new Client(1,2,simulatorTick,1));
+            elevatorController.addElevatorUser(new Client(1,1,numberOfFloors));
             System.out.println("*** CLIENT CREATED! ***");
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(1,9,9,2,simulatorTick));
+            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,2));
             System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
     }
