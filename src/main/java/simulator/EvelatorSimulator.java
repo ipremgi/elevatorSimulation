@@ -134,7 +134,7 @@ public class EvelatorSimulator implements ISimulator {
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(1,numberOfFloors,2));
+            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,2));
             System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
     }

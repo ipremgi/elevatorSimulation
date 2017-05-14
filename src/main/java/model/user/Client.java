@@ -14,6 +14,7 @@ public class Client extends Leaves {
 
     private int ticksWaiting = 0;
     private boolean waiting = false;
+    private boolean complained=false;
 
     public Client(int capacity, int priority, int numberOfFloors) {
         super("client");
@@ -43,9 +44,11 @@ public class Client extends Leaves {
     }
 
     public boolean shouldIComplain(){
-        if (waiting){
+        if (waiting && !complained){
             ticksWaiting++;
             if (ticksWaiting >= 60){
+                complained = true;
+                leaveBuilding();
                 return true;
             }
         }
