@@ -3,6 +3,8 @@ package simulator;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import controller.ElevatorController;
 import model.building.Building;
+import model.building.Direction;
+import model.building.DoorStatus;
 import model.building.Elevator;
 import model.user.*;
 import view.ElevatorView;
@@ -75,9 +77,53 @@ public class EvelatorSimulator implements ISimulator {
     }
 
     public void nextTick(Building building, Elevator elevator){
+        //increment tick
+        simulatorTick.nextTick();
+        //creates clients and maintenance crews
+        createRandomElevatorUsers();
+        //checks for new requests
+        elevatorController.checkForRequests();
+
+        //System.out.println(simulatorTick.getTick());
+        int steps = 4;
+        int ticks = simulatorTick.getTick();
+
+        if (ticks % steps == 1){
+            if (elevator.getDoorStatus() == DoorStatus.CLOSED){
+                elevatorController.openElevatorDoor();
+                elevatorController.updateView(ticks);
+            }
+        } else if (ticks % steps == 2){
+            if (elevator.getDoorStatus() == DoorStatus.OPEN){
+                elevatorController.leaveElevator();
+
+                PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
+
+                for (ElevatorUser person : tmpWaitingList){
+                    if (elevatorController.canAddPersonToElevator(person)){
+                        elevatorController.addPersonToElevator(person);
+                    }
+                }
+
+                elevatorController.updateView(ticks);
+            }
+        } else if (ticks % steps == 3){
+            if (elevator.getDoorStatus() == DoorStatus.OPEN){
+                elevatorController.closeElevatorDoor();
+                elevatorController.updateView(ticks);
+            }
+        } else if (ticks % steps == 0){
+            if (elevator.getDoorStatus() == DoorStatus.CLOSED){
+                elevatorChangeDirection(elevator);
+                elevatorController.moveElevator(elevatorController.calculateNextFloor());
+                elevatorController.updateView(ticks);
+            }
+        }
 
 
+    }
 
+    private void createRandomElevatorUsers(){
         //create client
         if (random.nextDouble() <= q){
             elevatorController.addElevatorUser(new Client(1,2,simulatorTick,1));
@@ -86,39 +132,20 @@ public class EvelatorSimulator implements ISimulator {
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(1,9,9,2));
+            elevatorController.addElevatorUser(new MaintenanceCrew(1,9,9,2,simulatorTick));
+            System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
+    }
 
-
-        simulatorTick.nextTick();
-        //System.out.println(simulatorTick.getTick());
-        int steps = 4;
-        int ticks = simulatorTick.getTick();
-
-        if (ticks % steps == 1){
-            elevatorController.openElevatorDoor();
-        } else if (ticks % steps == 2){
-            elevatorController.leaveElevator();
-
-            elevatorController.checkForRequests();
-
-            PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
-            //System.out.println("waiting list: " + tmpWaitingList);
-            //System.out.println(tmpWaitingList.peek());
-            for (ElevatorUser person : tmpWaitingList){
-                if (elevatorController.canAddPersonToElevator(person)){
-                    elevatorController.addPersonToElevator(person);
-                }
+    private void elevatorChangeDirection(Elevator elevator){
+        if (elevator.getDirection() == Direction.UP){
+            if (elevator.getFloor() > elevatorController.calculateNextFloor()){
+                elevator.setDirection(Direction.DOWN);
             }
-
-            elevatorController.updateView();
-        } else if (ticks % steps == 3){
-            elevatorController.closeElevatorDoor();
-        } else if (ticks % steps == 0){
-            elevatorController.moveElevator(elevatorController.calculateNextFloor());
-            elevatorController.updateView();
+        } else if (elevator.getDirection() == Direction.DOWN){
+            if (elevator.getFloor() < elevatorController.calculateNextFloor() || elevator.getFloor() == 0){
+                elevator.setDirection(Direction.UP);
+            }
         }
-
-
     }
 }

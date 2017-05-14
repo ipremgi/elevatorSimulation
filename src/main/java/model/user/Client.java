@@ -14,7 +14,6 @@ import java.util.Random;
 public class Client extends ElevatorUser {
 
     private SimulatorTick tick;
-    private Random randomGenerator = new Random();
     private int tickDuration;
 
 
@@ -25,7 +24,7 @@ public class Client extends ElevatorUser {
         this.tick=tick;
         this.setPriority(priority);
         this.setFloorsAccessible(determineFloorsAccessible());
-        this.tickDuration =randomGenerator.nextInt(30)+60;//other classes
+        this.tickDuration = tick.getTick() + randomGenerator.nextInt(30)+60;//other classes
     }
 
     @Override
@@ -50,11 +49,9 @@ public class Client extends ElevatorUser {
 
     public void shouldILeave() {
         //check that they have reached their randomly assigned time
-        if (tick.getTick() >= 60 && tick.getTick() <= 90) {
+        if (tick.getTick() == tickDuration) {
             leaveBuilding();
-        } else {
         }
-
     }
 
    // in here?
