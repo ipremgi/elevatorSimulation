@@ -34,10 +34,6 @@ public class Employee extends ElevatorUser {
         return floorsAccessible;
     }
 
-    public void leaveBuilding() {
-        setDestFloor(0);
-    }
-
     public void moveFloor() {
         //int randomFloor = randomGenerator.nextInt(getNumberOfFloors());
         do{
