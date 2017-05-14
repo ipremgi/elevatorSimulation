@@ -15,7 +15,7 @@ public class Developer extends ElevatorUser {
         this.setCapacity(capacity);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());
-        this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size() - 1)));
+        this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size())));
         this.setPriority(priority);
     }
 
@@ -26,6 +26,7 @@ public class Developer extends ElevatorUser {
         for (int i = (getNumberOfFloors() - 1); i > ((getNumberOfFloors() - 1) / 2); i--) {
             floorsAccessible.add(i);
         }
+
         return floorsAccessible;
     }
 
