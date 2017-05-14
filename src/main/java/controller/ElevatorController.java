@@ -176,7 +176,6 @@ public class ElevatorController {
             }
             else if (occupant instanceof Client){
                 if (((Client) occupant).isRemoveMe()){
-                    System.out.println("removing client " + occupant.getID());
                     this.buildingOccupants.remove(occupant);
                 }
                 ((Client) occupant).shouldILeave();

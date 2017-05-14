@@ -34,8 +34,6 @@ public class Client extends Leaves {
             floorsAccessible.add(i);
         }
 
-        System.out.println(floorsAccessible);
-
         return floorsAccessible;
     }
 

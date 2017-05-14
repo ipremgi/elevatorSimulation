@@ -67,7 +67,7 @@ public class ElevatorSimulator implements ISimulator {
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
 
-            elevatorController.addElevatorUser(new Employee(1,1,2,9));
+            elevatorController.addElevatorUser(new Employee(1,1,building.getFloors().size()));
         }
 
         for (int i = 0; i < ticks; i++){

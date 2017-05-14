@@ -10,11 +10,10 @@ public class Employee extends ElevatorUser {
     /**
      *
      * @param capacity
-     * @param destFloor
      * @param priority
      * @param numberOfFloors
      */
-    public Employee (int capacity, int destFloor , int priority, int numberOfFloors ) {
+    public Employee (int capacity, int priority, int numberOfFloors ) {
         super("employee");
         this.setCapacity(capacity);
         this.setNumberOfFloors(numberOfFloors);
@@ -28,7 +27,7 @@ public class Employee extends ElevatorUser {
     protected List<Integer> determineFloorsAccessible() {
 
         List<Integer> floorsAccessible = new ArrayList<Integer>();
-        for (int i = 0; i <= getNumberOfFloors(); i++) {
+        for (int i = 0; i < getNumberOfFloors(); i++) {
             floorsAccessible.add(i);
         }
         return floorsAccessible;

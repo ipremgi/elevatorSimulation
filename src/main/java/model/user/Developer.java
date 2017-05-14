@@ -26,7 +26,6 @@ public class Developer extends ElevatorUser {
         for (int i = (getNumberOfFloors() - 1); i > ((getNumberOfFloors() - 1) / 2); i--) {
             floorsAccessible.add(i);
         }
-        System.out.println(floorsAccessible);
         return floorsAccessible;
     }
 
