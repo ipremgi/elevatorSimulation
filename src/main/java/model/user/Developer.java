@@ -36,12 +36,6 @@ public class Developer extends ElevatorUser {
         //only work in the top half of the building. Developers may randomly decide to move to another floor in the top half.
     }
 
-
-
-
-
-
-
-    }
+}
 
 

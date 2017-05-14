@@ -2,7 +2,6 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -97,7 +96,6 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         } else if (this.priority < otherUser.getPriority()){
             return -1;
         }
-
         return priority;
     }
 
