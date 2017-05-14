@@ -65,6 +65,15 @@ public class ElevatorController {
      *         false if they cannot
      */
     public boolean canAddPersonToElevator(ElevatorUser person){
+        if (person instanceof Developer){
+            for(ElevatorUser user : elevator.getUsers()){
+                if(user instanceof Developer){
+                    if(((Developer) user).getCompany() != ((Developer) person).getCompany()){
+                        return false;
+                    }
+                }
+            }
+        }
         return ((person.getCapacity() + usedCapacity()) <= elevator.getMAX_CAPACITY()) && (elevator.getDoorStatus() == DoorStatus.OPEN);
     }
 

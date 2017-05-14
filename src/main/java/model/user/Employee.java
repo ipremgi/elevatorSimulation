@@ -40,7 +40,9 @@ public class Employee extends ElevatorUser {
 
     public void moveFloor() {
         //int randomFloor = randomGenerator.nextInt(getNumberOfFloors());
-        setDestFloor(randomGenerator.nextInt(getNumberOfFloors()));
+        do{
+            setDestFloor(randomGenerator.nextInt(getNumberOfFloors()));
+        }while (getCurrentFloor() == getDestFloor());
         //any floor same probability
     }
 }
