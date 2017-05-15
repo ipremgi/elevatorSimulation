@@ -99,7 +99,7 @@ public class ElevatorSimulator implements ISimulator {
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
                 elevatorController.leaveElevator();
 
-                PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<>(building.getFloor(elevator.getFloor()).getWaitingForLift());
+                PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<ElevatorUser>(building.getFloor(elevator.getFloor()).getWaitingForLift());
 
                 for (ElevatorUser person : tmpWaitingList){
                     if (elevatorController.canAddPersonToElevator(person)){
