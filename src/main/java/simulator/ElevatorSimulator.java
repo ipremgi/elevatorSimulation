@@ -70,7 +70,11 @@ public class ElevatorSimulator implements ISimulator {
             elevatorController.addElevatorUser(new Employee(1,1,building.getFloors().size()));
         }
 
-        for (int i = 0; i < ticks; i++){
+//        for (int i = 0; i < ticks; i++){
+//            nextTick(building,elevator);
+//        }
+
+        while (simulatorTick.getTick() < ticks){
             nextTick(building,elevator);
         }
 
@@ -79,23 +83,19 @@ public class ElevatorSimulator implements ISimulator {
 
     public void nextTick(Building building, Elevator elevator){
         //increment tick
-        simulatorTick.nextTick();
-        //creates clients and maintenance crews
-        createRandomElevatorUsers(building.getFloors().size());
-        //checks for new requests
-        elevatorController.checkForRequests();
-        elevatorController.checkForComplaints();
+        //simulatorTick.nextTick();
 
         //System.out.println(simulatorTick.getTick());
-        int steps = 4;
-        int ticks = simulatorTick.getTick();
 
-        if (ticks % steps == 1){
+        if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
                 elevatorController.openElevatorDoor();
-                elevatorController.updateView(ticks);
+                eachTick(building.getFloors().size());
+                simulatorTick.nextTick();
+                elevatorController.updateView(simulatorTick.getTick());
             }
-        } else if (ticks % steps == 2){
+        }
+        if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
                 elevatorController.leaveElevator();
 
@@ -108,17 +108,31 @@ public class ElevatorSimulator implements ISimulator {
                 }
 
                 elevatorChangeDirection(elevator);
-                elevatorController.updateView(ticks);
+                eachTick(building.getFloors().size());
+                simulatorTick.nextTick();
+                elevatorController.updateView(simulatorTick.getTick());
             }
-        } else if (ticks % steps == 3){
+        }
+        if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
                 elevatorController.closeElevatorDoor();
-                elevatorController.updateView(ticks);
+                eachTick(building.getFloors().size());
+                simulatorTick.nextTick();
+                elevatorController.updateView(simulatorTick.getTick());
             }
-        } else if (ticks % steps == 0){
+        }
+        if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
-                elevatorController.moveElevator(elevatorController.calculateNextFloor());
-                elevatorController.updateView(ticks);
+                int nextFloor = elevatorController.calculateNextFloor();
+                int floorsMoving = Math.abs(elevator.getFloor() - nextFloor);
+                elevatorController.moveElevator(nextFloor);
+                for(int i = 0; i < floorsMoving;i++){
+                    if (simulatorTick.getTick() < ticks){
+                        eachTick(building.getFloors().size());
+                        simulatorTick.nextTick();
+                    }
+                }
+                elevatorController.updateView(simulatorTick.getTick());
             }
         }
 
@@ -149,5 +163,13 @@ public class ElevatorSimulator implements ISimulator {
                 elevator.setDirection(Direction.UP);
             }
         }
+    }
+
+    private void eachTick(int numberOfFloors){
+        //creates clients and maintenance crews
+        createRandomElevatorUsers(numberOfFloors);
+        //checks for new requests
+        elevatorController.checkForRequests();
+        elevatorController.checkForComplaints();
     }
 }
