@@ -134,7 +134,7 @@ public class ElevatorControllerTest {
 
 
     /**
-     * DISCUS WITH AISHU & HARDISH IN CALL
+     * DISCUSS WITH AISHU & HARDISH IN CALL
      * Testing leaveElevator method
      * Scenario - check the correct person leaves the elevator
      *          - elevator should have the correct amount users after calling the leaving method
@@ -178,13 +178,15 @@ public class ElevatorControllerTest {
      * Scenario - set elevator direction to UP
      *          - set dest floor for users
      *          - should return next floor to go to
+     *          - change direction to DOWN
+     *          - should the next floor to go to
      */
     @Test
     public void testCalculateNextFloor(){
         building.getElevator().setDirection(Direction.UP);
 
         ElevatorUser e  = new Employee(1,0,6);
-        e.setDestFloor(6);
+        e.setDestFloor(6); // setting the destination for person
 
         ElevatorUser d1 = new Developer(Company.GOGGLES, 1,0,6);
         d1.setDestFloor(5);
@@ -192,6 +194,7 @@ public class ElevatorControllerTest {
         ElevatorUser d2 = new Developer(Company.GOGGLES, 1,0,6);
         d2.setDestFloor(2);
 
+        // Add users to elevator
         controller.openElevatorDoor();
         controller.addPersonToElevator(e);
         controller.addPersonToElevator(d1);
@@ -204,6 +207,21 @@ public class ElevatorControllerTest {
         building.getElevator().setDirection(Direction.DOWN);
         Assert.assertTrue(controller.calculateNextFloor() == 2);
 
+    }
+
+    /**
+     * Testing moveElevator method
+     * Scenario - set the elevator floor
+     *          - check the elevator current floor
+     *          - should be the same as the value used to set
+     */
+    @Test
+    public void testMoveElevator(){
+        controller.moveElevator(4);
+        Assert.assertTrue(building.getElevator().getFloor() == 4);
+
+        controller.moveElevator(2);
+        Assert.assertTrue(building.getElevator().getFloor() == 2);
     }
 
 
