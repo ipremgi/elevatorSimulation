@@ -31,10 +31,11 @@ public class ElevatorMenu extends JFrame implements ActionListener{
     private JButton start; // start the simulation
 
     public ElevatorMenu(){
-        createMenu();
+        instantiateComponents();
+        addComponents();
     }
 
-    private void createMenu(){
+    private void instantiateComponents(){
         setLayout(new FlowLayout());
 
         pLabel = new JLabel("Probability for P");
@@ -56,8 +57,9 @@ public class ElevatorMenu extends JFrame implements ActionListener{
         simTimeField = new JTextField(15);
 
         start = new JButton("START");
+    }
 
-
+    private void addComponents(){
         add(pLabel);
         add(pField);
 
@@ -84,12 +86,9 @@ public class ElevatorMenu extends JFrame implements ActionListener{
 
         add(start);
         start.addActionListener(this);
-
-
     }
 
-
     public void actionPerformed(ActionEvent e) {
-        System.out.println("HELLW");
+        System.out.println(pField.getText());
     }
 }
