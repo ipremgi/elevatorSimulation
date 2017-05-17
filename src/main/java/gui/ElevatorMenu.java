@@ -1,5 +1,8 @@
 package gui;
 
+import simulator.ElevatorSimulator;
+import simulator.ISimulator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,6 +38,9 @@ public class ElevatorMenu extends JFrame implements ActionListener{
         addComponents();
     }
 
+    /**
+     * Instantiate the JFrame components
+     */
     private void instantiateComponents(){
         setLayout(new FlowLayout());
 
@@ -48,17 +54,28 @@ public class ElevatorMenu extends JFrame implements ActionListener{
         simTimeLabel = new JLabel("Simulation time");
 
         pField = new JTextField(15);
+        pField.setName("Probability for P");
         qField = new JTextField(15);
+        qField.setName("Probability for Q");
         elCapField = new JTextField(15);
+        elCapField.setName("Elevator capacity");
         noOfFloorsField = new JTextField(15);
+        noOfFloorsField.setName("Number of floors");
         noOfEmpsField = new JTextField(15);
+        noOfEmpsField.setName("Number of employees");
         noOfDevMugField = new JTextField(15);
+        noOfDevMugField.setName("Number of Mugtomes developers");
         noOfDevGogField = new JTextField(15);
+        noOfDevGogField.setName("Number of Goggles developers");
         simTimeField = new JTextField(15);
+        simTimeField.setName("Simulation time");
 
         start = new JButton("START");
     }
 
+    /**
+     * Add the components to the JFrame in the correct order
+     */
     private void addComponents(){
         add(pLabel);
         add(pField);
@@ -88,7 +105,50 @@ public class ElevatorMenu extends JFrame implements ActionListener{
         start.addActionListener(this);
     }
 
+    /**
+     * Start the simulation when the start button is pressed
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
-        System.out.println(pField.getText());
+
+        ISimulator simulator = new ElevatorSimulator(validateIntField(noOfDevGogField),
+                                                        validateIntField(noOfDevMugField),
+                                                        validateIntField(simTimeField),
+                                                        validateIntField(noOfFloorsField),
+                                                        validateIntField(elCapField),
+                                                        validateDoubleField(qField),
+                                                        validateDoubleField(pField),
+                                                        validateIntField(noOfEmpsField));
+
+        this.setVisible(false);
+        simulator.simulate();
     }
+
+
+    /**
+     * Validate any field that should have a double input
+     * @param field - field to validate
+     * @return - the double value if valid
+     */
+    private double validateDoubleField(JTextField field){
+        try {
+            return Double.parseDouble(field.getText());
+        }catch (NumberFormatException nfe){
+            throw new NumberFormatException("Invalid input for " + field.getName());
+        }
+    }
+
+    /**
+     * Validate any field that should have a integer input
+     * @param field - field to validate
+     * @return - the int value if valid
+     */
+    private int validateIntField(JTextField field){
+        try {
+            return Integer.parseInt(field.getText());
+        }catch (NumberFormatException nfe){
+            throw new NumberFormatException("Invalid input for " + field.getName());
+        }
+    }
+
 }
