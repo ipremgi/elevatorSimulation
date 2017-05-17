@@ -142,7 +142,7 @@ public class ElevatorControllerTest {
     @Test
     public void testLeaveElevator(){
         ElevatorUser c = new Developer(Company.MUGTOMES,1,0,4);
-        c.setCurrentFloor(2);
+        c.setDestFloor(2);
 
         ElevatorUser d = new Developer(Company.MUGTOMES, 1, 0, 4);
         d.setDestFloor(2);
