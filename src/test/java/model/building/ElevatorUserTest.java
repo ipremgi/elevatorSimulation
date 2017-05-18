@@ -15,9 +15,9 @@ public class ElevatorUserTest {
 
     @Test
     public void priorityComparison() throws InterruptedException {
-        ElevatorUser client = new Client(1,2,10);
-        ElevatorUser employeeA = new Employee(1,1,10);
-        ElevatorUser employeeB = new Employee(1,1,10);
+        ElevatorUser client = new Client(1,2,10,10);
+        ElevatorUser employeeA = new Employee(1,1,10,10);
+        ElevatorUser employeeB = new Employee(1,1,10,10);
 
         PriorityQueue<ElevatorUser> priorityQueue = new PriorityQueue<ElevatorUser>();
 
@@ -38,8 +38,8 @@ public class ElevatorUserTest {
     @Test
     public void equals(){
 
-        ElevatorUser user1 = new Client(1,2,10);
-        ElevatorUser user2 = new Employee(1,1,10);
+        ElevatorUser user1 = new Client(1,2,10,10);
+        ElevatorUser user2 = new Employee(1,1,10,10);
 
         Assert.assertTrue(user1 == user1);
         Assert.assertTrue(user2 == user2);
