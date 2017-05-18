@@ -18,6 +18,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private int priority;
     private String ID;
     protected Random randomGenerator = new Random();
+    private long timeAddedToQueue;
 
     public ElevatorUser(String className){
         ID = className + nextID.incrementAndGet();
@@ -88,9 +89,14 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     public abstract void moveFloor();
 
     public int compareTo(ElevatorUser otherUser){
-        if (this.getPriority() == otherUser.getPriority()){
+        if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() == otherUser.getTimeAddedToQueue()){
             return 0;
-        } else if (this.priority > otherUser.getPriority()){
+        } else if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() > otherUser.getTimeAddedToQueue()){
+            return 1;
+        }else if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() < otherUser.getTimeAddedToQueue()){
+            return -1;
+        }
+        else if (this.priority > otherUser.getPriority()){
             return -1;
         } else if (this.priority < otherUser.getPriority()){
             return 1;
@@ -98,4 +104,11 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return priority;
     }
 
+    public long getTimeAddedToQueue() {
+        return timeAddedToQueue;
+    }
+
+    public void setTimeAddedToQueue(long timeAddedToQueue) {
+        this.timeAddedToQueue = timeAddedToQueue;
+    }
 }

@@ -19,7 +19,7 @@ public class MaintenanceCrew extends Leaves {
 
     @Override
     protected List<Integer> determineFloorsAccessible() {
-        ArrayList<Integer> fa = new ArrayList<>();
+        ArrayList<Integer> fa = new ArrayList<Integer>();
         fa.add(getNumberOfFloors());
         return fa;
     }
