@@ -19,7 +19,7 @@ public class ElevatorController {
     private ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>();
     private double p;
     private Random random = new Random();
-    private ArrayList<Integer> requests = new ArrayList<>();
+    private ArrayList<Integer> requests = new ArrayList<Integer>();
 
     public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building,double p) {
         this.elevator = elevator;
@@ -99,7 +99,7 @@ public class ElevatorController {
      * @return - the floor number
      */
     public int calculateNextFloor(){
-        ArrayList<Integer> tmpRequests = new ArrayList<>(requests);
+        ArrayList<Integer> tmpRequests = new ArrayList<Integer>(requests);
 
         //System.out.println(requests);
 
@@ -142,7 +142,7 @@ public class ElevatorController {
      * User leaving the elevator
      */
     public void leaveElevator(){
-        List<ElevatorUser> elevatorOccupants = new ArrayList<>(elevator.getUsers());
+        List<ElevatorUser> elevatorOccupants = new ArrayList<ElevatorUser>(elevator.getUsers());
 
         for (ElevatorUser occupant : elevatorOccupants){
 
@@ -160,7 +160,7 @@ public class ElevatorController {
 
     public void checkForRequests(){
 
-        ArrayList<ElevatorUser> buildingOccupants = new ArrayList<>(this.buildingOccupants);
+        ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>(this.buildingOccupants);
 
         for (ElevatorUser occupant : buildingOccupants){
             if (occupant.getCurrentFloor() == 0 && occupant.getDestFloor() != 0) {
@@ -207,6 +207,7 @@ public class ElevatorController {
 
     public void requestElevator(ElevatorUser occupant){
         building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
+        occupant.setTimeAddedToQueue(System.currentTimeMillis());
         building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
         this.buildingOccupants.remove(occupant);
     }
