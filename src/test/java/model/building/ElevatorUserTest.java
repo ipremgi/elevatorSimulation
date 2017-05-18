@@ -6,28 +6,18 @@ import model.user.Employee;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Time;
 import java.util.PriorityQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by HWILKHU on 18/05/2017.
  */
 public class ElevatorUserTest {
 
-    Floor floor;
-
-    @Before
-    public void setup(){
-        floor = new Floor();
-    }
-
     @Test
     public void priorityComparison() throws InterruptedException {
-        Client client = new Client(1,2,10);
-        Employee employeeA = new Employee(1,1,10);
-        Employee employeeB = new Employee(1,1,10);
+        ElevatorUser client = new Client(1,2,10);
+        ElevatorUser employeeA = new Employee(1,1,10);
+        ElevatorUser employeeB = new Employee(1,1,10);
 
         PriorityQueue<ElevatorUser> priorityQueue = new PriorityQueue<ElevatorUser>();
 
@@ -43,5 +33,16 @@ public class ElevatorUserTest {
         Assert.assertEquals(employeeB,priorityQueue.poll());
         Assert.assertEquals(employeeA, priorityQueue.poll());
 
+    }
+
+    @Test
+    public void equals(){
+
+        ElevatorUser user1 = new Client(1,2,10);
+        ElevatorUser user2 = new Employee(1,1,10);
+
+        Assert.assertTrue(user1 == user1);
+        Assert.assertTrue(user2 == user2);
+        Assert.assertTrue(user2 != user1);
     }
 }

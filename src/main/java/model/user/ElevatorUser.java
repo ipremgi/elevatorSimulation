@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -110,5 +111,16 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
     public void setTimeAddedToQueue(long timeAddedToQueue) {
         this.timeAddedToQueue = timeAddedToQueue;
+    }
+
+    @Override
+    public boolean equals(Object o){
+
+        if (o == this) return true;
+        if (!(o instanceof ElevatorUser)) return false;
+
+        ElevatorUser user = (ElevatorUser) o;
+
+        return Objects.equals(this.ID,user.ID);
     }
 }
