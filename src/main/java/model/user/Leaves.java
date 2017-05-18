@@ -1,7 +1,5 @@
 package model.user;
 
-import java.util.List;
-
 /**
  * Created by HWILKHU on 14/05/2017.
  */
@@ -11,8 +9,8 @@ public abstract class Leaves extends ElevatorUser {
     private boolean leaving = false;
     private boolean removeMe = false;
 
-    public Leaves(String className) {
-        super(className);
+    public Leaves(String className,int seed) {
+        super(className,seed);
     }
 
     @Override
