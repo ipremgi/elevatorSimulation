@@ -13,8 +13,8 @@ public class Employee extends ElevatorUser {
      * @param priority
      * @param numberOfFloors
      */
-    public Employee (int capacity, int priority, int numberOfFloors ) {
-        super("employee");
+    public Employee (int capacity, int priority, int numberOfFloors,int seed) {
+        super("employee",seed);
         this.setCapacity(capacity);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());

@@ -18,11 +18,12 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private int numberOfFloors;//change name
     private int priority;
     private String ID;
-    protected Random randomGenerator = new Random();
+    protected Random randomGenerator;
     private long timeAddedToQueue;
 
-    public ElevatorUser(String className){
+    public ElevatorUser(String className,int seed){
         ID = className + nextID.incrementAndGet();
+        randomGenerator = new Random(seed);
     }
 
     public String getID() {

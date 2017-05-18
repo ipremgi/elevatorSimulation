@@ -12,7 +12,7 @@ public class Application {
      * @param args
      */
     public static void main(String[] args) {
-        ISimulator simulator = new ElevatorSimulator(5,5,2880,6,4,0.002,0.001,10);
+        ISimulator simulator = new ElevatorSimulator(5,5,2880,6,4,0.002,0.001,10,10);
 
         simulator.simulate();
     }

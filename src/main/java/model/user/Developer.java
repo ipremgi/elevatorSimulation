@@ -9,8 +9,8 @@ public class Developer extends ElevatorUser {
 
     private Company company;
 
-    public Developer(Company company, int capacity, int priority,int numberOfFloors) {
-        super("developer" + company.name());
+    public Developer(Company company, int capacity, int priority,int numberOfFloors,int seed) {
+        super("developer" + company.name(),seed);
         this.company = company;
         this.setCapacity(capacity);
         this.setNumberOfFloors(numberOfFloors);
