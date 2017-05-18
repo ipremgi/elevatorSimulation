@@ -20,6 +20,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private String ID;
     protected Random randomGenerator;
     private long timeAddedToQueue;
+    private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
     public ElevatorUser(String className,int seed){
         ID = className + nextID.incrementAndGet();
@@ -30,11 +31,9 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return ID;
     }
 
-    public void setPriority(int priority) {
+    protected void setPriority(int priority) {
         this.priority = priority;
     }
-
-    private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
     public int getPriority() {
         return priority;}
@@ -44,7 +43,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return numberOfFloors;
     }
 
-    public void setNumberOfFloors(int numberOfFloors) {
+    protected void setNumberOfFloors(int numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
     }
 
@@ -54,7 +53,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    protected void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
@@ -82,7 +81,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return floorsAccessible;
     }
 
-    public void setFloorsAccessible(List<Integer> floorsAccessible) {
+    protected void setFloorsAccessible(List<Integer> floorsAccessible) {
         this.floorsAccessible = floorsAccessible;
     }
 

@@ -69,6 +69,9 @@ public class ElevatorController {
             for(ElevatorUser user : elevator.getUsers()){
                 if(user instanceof Developer){
                     if(((Developer) user).getCompany() != ((Developer) person).getCompany()){
+                        building.getFloor(elevator.getFloor()).removeUser(person);
+                        person.setTimeAddedToQueue(System.currentTimeMillis());
+                        building.getFloor(elevator.getFloor()).addUser(person);
                         return false;
                     }
                 }
