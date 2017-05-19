@@ -81,10 +81,9 @@ public class ElevatorSimulator implements ISimulator {
             nextTick(building,elevator);
         }
 
-
     }
 
-    public void nextTick(Building building, Elevator elevator){
+    protected void nextTick(Building building, Elevator elevator){
         //increment tick
         //simulatorTick.nextTick();
 
