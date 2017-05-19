@@ -25,7 +25,7 @@ public class ElevatorController {
         this.elevator = elevator;
         this.elevatorView = elevatorView;
         this.building = building;
-        this.p=p;
+        this.p = p;
     }
 
     public void addElevatorUser(ElevatorUser elevatorUser){
@@ -150,7 +150,7 @@ public class ElevatorController {
         for (ElevatorUser occupant : elevatorOccupants){
 
             if (occupant.getDestFloor() == elevator.getFloor()){
-                System.out.println("Leaving elevator : "+occupant.getID());
+                System.out.println("Leaving elevator : " + occupant.getID());
                 occupant.setCurrentFloor(elevator.getFloor());
                 elevator.removePerson(occupant);
                 //System.out.println("adding to building occupants");
