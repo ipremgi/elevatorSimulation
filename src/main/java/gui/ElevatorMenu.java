@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by ipremgi on 17/05/2017.
  */
-public class ElevatorMenu extends JFrame implements ActionListener{
+public class ElevatorMenu extends JPanel implements ActionListener{
 
     private JLabel pLabel;
     private JLabel qLabel;
@@ -101,7 +101,7 @@ public class ElevatorMenu extends JFrame implements ActionListener{
         add(simTimeLabel);
         add(simTimeField);
 
-        add(start);
+      //  add(start);
         start.addActionListener(this);
     }
 

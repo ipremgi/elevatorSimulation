@@ -39,14 +39,6 @@ public class ElevatorCanvas extends JPanel implements ActionListener{
         Rectangle2D person4 = new Rectangle2D.Double(85, y + 55, 35.0, 35.0);
         g2.fill(person4);
 
-
-
-
-
-
-
-
-
         t.start();
     }
 
