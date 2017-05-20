@@ -1,4 +1,4 @@
-package gui;
+package gui.panels;
 
 import simulator.ElevatorSimulator;
 import simulator.ISimulator;
@@ -9,10 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by ipremgi on 17/05/2017.
+ * Created by IPREMGI on 20/05/2017.
  */
-@Deprecated
-public class ElevatorMenu extends JFrame implements ActionListener{
+public class InputPanel extends JPanel implements ActionListener,IPanels {
 
     private JLabel pLabel;
     private JLabel qLabel;
@@ -34,15 +33,29 @@ public class ElevatorMenu extends JFrame implements ActionListener{
 
     private JButton start; // start the simulation
 
-    public ElevatorMenu(){
+    private boolean edidtable;
+
+    public InputPanel(boolean editable) {
+        this.edidtable = editable;
         instantiateComponents();
         addComponents();
     }
 
-    /**
-     * Instantiate the JFrame components
-     */
-    private void instantiateComponents(){
+    public void actionPerformed(ActionEvent e) {
+        ISimulator simulator = new ElevatorSimulator(validateIntField(noOfDevGogField),
+                validateIntField(noOfDevMugField),
+                validateIntField(simTimeField),
+                validateIntField(noOfFloorsField),
+                validateIntField(elCapField),
+                validateDoubleField(qField),
+                validateDoubleField(pField),
+                validateIntField(noOfEmpsField));
+
+        this.setVisible(false);
+        simulator.simulate();
+    }
+
+    public void instantiateComponents() {
         setLayout(new FlowLayout());
 
         pLabel = new JLabel("Probability for P");
@@ -56,28 +69,35 @@ public class ElevatorMenu extends JFrame implements ActionListener{
 
         pField = new JTextField(15);
         pField.setName("Probability for P");
+        pField.setEditable(edidtable);
         qField = new JTextField(15);
         qField.setName("Probability for Q");
+        qField.setEditable(edidtable);
         elCapField = new JTextField(15);
         elCapField.setName("Elevator capacity");
+        elCapField.setEditable(edidtable);
         noOfFloorsField = new JTextField(15);
         noOfFloorsField.setName("Number of floors");
+        noOfFloorsField.setEditable(edidtable);
         noOfEmpsField = new JTextField(15);
         noOfEmpsField.setName("Number of employees");
+        noOfEmpsField.setEditable(edidtable);
         noOfDevMugField = new JTextField(15);
         noOfDevMugField.setName("Number of Mugtomes developers");
+        noOfDevMugField.setEditable(edidtable);
         noOfDevGogField = new JTextField(15);
         noOfDevGogField.setName("Number of Goggles developers");
+        noOfDevGogField.setEditable(edidtable);
         simTimeField = new JTextField(15);
         simTimeField.setName("Simulation time");
+        simTimeField.setEditable(edidtable);
 
         start = new JButton("START");
+        start.setVisible(edidtable);
+
     }
 
-    /**
-     * Add the components to the JFrame in the correct order
-     */
-    private void addComponents(){
+    public void addComponents() {
         add(pLabel);
         add(pField);
 
@@ -102,29 +122,11 @@ public class ElevatorMenu extends JFrame implements ActionListener{
         add(simTimeLabel);
         add(simTimeField);
 
-        add(start);
-        start.addActionListener(this);
+        if(edidtable){
+            add(start);
+            start.addActionListener(this);
+        }
     }
-
-    /**
-     * Start the simulation when the start button is pressed
-     * @param e
-     */
-    public void actionPerformed(ActionEvent e) {
-
-        ISimulator simulator = new ElevatorSimulator(validateIntField(noOfDevGogField),
-                                                        validateIntField(noOfDevMugField),
-                                                        validateIntField(simTimeField),
-                                                        validateIntField(noOfFloorsField),
-                                                        validateIntField(elCapField),
-                                                        validateDoubleField(qField),
-                                                        validateDoubleField(pField),
-                                                        validateIntField(noOfEmpsField));
-
-        this.setVisible(false);
-        simulator.simulate();
-    }
-
 
     /**
      * Validate any field that should have a double input
@@ -151,5 +153,4 @@ public class ElevatorMenu extends JFrame implements ActionListener{
             throw new NumberFormatException("Invalid input for " + field.getName());
         }
     }
-
 }

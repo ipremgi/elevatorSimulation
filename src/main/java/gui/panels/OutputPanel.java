@@ -15,7 +15,7 @@ import java.awt.*;
  *  - Door Status
  *  - Elevator Capacity
  */
-public class Output extends JPanel implements IPanels {
+public class OutputPanel extends JPanel implements IPanels {
 
 
     private JLabel ticksLabel;
@@ -32,7 +32,7 @@ public class Output extends JPanel implements IPanels {
     private JTextField doorStatusField;
     private JTextField elCapField;
 
-    public Output() {
+    public OutputPanel() {
         setLayout(new GridLayout(6,2,2,2));
         setBorder(BorderFactory.createLineBorder(Color.YELLOW));
 

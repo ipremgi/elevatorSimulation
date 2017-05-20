@@ -77,11 +77,6 @@ public class ElevatorSimulator implements ISimulator {
 //        }
 
         while (simulatorTick.getTick() < ticks){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             nextTick(building,elevator);
         }
 

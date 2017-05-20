@@ -9,6 +9,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * Created by IPREMGI on 08/05/2017.
  */
+@Deprecated
 public class ElevatorCanvas extends JPanel implements ActionListener{
 
 

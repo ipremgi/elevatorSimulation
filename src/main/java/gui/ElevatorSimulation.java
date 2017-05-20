@@ -1,6 +1,6 @@
 package gui;
 
-import gui.panels.Output;
+import gui.panels.OutputPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class ElevatorSimulation extends JFrame implements ActionListener {
 
 
     private JPanel simInputPanel; // simulation information inputted in the menu box
-    private Output simOutputPanel; // output of the simulation
+    private OutputPanel simOutputPanel; // output of the simulation
     private JPanel simPanel;
     private JPanel simulationPanel;
 
@@ -26,7 +26,7 @@ public class ElevatorSimulation extends JFrame implements ActionListener {
         simInputPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
         simPanel = new JPanel(new GridLayout(2,0,10,10));
         simPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        simOutputPanel = new Output();
+        simOutputPanel = new OutputPanel();
         simulationPanel = new JPanel();
         simulationPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
@@ -40,17 +40,9 @@ public class ElevatorSimulation extends JFrame implements ActionListener {
         add(simInputPanel);
         setVisible(true);
         setSize(540,475);
-        setResizable(false);
+        setResizable(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-       // simOutputPanel.update("Ivan set text");
     }
 
 

@@ -1,5 +1,8 @@
 package gui;
 
+import gui.frames.Menu;
+import gui.frames.Simulation;
+
 import javax.swing.*;
 
 /**
@@ -45,13 +48,21 @@ public class ElevatorDemo {
 //
 //    }
 
+//    public static void main(String[] args) {
+//        ElevatorMenu em = new ElevatorMenu();
+//        em.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        em.setResizable(false);
+//        em.setVisible(true);
+//        em.setSize(250,500);
+//        em.setTitle("Elevator Menu");
+//    }
+
+//    public static void main(String[] args) {
+//        new Menu();
+//    }
+
     public static void main(String[] args) {
-        ElevatorMenu em = new ElevatorMenu();
-        em.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        em.setResizable(false);
-        em.setVisible(true);
-        em.setSize(250,500);
-        em.setTitle("Elevator Menu");
+        new Simulation();
     }
 
 //    public static void main(String[] args) {
