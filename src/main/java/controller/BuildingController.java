@@ -213,6 +213,9 @@ public class BuildingController {
         this.buildingOccupants.remove(occupant);
     }
 
+    /**
+     * checks if any clients in the waiting queues have been waiting long enough to complain
+     */
     public void checkForComplaints(){
         for (Floor floor : building.getFloors()){
             Iterator<ElevatorUser> iterator = floor.getWaitingForLift().iterator();
