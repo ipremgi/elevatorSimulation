@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Created by IPREMGI on 02/05/2017.
+ * Model class containing elevator information
  */
 public class Elevator {
 

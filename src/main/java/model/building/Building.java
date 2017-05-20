@@ -55,7 +55,6 @@ public class Building {
     }
 
     public Floor getFloor(int floor) {
-        //System.out.println("floor being requested : " + floor);
         return floors.get(floor);
     }
 

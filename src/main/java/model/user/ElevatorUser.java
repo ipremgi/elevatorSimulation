@@ -24,7 +24,11 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
     public ElevatorUser(String className,int seed){
         ID = className + nextID.incrementAndGet();
-        randomGenerator = new Random(seed);
+        if(Integer.toString(seed).trim().length() == 0){
+            randomGenerator = new Random(seed);
+        } else {
+            randomGenerator = new Random();
+        }
     }
 
     public String getID() {

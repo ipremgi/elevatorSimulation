@@ -1,6 +1,7 @@
 package controller;
 
 
+import gui.frames.Simulation;
 import junit.framework.Assert;
 import model.building.Building;
 import model.building.Direction;
@@ -22,7 +23,7 @@ public class BuildingControllerTest {
     public void setUp(){
 
         building = new Building(4,4);
-        view = new ElevatorView();
+        view = new ElevatorView(new Simulation(null));
         controller = new BuildingController(building.getElevator(), view, building, 0.005);
     }
 
@@ -37,6 +38,7 @@ public class BuildingControllerTest {
         ElevatorUser c = new Client(1,0,4,50);
         ElevatorUser e = new Employee(1,1,4,50);
         ElevatorUser d = new Developer(Company.MUGTOMES,2,1,4,50);
+
 
         controller.addPersonToElevator(c);
         Assert.assertTrue(controller.usedCapacity() == 1 );
@@ -58,6 +60,7 @@ public class BuildingControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_1(){
+
         ElevatorUser c = new Client(1,0,4,50);
         controller.openElevatorDoor();
 
@@ -74,6 +77,7 @@ public class BuildingControllerTest {
     @Test
     public void testCanAddPersonToElevator_2(){
         ElevatorUser c = new Client(1,0,4,50);
+
         Assert.assertTrue(!controller.canAddPersonToElevator(c));
     }
 
@@ -88,6 +92,7 @@ public class BuildingControllerTest {
     public void testCanAddPersonToElevator_3(){
         ElevatorUser mc = new MaintenanceCrew(4,0,4,50);
         ElevatorUser c = new Client(4,0,4,50);
+
         controller.openElevatorDoor();
 
         controller.addPersonToElevator(mc);
@@ -106,6 +111,7 @@ public class BuildingControllerTest {
     public void testCanAddPersonToElevator_4(){
         ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,50);
         ElevatorUser d2 = new Developer(Company.MUGTOMES,1,0,4,50);
+
         controller.openElevatorDoor();
 
         controller.addPersonToElevator(d1);
@@ -124,6 +130,7 @@ public class BuildingControllerTest {
     public void testCanAddPersonToElevator_5(){
         ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,50);
         ElevatorUser d2 = new Developer(Company.GOGGLES,1,0,4,50);
+
         controller.openElevatorDoor();
 
         controller.addPersonToElevator(d1);
@@ -147,6 +154,7 @@ public class BuildingControllerTest {
         d.setDestFloor(2);
 
         ElevatorUser e = new Employee(1,0,4,50);
+
         e.setDestFloor(4);
 
         controller.openElevatorDoor();
@@ -191,6 +199,7 @@ public class BuildingControllerTest {
         d1.setDestFloor(5);
 
         ElevatorUser d2 = new Developer(Company.GOGGLES, 1,0,6,50);
+
         d2.setDestFloor(2);
 
         // Add users to elevator

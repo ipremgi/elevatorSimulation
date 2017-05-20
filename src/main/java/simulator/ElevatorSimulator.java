@@ -1,6 +1,10 @@
 package simulator;
 
+
 import controller.BuildingController;
+import gui.dto.GUIInputs;
+import gui.frames.Simulation;
+
 import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;
@@ -14,7 +18,7 @@ import java.util.Random;
 /**
  * Created by IPREMGI on 02/05/2017.
  */
-public class ElevatorSimulator implements ISimulator {
+public class ElevatorSimulator implements ISimulator,Runnable {
 
     private SimulatorTick simulatorTick;
     private BuildingController buildingController;
@@ -30,17 +34,24 @@ public class ElevatorSimulator implements ISimulator {
     private double p;
     private int seed;
 
-    public ElevatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees, int seed) {
-        this.numberOfGoggle=numberOfGoggles;
-        this.numberOfMugtone=numberOfMugtones;
-        this.ticks=ticks;
-        this.noOfFloors=noOfFloors;
-        this.maxCapacity=maxCapacity;
-        this.q=q;
-        this.p=p;
-        this.numberOfEmployees=numberOfEmployees;
-        this.seed=seed;
-        random = new Random(seed);
+    private GUIInputs inputs;
+
+    public ElevatorSimulator(GUIInputs inputs) {
+        this.inputs = inputs;
+        this.numberOfGoggle = inputs.getNumberOfGoggles();
+        this.numberOfMugtone = inputs.getNumberOfMugtones();
+        this.ticks = inputs.getTicks();
+        this.noOfFloors = inputs.getNoOfFloors();
+        this.maxCapacity = inputs.getMaxCapacity();
+        this.q = inputs.getQ();
+        this.p = inputs.getP();
+        this.numberOfEmployees = inputs.getNumberOfEmployees();
+        this.seed = inputs.getSeed();
+        if(Integer.toString(inputs.getSeed()).trim().length() == 0){
+            random = new Random(seed);
+        } else {
+            random = new Random();
+        }
     }
 
     public void simulate() {
@@ -49,7 +60,8 @@ public class ElevatorSimulator implements ISimulator {
         simulatorTick = new SimulatorTick();
         Building building = new Building(noOfFloors,maxCapacity);
         Elevator elevator = building.getElevator();
-        ElevatorView elevatorView = new ElevatorView();
+        Simulation es = new Simulation(inputs);
+        ElevatorView elevatorView = new ElevatorView(es);
 
         buildingController = new BuildingController(elevator,elevatorView,building,p);
 
@@ -73,22 +85,21 @@ public class ElevatorSimulator implements ISimulator {
             buildingController.addElevatorUser(new Employee(1,1,building.getFloors().size(),seed));
         }
 
-//        for (int i = 0; i < ticks; i++){
-//            nextTick(building,elevator);
-//        }
-
         while (simulatorTick.getTick() < ticks){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
             nextTick(building,elevator);
         }
 
     }
 
-    protected void nextTick(Building building, Elevator elevator){
-        //increment tick
-        //simulatorTick.nextTick();
 
-        //System.out.println(simulatorTick.getTick());
-
+    public void nextTick(Building building, Elevator elevator){
         if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
                 buildingController.openElevatorDoor();
@@ -173,5 +184,12 @@ public class ElevatorSimulator implements ISimulator {
         //checks for new requests
         buildingController.checkForRequests();
         buildingController.checkForComplaints();
+    }
+
+    /**
+     * Start a thread with the simulate method running when the class is instantiated
+     */
+    public void run() {
+        simulate();
     }
 }
