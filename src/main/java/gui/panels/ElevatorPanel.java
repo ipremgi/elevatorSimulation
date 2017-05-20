@@ -8,11 +8,12 @@ import java.awt.*;
 
 /**
  * Created by IPREMGI on 20/05/2017.
+ * This JPanel will contain the users in the elevator
  */
 public class ElevatorPanel extends JPanel implements IPanels {
 
     private JLabel elevatorLabel;
-    private JTextPane elevatorField;
+    private JTextPane elevatorPane; // used to display the users in the elevator
 
     public ElevatorPanel(){
         setLayout(new GridLayout(2,0));
@@ -23,28 +24,32 @@ public class ElevatorPanel extends JPanel implements IPanels {
 
     public void instantiateComponents() {
         elevatorLabel = new JLabel("Elevator");
-        elevatorField = new JTextPane();
-        elevatorField.setEditable(false);
+        elevatorPane = new JTextPane();
+        elevatorPane.setEditable(false);
 
     }
 
     public void addComponents() {
         add(elevatorLabel);
-        add(elevatorField);
+        add(new JScrollPane(elevatorPane));
     }
 
+    /**
+     * Updating the Pane component
+     * @param param - object containing the number of users in the elevator
+     */
     public void update(GUIUpdates param){
         String names = "";
 
         if(param.getElevatorOccupants().size() == 0 ){
-            elevatorField.setText("EMPTY");
+            elevatorPane.setText("EMPTY");
         } else {
             for (ElevatorUser user : param.getElevatorOccupants()) {
                 names = user.getID() + ",\n" + names;
             }
-            elevatorField.setText(names);
+            elevatorPane.setText(names);
         }
 
-        repaint();
+        repaint(); // refresh the panel
     }
 }

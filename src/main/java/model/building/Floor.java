@@ -5,6 +5,7 @@ import model.user.ElevatorUser;
 import java.util.PriorityQueue;
 /**
  * Created by IPREMGI on 02/05/2017.
+ * Model class containing floor information
  */
 public class Floor {
 

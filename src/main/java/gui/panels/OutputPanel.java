@@ -37,9 +37,12 @@ public class OutputPanel extends JPanel implements IPanels {
 
         instantiateComponents();
         addComponents();
-
     }
 
+    /**
+     * Setting all the field with the new data
+     * @param param - object containing updated information
+     */
     public void update(GUIUpdates param){
         ticksField.setText(param.getTick());
         noOfCompField.setText(param.getNumberOfComplaints());
@@ -48,7 +51,7 @@ public class OutputPanel extends JPanel implements IPanels {
         doorStatusField.setText(param.getDoorStatus().name());
         elCapField.setText(param.getCapacity());
 
-        repaint(); // updates the JPanel with new values
+        //repaint(); // updates the JPanel with new values
     }
 
     public void instantiateComponents() {

@@ -2,6 +2,8 @@ package gui.dto;
 
 /**
  * Created by IPREMGI on 20/05/2017.
+ * Data Transfer Object
+ * This class will store the user configuration from Menu Frame
  */
 public class GUIInputs {
 

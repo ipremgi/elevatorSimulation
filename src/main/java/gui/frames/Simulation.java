@@ -8,8 +8,15 @@ import gui.panels.OutputPanel;
 
 import javax.swing.*;
 import java.awt.*;
+
+
 /**
  * Created by IPREMGI on 20/05/2017.
+ * The main JFrame that will show the simulation
+ * The JFrame will show
+ *      - Input provided by the user right hand side
+ *      - Output of the simulation left hand side (top)
+ *      - Elevator box that will display the users inside the elevator left hand side (bottom)
  */
 public class Simulation extends JFrame {
     
@@ -22,8 +29,12 @@ public class Simulation extends JFrame {
         setLayout(new GridLayout(1,1,10,20));
         startFrame(inputs);
     }
-    
-    
+
+    /**
+     * Starting the frame
+     * Adding all the panels to the main frame and setting the visibility to true
+     * @param inputs - object that contains input provided by the Menu frame
+     */
     private void startFrame(GUIInputs inputs){
 
         simPanel = new JPanel();
@@ -42,38 +53,17 @@ public class Simulation extends JFrame {
         setVisible(true);
         setSize(540,475);
         setTitle("Elevator Simulation");
-//
-//
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        java.util.List<ElevatorUser> a  = new ArrayList<ElevatorUser>();
-//        a.add(new Client(1,0,2));
-//        a.add(new Employee(2,4,5));
-//        GUIUpdates u = new GUIUpdates(1,2, Direction.DOWN,5, DoorStatus.CLOSED, a);
-//
-//        update(u);
-//
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        u.setElevatorOccupants(new ArrayList<ElevatorUser>());
-//
-//        update(u);
-
-
     }
 
+    /**
+     * Updating the JPanels
+     *  - Output panel - displaying the simulation information
+     *  - Elevator panel - people inside the elevator
+     * @param param - object that contains all the changes
+     */
     public void update(GUIUpdates param){
         outputPanel.update(param);
         elevatorPanel.update(param);
+        repaint();
     }
 }

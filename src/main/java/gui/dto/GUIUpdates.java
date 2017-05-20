@@ -8,7 +8,8 @@ import java.util.List;
 
 /**
  * Created by IPREMGI on 20/05/2017.
- * Class used to transport information in order to update the GUI
+ * Data Transfer Object
+ * Class containing information that is required to update the GUI
  */
 public class GUIUpdates {
 

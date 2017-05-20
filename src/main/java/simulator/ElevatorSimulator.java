@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * Created by IPREMGI on 02/05/2017.
  */
-public class ElevatorSimulator implements ISimulator {
+public class ElevatorSimulator implements ISimulator,Runnable {
 
     private SimulatorTick simulatorTick;
     private ElevatorController elevatorController;
@@ -75,11 +75,14 @@ public class ElevatorSimulator implements ISimulator {
             elevatorController.addElevatorUser(new Employee(1,1,building.getFloors().size()));
         }
 
-//        for (int i = 0; i < ticks; i++){
-//            nextTick(building,elevator);
-//        }
-
         while (simulatorTick.getTick() < ticks){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
             nextTick(building,elevator);
         }
 
@@ -87,11 +90,6 @@ public class ElevatorSimulator implements ISimulator {
     }
 
     public void nextTick(Building building, Elevator elevator){
-        //increment tick
-        //simulatorTick.nextTick();
-
-        //System.out.println(simulatorTick.getTick());
-
         if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
                 elevatorController.openElevatorDoor();
@@ -176,5 +174,12 @@ public class ElevatorSimulator implements ISimulator {
         //checks for new requests
         elevatorController.checkForRequests();
         elevatorController.checkForComplaints();
+    }
+
+    /**
+     * Start a thread with the simulate method running when the class is instantiated
+     */
+    public void run() {
+        simulate();
     }
 }

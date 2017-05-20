@@ -7,6 +7,7 @@ import java.awt.*;
 
 /**
  * Created by IPREMGI on 20/05/2017.
+ * The Menu Frame - this will allow the user to input their configuration
  */
 public class Menu extends JFrame {
 

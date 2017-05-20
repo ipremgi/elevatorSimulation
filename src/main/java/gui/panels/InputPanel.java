@@ -2,7 +2,6 @@ package gui.panels;
 
 import gui.dto.GUIInputs;
 import simulator.ElevatorSimulator;
-import simulator.ISimulator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +10,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by IPREMGI on 20/05/2017.
+ * This JPanel will be used for the Main Menu and also for the Simulation
  */
 public class InputPanel extends JPanel implements ActionListener,IPanels {
 
@@ -36,7 +36,7 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
 
     private GUIInputs input;
 
-    private boolean edidtable;
+    private boolean edidtable; // true for Main Menu
 
     public InputPanel(boolean editable, GUIInputs input) {
         this.edidtable = editable;
@@ -57,10 +57,11 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
                 validateIntField(noOfEmpsField));
 
 
-        ISimulator simulator = new ElevatorSimulator(input);
+
 
         this.setVisible(false);
-        simulator.simulate();
+        Thread simulation = new Thread(new ElevatorSimulator(input));
+        simulation.start();
     }
 
     public void instantiateComponents() {
@@ -130,10 +131,10 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         add(simTimeLabel);
         add(simTimeField);
 
-        if(edidtable){
+        if(edidtable){ // add the button if the editable is true
             add(start);
             start.addActionListener(this);
-        } else {
+        } else { // if false set the field text based on the input parameter
             pField.setText(Double.toString(input.getP()));
             qField.setText(Double.toString(input.getQ()));
             elCapField.setText(Integer.toString(input.getMaxCapacity()));
