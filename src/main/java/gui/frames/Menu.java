@@ -12,7 +12,11 @@ public class Menu extends JFrame {
 
     public Menu(){
         setLayout(new GridLayout(1,0));
-        add(new InputPanel(true));
+        startFrame();
+    }
+
+    private void startFrame(){
+        add(new InputPanel(true, null));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);

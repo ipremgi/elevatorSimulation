@@ -1,6 +1,6 @@
 package gui.panels;
 
-import gui.GUIParameter;
+import gui.dto.GUIUpdates;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,6 @@ import java.awt.*;
  *  - Elevator Capacity
  */
 public class OutputPanel extends JPanel implements IPanels {
-
 
     private JLabel ticksLabel;
     private JLabel noOfCompLabel;
@@ -34,14 +33,14 @@ public class OutputPanel extends JPanel implements IPanels {
 
     public OutputPanel() {
         setLayout(new GridLayout(6,2,2,2));
-        setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
         instantiateComponents();
         addComponents();
 
     }
 
-    public void update(GUIParameter param){
+    public void update(GUIUpdates param){
         ticksField.setText(param.getTick());
         noOfCompField.setText(param.getNumberOfComplaints());
         elDirField.setText(param.getDirection().name());

@@ -1,7 +1,6 @@
 package gui.panels;
 
-import gui.GUIParameter;
-import model.building.Elevator;
+import gui.dto.GUIUpdates;
 import model.user.ElevatorUser;
 
 import javax.swing.*;
@@ -12,34 +11,38 @@ import java.awt.*;
  */
 public class ElevatorPanel extends JPanel implements IPanels {
 
-    private JTextField elevator;
+    private JLabel elevatorLabel;
+    private JTextPane elevatorField;
 
     public ElevatorPanel(){
-        setLayout(new GridLayout(1,0));
+        setLayout(new GridLayout(2,0));
+        setBorder(BorderFactory.createLineBorder(Color.RED));
         instantiateComponents();
         addComponents();
     }
 
     public void instantiateComponents() {
-        elevator = new JTextField("EMPTY");
-        elevator.setEditable(false);
+        elevatorLabel = new JLabel("Elevator");
+        elevatorField = new JTextPane();
+        elevatorField.setEditable(false);
 
     }
 
     public void addComponents() {
-        add(elevator);
+        add(elevatorLabel);
+        add(elevatorField);
     }
 
-    public void update(GUIParameter param){
-        String names = "null";
+    public void update(GUIUpdates param){
+        String names = "";
 
         if(param.getElevatorOccupants().size() == 0 ){
-            elevator.setText("EMPTY");
+            elevatorField.setText("EMPTY");
         } else {
             for (ElevatorUser user : param.getElevatorOccupants()) {
-                names = names + "\n" + user.getID();
+                names = user.getID() + ",\n" + names;
             }
-            elevator.setText(names);
+            elevatorField.setText(names);
         }
 
         repaint();

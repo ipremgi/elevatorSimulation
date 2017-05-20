@@ -1,5 +1,6 @@
 package gui.panels;
 
+import gui.dto.GUIInputs;
 import simulator.ElevatorSimulator;
 import simulator.ISimulator;
 
@@ -33,16 +34,20 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
 
     private JButton start; // start the simulation
 
+    private GUIInputs input;
+
     private boolean edidtable;
 
-    public InputPanel(boolean editable) {
+    public InputPanel(boolean editable, GUIInputs input) {
         this.edidtable = editable;
+        this.input = input;
+        setBorder(BorderFactory.createLineBorder(Color.BLUE));
         instantiateComponents();
         addComponents();
     }
 
     public void actionPerformed(ActionEvent e) {
-        ISimulator simulator = new ElevatorSimulator(validateIntField(noOfDevGogField),
+        GUIInputs input = new GUIInputs(validateIntField(noOfDevGogField),
                 validateIntField(noOfDevMugField),
                 validateIntField(simTimeField),
                 validateIntField(noOfFloorsField),
@@ -50,6 +55,9 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
                 validateDoubleField(qField),
                 validateDoubleField(pField),
                 validateIntField(noOfEmpsField));
+
+
+        ISimulator simulator = new ElevatorSimulator(input);
 
         this.setVisible(false);
         simulator.simulate();
@@ -125,6 +133,15 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         if(edidtable){
             add(start);
             start.addActionListener(this);
+        } else {
+            pField.setText(Double.toString(input.getP()));
+            qField.setText(Double.toString(input.getQ()));
+            elCapField.setText(Integer.toString(input.getMaxCapacity()));
+            noOfFloorsField.setText(Integer.toString(input.getNoOfFloors()));
+            noOfEmpsField.setText(Integer.toString(input.getNumberOfEmployees()));
+            noOfDevMugField.setText(Integer.toString(input.getNumberOfMugtones()));
+            noOfDevGogField.setText(Integer.toString(input.getNumberOfGoggles()));
+            simTimeField.setText(Integer.toString(input.getTicks()));
         }
     }
 

@@ -1,4 +1,4 @@
-package gui;
+package gui.dto;
 
 import model.building.Direction;
 import model.building.DoorStatus;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by IPREMGI on 20/05/2017.
  * Class used to transport information in order to update the GUI
  */
-public class GUIParameter {
+public class GUIUpdates {
 
     private int tick;
     private int numberOfComplaints;
@@ -19,7 +19,7 @@ public class GUIParameter {
     private DoorStatus doorStatus;
     private List<ElevatorUser> elevatorOccupants;
 
-    public GUIParameter(int tick, int numberOfComplaints, Direction direction, int elevatorfloor, DoorStatus doorStatus, List<ElevatorUser> elevatorOccupants) {
+    public GUIUpdates(int tick, int numberOfComplaints, Direction direction, int elevatorfloor, DoorStatus doorStatus, List<ElevatorUser> elevatorOccupants) {
         this.tick = tick;
         this.numberOfComplaints = numberOfComplaints;
         this.direction = direction;

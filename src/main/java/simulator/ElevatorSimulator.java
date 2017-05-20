@@ -1,7 +1,8 @@
 package simulator;
 
 import controller.ElevatorController;
-import gui.ElevatorSimulation;
+import gui.dto.GUIInputs;
+import gui.frames.Simulation;
 import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;
@@ -29,16 +30,18 @@ public class ElevatorSimulator implements ISimulator {
     private Random random = new Random(50);
     private double q;
     private double p;
+    private GUIInputs inputs;
 
-    public ElevatorSimulator(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees) {
-        this.numberOfGoggle=numberOfGoggles;
-        this.numberOfMugtone=numberOfMugtones;
-        this.ticks=ticks;
-        this.noOfFloors=noOfFloors;
-        this.maxCapacity=maxCapacity;
-        this.q=q;
-        this.p=p;
-        this.numberOfEmployees=numberOfEmployees;
+    public ElevatorSimulator(GUIInputs inputs) {
+        this.inputs = inputs;
+        this.numberOfGoggle = inputs.getNumberOfGoggles();
+        this.numberOfMugtone = inputs.getNumberOfMugtones();
+        this.ticks = inputs.getTicks();
+        this.noOfFloors = inputs.getNoOfFloors();
+        this.maxCapacity = inputs.getMaxCapacity();
+        this.q = inputs.getQ();
+        this.p = inputs.getP();
+        this.numberOfEmployees = inputs.getNumberOfEmployees();
     }
 
     public void simulate() {
@@ -47,7 +50,7 @@ public class ElevatorSimulator implements ISimulator {
         simulatorTick = new SimulatorTick();
         Building building = new Building(noOfFloors,maxCapacity);
         Elevator elevator = building.getElevator();
-        ElevatorSimulation es = new ElevatorSimulation();
+        Simulation es = new Simulation(inputs);
         ElevatorView elevatorView = new ElevatorView(es);
 
         elevatorController = new ElevatorController(elevator,elevatorView,building,p);

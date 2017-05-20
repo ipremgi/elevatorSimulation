@@ -11,9 +11,9 @@ public class Application {
      * MAIN CLASS - PLACEHOLDER
      * @param args
      */
-    public static void main(String[] args) {
-        ISimulator simulator = new ElevatorSimulator(5,5,2880,6,4,0.002,0.001,10);
-
-        simulator.simulate();
-    }
+//    public static void main(String[] args) {
+//        ISimulator simulator = new ElevatorSimulator(5,5,2880,6,4,0.002,0.001,10);
+//
+//        simulator.simulate();
+//    }
 }

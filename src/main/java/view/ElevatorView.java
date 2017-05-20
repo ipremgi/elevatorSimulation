@@ -1,7 +1,7 @@
 package view;
 
-import gui.ElevatorSimulation;
-import gui.GUIParameter;
+import gui.dto.GUIUpdates;
+import gui.frames.Simulation;
 import model.building.Direction;
 import model.building.DoorStatus;
 import model.user.ElevatorUser;
@@ -13,16 +13,16 @@ import java.util.List;
  */
 public class ElevatorView {
 
-    private ElevatorSimulation es;
+    private Simulation es;
 
-    public ElevatorView(ElevatorSimulation es) {
+    public ElevatorView(Simulation es) {
         this.es = es;
     }
 
 
 
     public void updateView(int elevatorfloor, DoorStatus doorStatus, List<ElevatorUser> elevatorOccupants, int tick, Direction direction, int numberOfComplaints){
-        es.update(new GUIParameter(tick,numberOfComplaints,direction, elevatorfloor, doorStatus, elevatorOccupants));
+        es.update(new GUIUpdates(tick,numberOfComplaints,direction, elevatorfloor, doorStatus, elevatorOccupants));
         System.out.println("\n**************************************************************\n");
         System.out.println("Tick: " + tick);
         System.out.println("Number of complaints: "+numberOfComplaints);
