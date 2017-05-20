@@ -4,7 +4,6 @@ package controller;
 import junit.framework.Assert;
 import model.building.Building;
 import model.building.Direction;
-import model.building.Elevator;
 import model.user.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +12,9 @@ import view.ElevatorView;
 /**
  * Created by IPREMGI on 06/05/2017.
  */
-public class ElevatorControllerTest {
+public class BuildingControllerTest {
 
-    private static ElevatorController controller;
+    private static BuildingController controller;
     private static ElevatorView view;
     private static Building building;
 
@@ -24,7 +23,7 @@ public class ElevatorControllerTest {
 
         building = new Building(4,4);
         view = new ElevatorView();
-        controller = new ElevatorController(building.getElevator(), view, building, 0.005);
+        controller = new BuildingController(building.getElevator(), view, building, 0.005);
     }
 
 
@@ -35,9 +34,9 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testUsedCapacity(){
-        ElevatorUser c = new Client(1,0,4);
-        ElevatorUser e = new Employee(1,1,4);
-        ElevatorUser d = new Developer(Company.MUGTOMES,2,1,4);
+        ElevatorUser c = new Client(1,0,4,50);
+        ElevatorUser e = new Employee(1,1,4,50);
+        ElevatorUser d = new Developer(Company.MUGTOMES,2,1,4,50);
 
         controller.addPersonToElevator(c);
         Assert.assertTrue(controller.usedCapacity() == 1 );
@@ -59,7 +58,7 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_1(){
-        ElevatorUser c = new Client(1,0,4);
+        ElevatorUser c = new Client(1,0,4,50);
         controller.openElevatorDoor();
 
         Assert.assertTrue(controller.canAddPersonToElevator(c));
@@ -74,7 +73,7 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_2(){
-        ElevatorUser c = new Client(1,0,4);
+        ElevatorUser c = new Client(1,0,4,50);
         Assert.assertTrue(!controller.canAddPersonToElevator(c));
     }
 
@@ -87,8 +86,8 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_3(){
-        ElevatorUser mc = new MaintenanceCrew(4,0,4);
-        ElevatorUser c = new Client(4,0,4);
+        ElevatorUser mc = new MaintenanceCrew(4,0,4,50);
+        ElevatorUser c = new Client(4,0,4,50);
         controller.openElevatorDoor();
 
         controller.addPersonToElevator(mc);
@@ -105,8 +104,8 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_4(){
-        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4);
-        ElevatorUser d2 = new Developer(Company.MUGTOMES,1,0,4);
+        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,50);
+        ElevatorUser d2 = new Developer(Company.MUGTOMES,1,0,4,50);
         controller.openElevatorDoor();
 
         controller.addPersonToElevator(d1);
@@ -123,8 +122,8 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_5(){
-        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4);
-        ElevatorUser d2 = new Developer(Company.GOGGLES,1,0,4);
+        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,50);
+        ElevatorUser d2 = new Developer(Company.GOGGLES,1,0,4,50);
         controller.openElevatorDoor();
 
         controller.addPersonToElevator(d1);
@@ -141,13 +140,13 @@ public class ElevatorControllerTest {
      */
     @Test
     public void testLeaveElevator(){
-        ElevatorUser c = new Developer(Company.MUGTOMES,1,0,4);
+        ElevatorUser c = new Developer(Company.MUGTOMES,1,0,4,50);
         c.setDestFloor(2);
 
-        ElevatorUser d = new Developer(Company.MUGTOMES, 1, 0, 4);
+        ElevatorUser d = new Developer(Company.MUGTOMES, 1, 0, 4,50);
         d.setDestFloor(2);
 
-        ElevatorUser e = new Employee(1,0,4);
+        ElevatorUser e = new Employee(1,0,4,50);
         e.setDestFloor(4);
 
         controller.openElevatorDoor();
@@ -185,13 +184,13 @@ public class ElevatorControllerTest {
     public void testCalculateNextFloor(){
         building.getElevator().setDirection(Direction.UP);
 
-        ElevatorUser e  = new Employee(1,0,6);
+        ElevatorUser e  = new Employee(1,0,6,50);
         e.setDestFloor(6); // setting the destination for person
 
-        ElevatorUser d1 = new Developer(Company.GOGGLES, 1,0,6);
+        ElevatorUser d1 = new Developer(Company.GOGGLES, 1,0,6,50);
         d1.setDestFloor(5);
 
-        ElevatorUser d2 = new Developer(Company.GOGGLES, 1,0,6);
+        ElevatorUser d2 = new Developer(Company.GOGGLES, 1,0,6,50);
         d2.setDestFloor(2);
 
         // Add users to elevator

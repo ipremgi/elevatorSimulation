@@ -1,6 +1,6 @@
 package simulator;
 
-import controller.ElevatorController;
+import controller.BuildingController;
 import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;
@@ -17,7 +17,7 @@ import java.util.Random;
 public class ElevatorSimulator implements ISimulator {
 
     private SimulatorTick simulatorTick;
-    private ElevatorController elevatorController;
+    private BuildingController buildingController;
 
     private int numberOfGoggle;
     private int numberOfMugtone;
@@ -51,26 +51,26 @@ public class ElevatorSimulator implements ISimulator {
         Elevator elevator = building.getElevator();
         ElevatorView elevatorView = new ElevatorView();
 
-        elevatorController = new ElevatorController(elevator,elevatorView,building,p);
+        buildingController = new BuildingController(elevator,elevatorView,building,p);
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size(),seed));
+            buildingController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size(),seed));
         }
 
         //creates mugtone developers
         for (int i = 0; i < numberOfMugtone; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size(),seed));
+            buildingController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size(),seed));
         }
 
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
 
-            elevatorController.addElevatorUser(new Employee(1,1,building.getFloors().size(),seed));
+            buildingController.addElevatorUser(new Employee(1,1,building.getFloors().size(),seed));
         }
 
 //        for (int i = 0; i < ticks; i++){
@@ -91,50 +91,50 @@ public class ElevatorSimulator implements ISimulator {
 
         if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
-                elevatorController.openElevatorDoor();
+                buildingController.openElevatorDoor();
                 eachTick(building.getFloors().size());
                 simulatorTick.nextTick();
-                elevatorController.updateView(simulatorTick.getTick());
+                buildingController.updateView(simulatorTick.getTick());
             }
         }
         if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
-                elevatorController.leaveElevator();
+                buildingController.leaveElevator();
 
                 PriorityQueue<ElevatorUser> tmpWaitingList = new PriorityQueue<ElevatorUser>(building.getFloor(elevator.getFloor()).getWaitingForLift());
 
                 for (ElevatorUser person : tmpWaitingList){
-                    if (elevatorController.canAddPersonToElevator(person)){
-                        elevatorController.addPersonToElevator(person);
+                    if (buildingController.canAddPersonToElevator(person)){
+                        buildingController.addPersonToElevator(person);
                     }
                 }
 
                 elevatorChangeDirection(elevator);
                 eachTick(building.getFloors().size());
                 simulatorTick.nextTick();
-                elevatorController.updateView(simulatorTick.getTick());
+                buildingController.updateView(simulatorTick.getTick());
             }
         }
         if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
-                elevatorController.closeElevatorDoor();
+                buildingController.closeElevatorDoor();
                 eachTick(building.getFloors().size());
                 simulatorTick.nextTick();
-                elevatorController.updateView(simulatorTick.getTick());
+                buildingController.updateView(simulatorTick.getTick());
             }
         }
         if (simulatorTick.getTick() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
-                int nextFloor = elevatorController.calculateNextFloor();
+                int nextFloor = buildingController.calculateNextFloor();
                 int floorsMoving = Math.abs(elevator.getFloor() - nextFloor);
-                elevatorController.moveElevator(nextFloor);
+                buildingController.moveElevator(nextFloor);
                 for(int i = 0; i < floorsMoving;i++){
                     if (simulatorTick.getTick() < ticks){
                         eachTick(building.getFloors().size());
                         simulatorTick.nextTick();
                     }
                 }
-                elevatorController.updateView(simulatorTick.getTick());
+                buildingController.updateView(simulatorTick.getTick());
             }
         }
 
@@ -144,24 +144,24 @@ public class ElevatorSimulator implements ISimulator {
     private void createRandomElevatorUsers(int numberOfFloors){
         //create client
         if (random.nextDouble() <= q){
-            elevatorController.addElevatorUser(new Client(1,2,numberOfFloors,seed));
+            buildingController.addElevatorUser(new Client(1,2,numberOfFloors,seed));
             System.out.println("*** CLIENT CREATED! ***");
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1,seed));
+            buildingController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1,seed));
             System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
     }
 
     private void elevatorChangeDirection(Elevator elevator){
         if (elevator.getDirection() == Direction.UP){
-            if (elevator.getFloor() > elevatorController.calculateNextFloor()){
+            if (elevator.getFloor() > buildingController.calculateNextFloor()){
                 elevator.setDirection(Direction.DOWN);
             }
         } else if (elevator.getDirection() == Direction.DOWN){
-            if (elevator.getFloor() < elevatorController.calculateNextFloor() || elevator.getFloor() == 0){
+            if (elevator.getFloor() < buildingController.calculateNextFloor() || elevator.getFloor() == 0){
                 elevator.setDirection(Direction.UP);
             }
         }
@@ -171,7 +171,7 @@ public class ElevatorSimulator implements ISimulator {
         //creates clients and maintenance crews
         createRandomElevatorUsers(numberOfFloors);
         //checks for new requests
-        elevatorController.checkForRequests();
-        elevatorController.checkForComplaints();
+        buildingController.checkForRequests();
+        buildingController.checkForComplaints();
     }
 }

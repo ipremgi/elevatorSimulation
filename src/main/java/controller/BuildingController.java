@@ -11,7 +11,7 @@ import java.util.*;
  */
 
 //rename to building controller?
-public class ElevatorController {
+public class BuildingController {
 
     private Elevator elevator;
     private ElevatorView elevatorView;
@@ -21,7 +21,7 @@ public class ElevatorController {
     private Random random = new Random();
     private ArrayList<Integer> requests = new ArrayList<Integer>();
 
-    public ElevatorController(Elevator elevator, ElevatorView elevatorView, Building building,double p) {
+    public BuildingController(Elevator elevator, ElevatorView elevatorView, Building building, double p) {
         this.elevator = elevator;
         this.elevatorView = elevatorView;
         this.building = building;
