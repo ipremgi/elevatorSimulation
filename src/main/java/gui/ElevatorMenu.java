@@ -118,7 +118,7 @@ public class ElevatorMenu extends JFrame implements ActionListener{
                                                         validateIntField(elCapField),
                                                         validateDoubleField(qField),
                                                         validateDoubleField(pField),
-                                                        validateIntField(noOfEmpsField),50);
+                                                        validateIntField(noOfEmpsField));
 
         this.setVisible(false);
         simulator.simulate();
