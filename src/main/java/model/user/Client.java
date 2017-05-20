@@ -1,7 +1,5 @@
 package model.user;
 
-import simulator.SimulatorTick;
-
 import java.util.ArrayList;
 import java.util.List;
 
