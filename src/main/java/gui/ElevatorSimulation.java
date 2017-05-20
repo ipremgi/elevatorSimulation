@@ -1,51 +1,38 @@
 package gui;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
+import gui.panels.Output;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by IPREMGI on 17/05/2017.
  */
-public class ElevatorSimulation extends JFrame {
+public class ElevatorSimulation extends JFrame implements ActionListener {
 
 
     private JPanel simInputPanel; // simulation information inputted in the menu box
-    private JPanel simOutputPanel; // output of the simulation
+    private Output simOutputPanel; // output of the simulation
     private JPanel simPanel;
     private JPanel simulationPanel;
 
 
     public ElevatorSimulation(){
-        simInputPanel = new ElevatorMenu();
+        //simInputPanel = new ElevatorMenu();
+
+        simInputPanel = new JPanel();
         simInputPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
         simPanel = new JPanel(new GridLayout(2,0,10,10));
         simPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        simOutputPanel = new JPanel(new GridLayout(5,2,2,2));
-        simOutputPanel.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-
-
-        simOutputPanel.add(new JLabel("Tick",SwingConstants.CENTER));
-        simOutputPanel.add(new JTextField("TICKS"));
-        simOutputPanel.add(new JLabel("Number of complaints:"));
-        simOutputPanel.add(new JTextField("NO OF COMPLAINTS"));
-        simOutputPanel.add(new JLabel("Elevator direction"));
-        simOutputPanel.add(new JTextField("DIRECTION"));
-        simOutputPanel.add(new JLabel("Floor"));
-        simOutputPanel.add(new JTextField("Current Floor"));
-        simOutputPanel.add(new JLabel("Door Status:"));
-        simOutputPanel.add(new JTextField("Door status"));
-
-
-
-
-
-
+        simOutputPanel = new Output();
         simulationPanel = new JPanel();
         simulationPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
         simPanel.add(simOutputPanel);
         simPanel.add(simulationPanel);
+
 
 
         setLayout(new GridLayout(1,1,10,20));
@@ -55,19 +42,26 @@ public class ElevatorSimulation extends JFrame {
         setSize(540,475);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+
+//        try {
+//            Thread.sleep(4000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+       // simOutputPanel.update("Ivan set text");
     }
 
 
 
+    public void paintComponent(Graphics g){
 
+    }
 
-
-
-
-
-
-
-
+    public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
 
 
 //    public ElevatorSimulation() {
@@ -143,6 +137,10 @@ public class ElevatorSimulation extends JFrame {
 //
 //
 //    }
+
+    public void update(GUIParameter p){
+        simOutputPanel.update(p);
+    }
 
 
 

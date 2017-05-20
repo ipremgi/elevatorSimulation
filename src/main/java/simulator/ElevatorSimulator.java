@@ -1,6 +1,7 @@
 package simulator;
 
 import controller.ElevatorController;
+import gui.ElevatorSimulation;
 import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;
@@ -46,7 +47,8 @@ public class ElevatorSimulator implements ISimulator {
         simulatorTick = new SimulatorTick();
         Building building = new Building(noOfFloors,maxCapacity);
         Elevator elevator = building.getElevator();
-        ElevatorView elevatorView = new ElevatorView();
+        ElevatorSimulation es = new ElevatorSimulation();
+        ElevatorView elevatorView = new ElevatorView(es);
 
         elevatorController = new ElevatorController(elevator,elevatorView,building,p);
 
@@ -75,6 +77,11 @@ public class ElevatorSimulator implements ISimulator {
 //        }
 
         while (simulatorTick.getTick() < ticks){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             nextTick(building,elevator);
         }
 

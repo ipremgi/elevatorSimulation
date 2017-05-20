@@ -1,6 +1,7 @@
 package controller;
 
 
+import gui.ElevatorSimulation;
 import junit.framework.Assert;
 import model.building.Building;
 import model.building.Direction;
@@ -23,7 +24,7 @@ public class ElevatorControllerTest {
     public void setUp(){
 
         building = new Building(4,4);
-        view = new ElevatorView();
+        view = new ElevatorView(new ElevatorSimulation());
         controller = new ElevatorController(building.getElevator(), view, building, 0.005);
     }
 
