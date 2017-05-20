@@ -22,6 +22,7 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
     private JLabel noOfDevMugLabel;
     private JLabel noOfDevGogLabel;
     private JLabel simTimeLabel;
+    private JLabel seedLabel;
 
     private JTextField pField;
     private JTextField qField;
@@ -31,6 +32,7 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
     private JTextField noOfDevMugField;
     private JTextField noOfDevGogField;
     private JTextField simTimeField;
+    private JTextField seedField;
 
     private JButton start; // start the simulation
 
@@ -75,6 +77,7 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         noOfDevMugLabel = new JLabel("Number of Mugtomes developers");
         noOfDevGogLabel = new JLabel("Number of Goggles developers");
         simTimeLabel = new JLabel("Simulation time");
+        seedLabel = new JLabel("Seed");
 
         pField = new JTextField(15);
         pField.setName("Probability for P");
@@ -100,6 +103,9 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         simTimeField = new JTextField(15);
         simTimeField.setName("Simulation time");
         simTimeField.setEditable(edidtable);
+        seedField = new JTextField(15);
+        seedField.setText("Seed");
+        seedField.setEditable(edidtable);
 
         start = new JButton("START");
         start.setVisible(edidtable);

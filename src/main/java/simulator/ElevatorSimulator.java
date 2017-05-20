@@ -27,9 +27,11 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private int ticks;
     private int noOfFloors;
     private int maxCapacity;
-    private Random random = new Random(50);
+    private Random random;
     private double q;
     private double p;
+    private int seed;
+
     private GUIInputs inputs;
 
     public ElevatorSimulator(GUIInputs inputs) {
@@ -42,6 +44,12 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         this.q = inputs.getQ();
         this.p = inputs.getP();
         this.numberOfEmployees = inputs.getNumberOfEmployees();
+        this.seed = inputs.getSeed();
+        if(Integer.toString(inputs.getSeed()).trim().length() == 0){
+            random = new Random(seed);
+        } else {
+            random = new Random();
+        }
     }
 
     public void simulate() {
@@ -59,20 +67,20 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         for (int i = 0; i < numberOfGoggle; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size()));
+            elevatorController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size(),seed));
         }
 
         //creates mugtone developers
         for (int i = 0; i < numberOfMugtone; i++){
 
 
-            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size()));
+            elevatorController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size(),seed));
         }
 
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
 
-            elevatorController.addElevatorUser(new Employee(1,1,building.getFloors().size()));
+            elevatorController.addElevatorUser(new Employee(1,1,building.getFloors().size(),seed));
         }
 
         while (simulatorTick.getTick() < ticks){
@@ -86,8 +94,8 @@ public class ElevatorSimulator implements ISimulator,Runnable {
             nextTick(building,elevator);
         }
 
-
     }
+
 
     public void nextTick(Building building, Elevator elevator){
         if (simulatorTick.getTick() < ticks ){
@@ -145,13 +153,13 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private void createRandomElevatorUsers(int numberOfFloors){
         //create client
         if (random.nextDouble() <= q){
-            elevatorController.addElevatorUser(new Client(1,2,numberOfFloors));
+            elevatorController.addElevatorUser(new Client(1,2,numberOfFloors,seed));
             System.out.println("*** CLIENT CREATED! ***");
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1));
+            elevatorController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1,seed));
             System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
     }

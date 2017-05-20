@@ -15,6 +15,7 @@ public class GUIInputs {
     private double q;
     private double p;
     private int numberOfEmployees;
+    private int seed;
 
     public GUIInputs(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees) {
         this.numberOfGoggles = numberOfGoggles;
@@ -89,6 +90,14 @@ public class GUIInputs {
 
     public void setNumberOfEmployees(int numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
+    }
+
+    public int getSeed() {
+        return seed;
+    }
+
+    public void setSeed(int seed) {
+        this.seed = seed;
     }
 }
 

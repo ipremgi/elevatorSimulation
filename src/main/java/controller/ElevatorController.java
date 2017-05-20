@@ -69,6 +69,9 @@ public class ElevatorController {
             for(ElevatorUser user : elevator.getUsers()){
                 if(user instanceof Developer){
                     if(((Developer) user).getCompany() != ((Developer) person).getCompany()){
+                        building.getFloor(elevator.getFloor()).removeUser(person);
+                        person.setTimeAddedToQueue(System.currentTimeMillis());
+                        building.getFloor(elevator.getFloor()).addUser(person);
                         return false;
                     }
                 }
@@ -207,6 +210,7 @@ public class ElevatorController {
 
     public void requestElevator(ElevatorUser occupant){
         building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
+        occupant.setTimeAddedToQueue(System.currentTimeMillis());
         building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
         this.buildingOccupants.remove(occupant);
     }

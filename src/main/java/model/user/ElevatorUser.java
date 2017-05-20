@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,21 +18,26 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private int numberOfFloors;//change name
     private int priority;
     private String ID;
-    protected Random randomGenerator = new Random();
+    protected Random randomGenerator;
+    private long timeAddedToQueue;
+    private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
-    public ElevatorUser(String className){
+    public ElevatorUser(String className,int seed){
         ID = className + nextID.incrementAndGet();
+        if(Integer.toString(seed).trim().length() == 0){
+            randomGenerator = new Random(seed);
+        } else {
+            randomGenerator = new Random();
+        }
     }
 
     public String getID() {
         return ID;
     }
 
-    public void setPriority(int priority) {
+    protected void setPriority(int priority) {
         this.priority = priority;
     }
-
-    private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
     public int getPriority() {
         return priority;}
@@ -41,7 +47,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return numberOfFloors;
     }
 
-    public void setNumberOfFloors(int numberOfFloors) {
+    protected void setNumberOfFloors(int numberOfFloors) {
         this.numberOfFloors = numberOfFloors;
     }
 
@@ -51,7 +57,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    protected void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
@@ -79,7 +85,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return floorsAccessible;
     }
 
-    public void setFloorsAccessible(List<Integer> floorsAccessible) {
+    protected void setFloorsAccessible(List<Integer> floorsAccessible) {
         this.floorsAccessible = floorsAccessible;
     }
 
@@ -88,9 +94,14 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     public abstract void moveFloor();
 
     public int compareTo(ElevatorUser otherUser){
-        if (this.getPriority() == otherUser.getPriority()){
+        if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() == otherUser.getTimeAddedToQueue()){
             return 0;
-        } else if (this.priority > otherUser.getPriority()){
+        } else if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() > otherUser.getTimeAddedToQueue()){
+            return 1;
+        }else if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() < otherUser.getTimeAddedToQueue()){
+            return -1;
+        }
+        else if (this.priority > otherUser.getPriority()){
             return -1;
         } else if (this.priority < otherUser.getPriority()){
             return 1;
@@ -98,4 +109,22 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return priority;
     }
 
+    public long getTimeAddedToQueue() {
+        return timeAddedToQueue;
+    }
+
+    public void setTimeAddedToQueue(long timeAddedToQueue) {
+        this.timeAddedToQueue = timeAddedToQueue;
+    }
+
+    @Override
+    public boolean equals(Object o){
+
+        if (o == this) return true;
+        if (!(o instanceof ElevatorUser)) return false;
+
+        ElevatorUser user = (ElevatorUser) o;
+
+        return Objects.equals(this.ID,user.ID);
+    }
 }
