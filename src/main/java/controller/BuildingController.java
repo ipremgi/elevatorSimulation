@@ -177,13 +177,11 @@ public class BuildingController {
                     requestElevator(occupant);
                 }
             }
-            else if (occupant instanceof Client){
-                if (((Client) occupant).isRemoveMe()){
+            else if (occupant instanceof Leaves){
+                if (((Leaves) occupant).isRemoveMe()){
                     this.buildingOccupants.remove(occupant);
                 }
-                ((Client) occupant).shouldILeave();
-            }else if (occupant instanceof MaintenanceCrew){
-                ((MaintenanceCrew) occupant).shouldILeave();
+                ((Leaves) occupant).shouldILeave();
             }
         }
 
