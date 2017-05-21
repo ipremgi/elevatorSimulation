@@ -17,7 +17,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private static AtomicInteger nextID = new AtomicInteger();
     private int numberOfFloors;//change name
     private int priority;
-    private String ID;
+    private final String ID;
     protected Random randomGenerator;
     private long timeAddedToQueue;
     private List<Integer> floorsAccessible = new ArrayList<Integer>();

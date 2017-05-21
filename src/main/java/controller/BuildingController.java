@@ -204,6 +204,11 @@ public class BuildingController {
 
     public void updateView(int tick){
         elevatorView.updateView(elevator.getFloor(),elevator.getDoorStatus(),elevator.getUsers(),tick,elevator.getDirection(), building.getNoOfComplaints());
+        try {
+            Thread.sleep(750);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void requestElevator(ElevatorUser occupant){
