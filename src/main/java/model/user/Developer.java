@@ -9,10 +9,9 @@ public class Developer extends ElevatorUser {
 
     private Company company;
 
-    public Developer(Company company, int capacity, int priority,int numberOfFloors,int seed) {
-        super("developer" + company.name(),seed);
+    public Developer(Company company, int CAPACITY, int priority,int numberOfFloors,int seed) {
+        super("developer" + company.name(),seed,CAPACITY);
         this.company = company;
-        this.setCapacity(capacity);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size())));

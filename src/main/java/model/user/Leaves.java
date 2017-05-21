@@ -9,8 +9,8 @@ public abstract class Leaves extends ElevatorUser {
     private boolean leaving = false;
     private boolean removeMe = false;
 
-    public Leaves(String className,int seed) {
-        super(className,seed);
+    public Leaves(String className,int seed,int CAPACITY) {
+        super(className,seed,CAPACITY);
     }
 
     public void leaveBuilding() {

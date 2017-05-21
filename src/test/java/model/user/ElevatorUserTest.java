@@ -97,10 +97,8 @@ public class ElevatorUserTest {
     }
 
     @Test
-    public void getSetCapacity(){
-        user.setCapacity(5);
-
-        Assert.assertEquals(5,user.getCapacity());
+    public void getCapacity(){
+        Assert.assertEquals(1,user.getCAPACITY());
     }
 
     @Test

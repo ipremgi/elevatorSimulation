@@ -81,7 +81,7 @@ public class GUIUpdates {
         int cap = 0;
 
         for(ElevatorUser user: elevatorOccupants){
-            cap += user.getCapacity();
+            cap += user.getCAPACITY();
         }
 
         return Integer.toString(cap);

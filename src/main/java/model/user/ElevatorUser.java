@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
-    private int capacity;
+    private final int CAPACITY;
     private int currentFloor = 0;
     private int destFloor;
     private static AtomicInteger nextID = new AtomicInteger();
@@ -22,13 +22,14 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private long timeAddedToQueue;
     private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
-    public ElevatorUser(String className,int seed){
+    public ElevatorUser(String className,int seed,int CAPACITY){
         ID = className + nextID.incrementAndGet();
         if(Integer.toString(seed).trim().length() == 0){
             randomGenerator = new Random(seed);
         } else {
             randomGenerator = new Random();
         }
+        this.CAPACITY=CAPACITY;
     }
 
     public String getID() {
@@ -53,12 +54,8 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
     // Capacity
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    protected void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public int getCAPACITY() {
+        return CAPACITY;
     }
 
     //currentFloor

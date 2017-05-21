@@ -16,9 +16,8 @@ public class Client extends Leaves {
     private boolean waiting = false;
     private boolean complained=false;
 
-    public Client(int capacity, int priority, int numberOfFloors,int seed) {
-        super("client",seed);
-        this.setCapacity(capacity);
+    public Client(int CAPACITY, int priority, int numberOfFloors,int seed) {
+        super("client",seed,CAPACITY);
         this.setPriority(priority);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());

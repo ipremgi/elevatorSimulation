@@ -9,13 +9,12 @@ import java.util.List;
 public class Employee extends ElevatorUser {
     /**
      *
-     * @param capacity
+     * @param CAPACITY
      * @param priority
      * @param numberOfFloors
      */
-    public Employee (int capacity, int priority, int numberOfFloors,int seed) {
-        super("employee",seed);
-        this.setCapacity(capacity);
+    public Employee (int CAPACITY, int priority, int numberOfFloors,int seed) {
+        super("employee",seed,CAPACITY);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(randomGenerator.nextInt(numberOfFloors));

@@ -52,7 +52,7 @@ public class BuildingController {
         int usedCapacity = 0;
 
         for (ElevatorUser occupant : elevator.getUsers()){
-            usedCapacity = usedCapacity + occupant.getCapacity();
+            usedCapacity = usedCapacity + occupant.getCAPACITY();
         }
 
         return usedCapacity;
@@ -77,7 +77,7 @@ public class BuildingController {
                 }
             }
         }
-        return ((person.getCapacity() + usedCapacity()) <= elevator.getMAX_CAPACITY()) && (elevator.getDoorStatus() == DoorStatus.OPEN);
+        return ((person.getCAPACITY() + usedCapacity()) <= elevator.getMAX_CAPACITY()) && (elevator.getDoorStatus() == DoorStatus.OPEN);
     }
 
     public void addPersonToElevator(ElevatorUser user){

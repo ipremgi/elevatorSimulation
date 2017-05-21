@@ -8,9 +8,8 @@ import java.util.List;
  */
 public class MaintenanceCrew extends Leaves {
 
-    public MaintenanceCrew (int capacity, int numberOfFloors, int priority, int seed) {
-        super("maintenancecrew",seed);
-        this.setCapacity(capacity);
+    public MaintenanceCrew (int CAPACITY, int numberOfFloors, int priority, int seed) {
+        super("maintenancecrew",seed,CAPACITY);
         this.setNumberOfFloors(numberOfFloors);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(getFloorsAccessible().get(0));
