@@ -13,11 +13,6 @@ public abstract class Leaves extends ElevatorUser {
         super(className,seed);
     }
 
-    @Override
-    public void moveFloor() {
-
-    }
-
     public void leaveBuilding() {
         setDestFloor(0);
     }

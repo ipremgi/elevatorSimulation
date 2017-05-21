@@ -32,12 +32,4 @@ public class Employee extends ElevatorUser {
         }
         return floorsAccessible;
     }
-
-    public void moveFloor() {
-        //int randomFloor = randomGenerator.nextInt(getNumberOfFloors());
-        do{
-            setDestFloor(randomGenerator.nextInt(getNumberOfFloors()));
-        }while (getCurrentFloor() == getDestFloor());
-        //any floor same probability
-    }
 }

@@ -44,7 +44,7 @@ public class Client extends Leaves {
     public boolean shouldIComplain(){
         if (waiting && !complained){
             ticksWaiting++;
-            if (ticksWaiting >= 60){
+            if (ticksWaiting > 60){
                 complained = true;
                 leaveBuilding();
                 return true;

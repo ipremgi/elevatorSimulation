@@ -91,7 +91,13 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
     protected abstract List<Integer> determineFloorsAccessible();
 
-    public abstract void moveFloor();
+    public void moveFloor() {
+
+        do{
+            this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size())));
+        }while (getCurrentFloor() == getDestFloor());
+        //only work in the top half of the building. Developers may randomly decide to move to another floor in the top half.
+    }
 
     public int compareTo(ElevatorUser otherUser){
         if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() == otherUser.getTimeAddedToQueue()){

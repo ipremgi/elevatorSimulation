@@ -12,7 +12,8 @@ public class MaintenanceCrew extends Leaves {
         super("maintenancecrew",seed);
         this.setCapacity(capacity);
         this.setNumberOfFloors(numberOfFloors);
-        this.setDestFloor(determineFloorsAccessible().get(0) - 1);
+        this.setFloorsAccessible(determineFloorsAccessible());
+        this.setDestFloor(getFloorsAccessible().get(0));
         this.setPriority(priority);
         this.setTickDuration(randomGenerator.nextInt(121)+120);
     }
@@ -20,7 +21,7 @@ public class MaintenanceCrew extends Leaves {
     @Override
     protected List<Integer> determineFloorsAccessible() {
         ArrayList<Integer> fa = new ArrayList<Integer>();
-        fa.add(getNumberOfFloors());
+        fa.add((getNumberOfFloors() - 1));
         return fa;
     }
 
