@@ -8,6 +8,7 @@ import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;
 import model.building.Elevator;
+import model.counter.IncrementCounter;
 import model.user.*;
 import view.ElevatorView;
 

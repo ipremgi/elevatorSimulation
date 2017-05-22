@@ -1,5 +1,6 @@
-package simulator;
+package model.counter;
 
+import model.counter.IncrementCounter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

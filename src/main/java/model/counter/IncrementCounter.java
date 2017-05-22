@@ -1,4 +1,4 @@
-package simulator;
+package model.counter;
 
 /**
  * Created by HWILKHU on 06/05/2017.
