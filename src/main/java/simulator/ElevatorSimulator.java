@@ -23,16 +23,16 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private SimulatorTick simulatorTick;
     private BuildingController buildingController;
 
-    private int numberOfGoggle;
-    private int numberOfMugtone;
-    private int numberOfEmployees;
+    private final int numberOfGoggle;
+    private final int numberOfMugtone;
+    private final int numberOfEmployees;
     private int ticks;
-    private int noOfFloors;
-    private int maxCapacity;
+    private final int noOfFloors;
+    private final int maxCapacity;
     private Random random;
-    private double q;
-    private double p;
-    private int seed;
+    private final double q;
+    private final double p;
+    private final int seed;
 
     private GUIInputs inputs;
 
@@ -86,13 +86,6 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         }
 
         while (simulatorTick.getTick() < ticks){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
             nextTick(building,elevator);
         }
 
