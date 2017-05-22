@@ -19,7 +19,7 @@ public class ClientTest {
 
     @Test
     public void determineFloorsAccessible(){
-        ArrayList<Integer> floorsAccessible = new ArrayList<>();
+        ArrayList<Integer> floorsAccessible = new ArrayList<Integer>();
         floorsAccessible.add(0);
         floorsAccessible.add(1);
         floorsAccessible.add(2);

@@ -9,11 +9,9 @@ import java.util.List;
 public class MaintenanceCrew extends Leaves {
 
     public MaintenanceCrew (int CAPACITY, int numberOfFloors, int priority, int seed) {
-        super("maintenancecrew",seed,CAPACITY);
-        this.setNumberOfFloors(numberOfFloors);
+        super("MAIN_CREW_", seed, CAPACITY, numberOfFloors, priority);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(getFloorsAccessible().get(0));
-        this.setPriority(priority);
         this.setTickDuration(randomGenerator.nextInt(121)+120);
     }
 

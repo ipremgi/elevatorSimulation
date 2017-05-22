@@ -22,14 +22,16 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private long timeAddedToQueue;
     private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
-    public ElevatorUser(String className,int seed,int CAPACITY){
+    public ElevatorUser(String className, int seed, int CAPACITY, int numberOfFloors, int priority ){
         ID = className + nextID.incrementAndGet();
         if(Integer.toString(seed).trim().length() == 0){
             randomGenerator = new Random(seed);
         } else {
             randomGenerator = new Random();
         }
-        this.CAPACITY=CAPACITY;
+        this.CAPACITY = CAPACITY;
+        this.numberOfFloors = numberOfFloors;
+        this.priority = priority;
     }
 
     public String getID() {

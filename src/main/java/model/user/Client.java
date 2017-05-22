@@ -15,9 +15,7 @@ public class Client extends Leaves {
     private boolean complained=false;
 
     public Client(int CAPACITY, int priority, int numberOfFloors,int seed) {
-        super("client",seed,CAPACITY);
-        this.setPriority(priority);
-        this.setNumberOfFloors(numberOfFloors);
+        super("CLIENT_", seed, CAPACITY, numberOfFloors, priority);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt((this.getFloorsAccessible().size()))));
         this.setTickDuration(randomGenerator.nextInt(31)+60);//other classes
