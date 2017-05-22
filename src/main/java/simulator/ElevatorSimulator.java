@@ -4,7 +4,6 @@ package simulator;
 import controller.BuildingController;
 import gui.dto.GUIInputs;
 import gui.frames.Simulation;
-
 import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;

@@ -1,6 +1,4 @@
 import gui.frames.Menu;
-import simulator.ElevatorSimulator;
-import simulator.ISimulator;
 
 /**
  * Created by IPREMGI on 02/05/2017.
