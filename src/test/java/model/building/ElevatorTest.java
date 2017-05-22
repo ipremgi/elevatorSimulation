@@ -49,7 +49,7 @@ public class ElevatorTest {
     @Test
     public void elevatorOccupantOperations(){
         ElevatorUser employee = new Employee(1,1,10,1);
-        ArrayList<ElevatorUser> elevatorOccupants = new ArrayList<>();
+        ArrayList<ElevatorUser> elevatorOccupants = new ArrayList<ElevatorUser>();
 
         elevator.addUser(employee);
         elevatorOccupants.add(employee);
