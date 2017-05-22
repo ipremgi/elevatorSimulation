@@ -58,10 +58,7 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
                 validateDoubleField(pField),
                 validateIntField(noOfEmpsField));
 
-
-
-
-        this.setVisible(false);
+        //this.setVisible(false);
         Thread simulation = new Thread(new ElevatorSimulator(input));
         simulation.start();
     }

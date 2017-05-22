@@ -51,7 +51,7 @@ public class Simulation extends JFrame {
         a.setSize(210,500);
         add(a);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setVisible(true);
         setSize(425,475);

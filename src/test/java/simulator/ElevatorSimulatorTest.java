@@ -1,8 +1,5 @@
 package simulator;
 
-import model.building.Elevator;
-import org.junit.Test;
-
 /**
  * Created by HWILKHU on 18/05/2017.
  */
