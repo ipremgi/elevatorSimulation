@@ -8,17 +8,17 @@ import org.junit.Test;
  * Created by HWILKHU on 18/05/2017.
  */
 public class SimulatorTickTest {
-    private SimulatorTick simulatorTick;
+    private IncrementCounter simulatorTick;
 
     @Before
     public void setup(){
-        simulatorTick = new SimulatorTick();
+        simulatorTick = new IncrementCounter();
     }
 
     @Test
     public void tick(){
-        Assert.assertEquals(0,simulatorTick.getTick());
-        simulatorTick.nextTick();
-        Assert.assertEquals(1,simulatorTick.getTick());
+        Assert.assertEquals(0,simulatorTick.getCount());
+        simulatorTick.nextCount();
+        Assert.assertEquals(1,simulatorTick.getCount());
     }
 }
