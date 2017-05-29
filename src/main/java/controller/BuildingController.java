@@ -18,14 +18,21 @@ public class BuildingController {
     private Building building;
     private ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>();
     private double p;
-    private Random random = new Random();
+    private Random random;
     private ArrayList<Integer> requests = new ArrayList<Integer>();
 
-    public BuildingController(ElevatorView elevatorView, Building building, double p) {
-        this.elevator = building.getElevator();
+
+    public BuildingController(Elevator elevator, ElevatorView elevatorView, Building building, double p, int seed) {
+        this.elevator = elevator;
         this.elevatorView = elevatorView;
         this.building = building;
         this.p = p;
+
+        if(seed != -1){
+            random = new Random(seed);
+        } else {
+            random = new Random();
+        }
     }
 
     public void addElevatorUser(ElevatorUser elevatorUser){

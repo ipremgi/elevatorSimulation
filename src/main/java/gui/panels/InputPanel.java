@@ -56,7 +56,8 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
                 validateIntField(elCapField),
                 validateDoubleField(qField),
                 validateDoubleField(pField),
-                validateIntField(noOfEmpsField));
+                validateIntField(noOfEmpsField),
+                validSeed(seedField));
 
         //this.setVisible(false);
         Thread simulation = new Thread(new ElevatorSimulator(input));
@@ -146,10 +147,10 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
             elCapField.setText(Integer.toString(input.getMaxCapacity()));
             noOfFloorsField.setText(Integer.toString(input.getNoOfFloors()));
             noOfEmpsField.setText(Integer.toString(input.getNumberOfEmployees()));
-            noOfDevMugField.setText(Integer.toString(input.getNumberOfMugtones()));
+            noOfDevMugField.setText(Integer.toString(input.getNumberOfMugtomes()));
             noOfDevGogField.setText(Integer.toString(input.getNumberOfGoggles()));
             simTimeField.setText(Integer.toString(input.getTicks()));
-            seedField.setText((Integer.toString(input.getSeed()).trim().length() == 0) ? "No seed" : Integer.toString(input.getSeed()));
+            seedField.setText((input.getSeed() == -1) ? "No seed" : Integer.toString(input.getSeed()));
         }
     }
 
@@ -177,5 +178,14 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         }catch (NumberFormatException nfe){
             throw new NumberFormatException("Invalid input for " + field.getName());
         }
+    }
+
+    private int validSeed(JTextField seedField){
+        if(seedField.getText().trim().length() == 0){
+            return -1;
+        } else {
+            validateIntField(seedField);
+        }
+        return -1;
     }
 }
