@@ -22,8 +22,8 @@ public class BuildingController {
     private ArrayList<Integer> requests = new ArrayList<Integer>();
 
 
-    public BuildingController(Elevator elevator, ElevatorView elevatorView, Building building, double p, int seed) {
-        this.elevator = elevator;
+    public BuildingController(ElevatorView elevatorView, Building building, double p, int seed) {
+        this.elevator = building.getElevator();
         this.elevatorView = elevatorView;
         this.building = building;
         this.p = p;
