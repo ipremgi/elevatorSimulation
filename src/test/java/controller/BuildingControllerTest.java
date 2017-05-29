@@ -24,7 +24,7 @@ public class BuildingControllerTest {
 
         building = new Building(4,4);
         view = new ElevatorView(new Simulation(null));
-        controller = new BuildingController(view, building, 0.005);
+        controller = new BuildingController(building.getElevator(), view, building, 0.005);
     }
 
 

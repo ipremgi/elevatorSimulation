@@ -76,7 +76,7 @@ public class ElevatorUserTest {
 
     @Test
     public void getID(){
-        Assert.assertTrue(user.getID().contains("employee"));
+        Assert.assertTrue(user.getID().contains("EMP"));
     }
 
     @Test
