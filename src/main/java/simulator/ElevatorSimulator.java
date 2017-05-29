@@ -33,7 +33,6 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private final double q;
     private final double p;
     private final int seed;
-
     private GUIInputs inputs;
 
     public ElevatorSimulator(GUIInputs inputs) {
@@ -63,7 +62,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         Simulation es = new Simulation(inputs);
         ElevatorView elevatorView = new ElevatorView(es);
 
-        buildingController = new BuildingController(elevator,elevatorView,building,p);
+        buildingController = new BuildingController(elevatorView,building,p);
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){

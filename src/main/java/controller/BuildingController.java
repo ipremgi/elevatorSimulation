@@ -21,8 +21,8 @@ public class BuildingController {
     private Random random = new Random();
     private ArrayList<Integer> requests = new ArrayList<Integer>();
 
-    public BuildingController(Elevator elevator, ElevatorView elevatorView, Building building, double p) {
-        this.elevator = elevator;
+    public BuildingController(ElevatorView elevatorView, Building building, double p) {
+        this.elevator = building.getElevator();
         this.elevatorView = elevatorView;
         this.building = building;
         this.p = p;
@@ -211,11 +211,11 @@ public class BuildingController {
         }
     }
 
-    public void requestElevator(ElevatorUser occupant){
-        building.getFloor(occupant.getCurrentFloor()).setBtnPressed(true);
-        occupant.setTimeAddedToQueue(System.currentTimeMillis());
-        building.getFloor(occupant.getCurrentFloor()).addUser(occupant);
-        this.buildingOccupants.remove(occupant);
+    public void requestElevator(ElevatorUser elevatorUser){
+        building.getFloor(elevatorUser.getCurrentFloor()).setBtnPressed(true);
+        elevatorUser.setTimeAddedToQueue(System.currentTimeMillis());
+        building.getFloor(elevatorUser.getCurrentFloor()).addUser(elevatorUser);
+        this.buildingOccupants.remove(elevatorUser);
     }
 
     /**
