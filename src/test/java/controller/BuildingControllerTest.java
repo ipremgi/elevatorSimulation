@@ -1,6 +1,7 @@
 package controller;
 
 
+import gui.dto.GUIInputs;
 import gui.frames.Simulation;
 import junit.framework.Assert;
 import model.building.Building;
@@ -23,8 +24,12 @@ public class BuildingControllerTest {
     public void setUp(){
 
         building = new Building(4,4);
-        view = new ElevatorView(new Simulation(null));
-        controller = new BuildingController(building.getElevator(), view, building, 0.005);
+        view = new ElevatorView(new Simulation(getGUIInputs()));
+        controller = new BuildingController(building.getElevator(), view, building, 0.005,-1);
+    }
+
+    private GUIInputs getGUIInputs(){
+        return new GUIInputs(1,1,1,1,1,0.005,0.005,1,-1);
     }
 
 

@@ -8,7 +8,7 @@ package gui.dto;
 public class GUIInputs {
 
     private int numberOfGoggles;
-    private int numberOfMugtones;
+    private int numberOfMugtomes;
     private int ticks;
     private int noOfFloors;
     private int maxCapacity;
@@ -17,15 +17,23 @@ public class GUIInputs {
     private int numberOfEmployees;
     private int seed;
 
-    public GUIInputs(int numberOfGoggles, int numberOfMugtones, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees) {
+    public GUIInputs(int numberOfGoggles, int numberOfMugtomes, int ticks, int noOfFloors, int maxCapacity, double q, double p, int numberOfEmployees, int seed) {
         this.numberOfGoggles = numberOfGoggles;
-        this.numberOfMugtones = numberOfMugtones;
+        this.numberOfMugtomes = numberOfMugtomes;
         this.ticks = ticks;
         this.noOfFloors = noOfFloors;
         this.maxCapacity = maxCapacity;
         this.q = q;
         this.p = p;
         this.numberOfEmployees = numberOfEmployees;
+
+        if(Integer.toString(seed).trim().length() == 0){
+            this.seed = -1;
+        } else {
+            this.seed = seed;
+        }
+
+
     }
 
     public int getNumberOfGoggles() {
@@ -36,12 +44,12 @@ public class GUIInputs {
         this.numberOfGoggles = numberOfGoggles;
     }
 
-    public int getNumberOfMugtones() {
-        return numberOfMugtones;
+    public int getNumberOfMugtomes() {
+        return numberOfMugtomes;
     }
 
-    public void setNumberOfMugtones(int numberOfMugtones) {
-        this.numberOfMugtones = numberOfMugtones;
+    public void setNumberOfMugtomes(int numberOfMugtomes) {
+        this.numberOfMugtomes = numberOfMugtomes;
     }
 
     public int getTicks() {

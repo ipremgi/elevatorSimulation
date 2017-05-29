@@ -24,7 +24,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private BuildingController buildingController;
 
     private int numberOfGoggle;
-    private int numberOfMugtone;
+    private int numberOfMugtome;
     private int numberOfEmployees;
     private int ticks;
     private int noOfFloors;
@@ -39,7 +39,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     public ElevatorSimulator(GUIInputs inputs) {
         this.inputs = inputs;
         this.numberOfGoggle = inputs.getNumberOfGoggles();
-        this.numberOfMugtone = inputs.getNumberOfMugtones();
+        this.numberOfMugtome = inputs.getNumberOfMugtomes();
         this.ticks = inputs.getTicks();
         this.noOfFloors = inputs.getNoOfFloors();
         this.maxCapacity = inputs.getMaxCapacity();
@@ -47,7 +47,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         this.p = inputs.getP();
         this.numberOfEmployees = inputs.getNumberOfEmployees();
         this.seed = inputs.getSeed();
-        if(Integer.toString(inputs.getSeed()).trim().length() == 0){
+        if(seed != -1){
             random = new Random(seed);
         } else {
             random = new Random();
@@ -63,7 +63,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         Simulation es = new Simulation(inputs);
         ElevatorView elevatorView = new ElevatorView(es);
 
-        buildingController = new BuildingController(elevator,elevatorView,building,p);
+        buildingController = new BuildingController(elevator,elevatorView,building,p, seed);
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){
@@ -73,7 +73,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         }
 
         //creates mugtone developers
-        for (int i = 0; i < numberOfMugtone; i++){
+        for (int i = 0; i < numberOfMugtome; i++){
 
 
             buildingController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size(),seed));
