@@ -184,8 +184,7 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         if(seedField.getText().trim().length() == 0){
             return -1;
         } else {
-            validateIntField(seedField);
+            return validateIntField(seedField);
         }
-        return -1;
     }
 }
