@@ -4,11 +4,11 @@ package simulator;
 import controller.BuildingController;
 import gui.dto.GUIInputs;
 import gui.frames.Simulation;
-
 import model.building.Building;
 import model.building.Direction;
 import model.building.DoorStatus;
 import model.building.Elevator;
+import model.counter.IncrementCounter;
 import model.user.*;
 import view.ElevatorView;
 
@@ -20,20 +20,20 @@ import java.util.Random;
  */
 public class ElevatorSimulator implements ISimulator,Runnable {
 
-    private SimulatorTick simulatorTick;
+    private IncrementCounter simulatorTick;
     private BuildingController buildingController;
+
 
     private int numberOfGoggle;
     private int numberOfMugtome;
     private int numberOfEmployees;
     private int ticks;
-    private int noOfFloors;
-    private int maxCapacity;
+    private final int noOfFloors;
+    private final int maxCapacity;
     private Random random;
-    private double q;
-    private double p;
-    private int seed;
-
+    private final double q;
+    private final double p;
+    private final int seed;
     private GUIInputs inputs;
 
     public ElevatorSimulator(GUIInputs inputs) {
@@ -57,12 +57,11 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     public void simulate() {
         System.out.println("simulation has started");
 
-        simulatorTick = new SimulatorTick();
+        simulatorTick = new IncrementCounter();
         Building building = new Building(noOfFloors,maxCapacity);
         Elevator elevator = building.getElevator();
         Simulation es = new Simulation(inputs);
         ElevatorView elevatorView = new ElevatorView(es);
-
         buildingController = new BuildingController(elevator,elevatorView,building,p, seed);
 
         // creates goggle developers
@@ -85,14 +84,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
             buildingController.addElevatorUser(new Employee(1,1,building.getFloors().size(),seed));
         }
 
-        while (simulatorTick.getTick() < ticks){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-
+        while (simulatorTick.getCount() < ticks){
             nextTick(building,elevator);
         }
 
@@ -100,15 +92,15 @@ public class ElevatorSimulator implements ISimulator,Runnable {
 
 
     public void nextTick(Building building, Elevator elevator){
-        if (simulatorTick.getTick() < ticks ){
+        if (simulatorTick.getCount() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
                 buildingController.openElevatorDoor();
                 eachTick(building.getFloors().size());
-                simulatorTick.nextTick();
-                buildingController.updateView(simulatorTick.getTick());
+                simulatorTick.nextCount();
+                buildingController.updateView(simulatorTick.getCount());
             }
         }
-        if (simulatorTick.getTick() < ticks ){
+        if (simulatorTick.getCount() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
                 buildingController.leaveElevator();
 
@@ -122,30 +114,30 @@ public class ElevatorSimulator implements ISimulator,Runnable {
 
                 elevatorChangeDirection(elevator);
                 eachTick(building.getFloors().size());
-                simulatorTick.nextTick();
-                buildingController.updateView(simulatorTick.getTick());
+                simulatorTick.nextCount();
+                buildingController.updateView(simulatorTick.getCount());
             }
         }
-        if (simulatorTick.getTick() < ticks ){
+        if (simulatorTick.getCount() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.OPEN){
                 buildingController.closeElevatorDoor();
                 eachTick(building.getFloors().size());
-                simulatorTick.nextTick();
-                buildingController.updateView(simulatorTick.getTick());
+                simulatorTick.nextCount();
+                buildingController.updateView(simulatorTick.getCount());
             }
         }
-        if (simulatorTick.getTick() < ticks ){
+        if (simulatorTick.getCount() < ticks ){
             if (elevator.getDoorStatus() == DoorStatus.CLOSED){
                 int nextFloor = buildingController.calculateNextFloor();
                 int floorsMoving = Math.abs(elevator.getFloor() - nextFloor);
                 buildingController.moveElevator(nextFloor);
                 for(int i = 0; i < floorsMoving;i++){
-                    if (simulatorTick.getTick() < ticks){
+                    if (simulatorTick.getCount() < ticks){
                         eachTick(building.getFloors().size());
-                        simulatorTick.nextTick();
+                        simulatorTick.nextCount();
                     }
                 }
-                buildingController.updateView(simulatorTick.getTick());
+                buildingController.updateView(simulatorTick.getCount());
             }
         }
 

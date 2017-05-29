@@ -1,7 +1,5 @@
 package model.user;
 
-import simulator.SimulatorTick;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +49,3 @@ public class Client extends Leaves {
     }
 
 }
-
-
-/*
-* sets the move floor using probabilty
-* */
-

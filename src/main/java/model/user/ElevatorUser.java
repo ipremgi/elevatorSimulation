@@ -15,7 +15,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private int currentFloor = 0;
     private int destFloor;
     private static AtomicInteger nextID = new AtomicInteger();
-    private int numberOfFloors;//change name
+    private int numberOfFloors;
     private int priority;
     private final String ID;
     protected Random randomGenerator;
@@ -98,6 +98,7 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         //only work in the top half of the building. Developers may randomly decide to move to another floor in the top half.
     }
 
+    @Override
     public int compareTo(ElevatorUser otherUser){
         if (this.getPriority() == otherUser.getPriority() && this.getTimeAddedToQueue() == otherUser.getTimeAddedToQueue()){
             return 0;
