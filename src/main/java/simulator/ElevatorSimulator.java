@@ -62,7 +62,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         Elevator elevator = building.getElevator();
         Simulation es = new Simulation(inputs);
         ElevatorView elevatorView = new ElevatorView(es);
-        buildingController = new BuildingController(elevator,elevatorView,building,p, seed);
+        buildingController = new BuildingController(elevatorView,building,p, seed);
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){
