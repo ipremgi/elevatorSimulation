@@ -21,7 +21,7 @@ public class Menu extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
-        setSize(210,500);
+        setSize(210,600);
         setTitle("Elevator Menu");
     }
 }

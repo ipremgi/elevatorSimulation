@@ -48,13 +48,13 @@ public class Simulation extends JFrame {
         add(simPanel);
 
         InputPanel a = new InputPanel(false, inputs);
-        a.setSize(210,500);
+        a.setSize(210,600);
         add(a);
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setVisible(true);
-        setSize(425,475);
+        setSize(425,600);
         setTitle("Elevator Simulation");
     }
 

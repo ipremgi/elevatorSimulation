@@ -74,8 +74,8 @@ public class InputPanel extends JPanel implements ActionListener,IPanels {
         noOfEmpsLabel = new JLabel("Number of employees");
         noOfDevMugLabel = new JLabel("Number of Mugtomes developers");
         noOfDevGogLabel = new JLabel("Number of Goggles developers");
-        simTimeLabel = new JLabel("Simulation time");
-        seedLabel = new JLabel("Seed");
+        simTimeLabel = new JLabel("Simulation time (Ticks)");
+        seedLabel = new JLabel("Seed (Optional)");
 
         pField = new JTextField(15);
         pField.setName("Probability for P");
