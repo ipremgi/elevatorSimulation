@@ -62,26 +62,26 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         Elevator elevator = building.getElevator();
         Simulation es = new Simulation(inputs);
         ElevatorView elevatorView = new ElevatorView(es);
-        buildingController = new BuildingController(elevatorView,building,p, seed);
+        buildingController = new BuildingController(elevatorView,building,p, random);
 
         // creates goggle developers
         for (int i = 0; i < numberOfGoggle; i++){
 
 
-            buildingController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size(),seed));
+            buildingController.addElevatorUser(new Developer(Company.GOGGLES,1,1,building.getFloors().size(),random));
         }
 
         //creates mugtone developers
         for (int i = 0; i < numberOfMugtome; i++){
 
 
-            buildingController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size(),seed));
+            buildingController.addElevatorUser(new Developer(Company.MUGTOMES,1,1,building.getFloors().size(),random));
         }
 
         //creates employees
         for (int i = 0; i < numberOfEmployees; i++){
 
-            buildingController.addElevatorUser(new Employee(1,1,building.getFloors().size(),seed));
+            buildingController.addElevatorUser(new Employee(1,1,building.getFloors().size(),random));
         }
 
         while (simulatorTick.getCount() < ticks){
@@ -147,13 +147,13 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private void createRandomElevatorUsers(int numberOfFloors){
         //create client
         if (random.nextDouble() <= q){
-            buildingController.addElevatorUser(new Client(1,2,numberOfFloors,seed));
+            buildingController.addElevatorUser(new Client(1,2,numberOfFloors,random));
             System.out.println("*** CLIENT CREATED! ***");
         }
 
         //create maintenance crew
         if (random.nextDouble() <= 0.005){
-            buildingController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1,seed));
+            buildingController.addElevatorUser(new MaintenanceCrew(4,numberOfFloors,1,random));
             System.out.println("*** MAINTENANCE CREW CREATED CREATED! ***");
         }
     }

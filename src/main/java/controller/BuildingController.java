@@ -22,17 +22,13 @@ public class BuildingController {
     private ArrayList<Integer> requests = new ArrayList<Integer>();
 
 
-    public BuildingController(ElevatorView elevatorView, Building building, double p, int seed) {
+    public BuildingController(ElevatorView elevatorView, Building building, double p, Random random) {
         this.elevator = building.getElevator();
         this.elevatorView = elevatorView;
         this.building = building;
         this.p = p;
 
-        if(seed != -1){
-            random = new Random(seed);
-        } else {
-            random = new Random();
-        }
+        this.random = random;
     }
 
     public void addElevatorUser(ElevatorUser elevatorUser){

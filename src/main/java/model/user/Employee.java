@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Aishwarya on 05/05/2017.
@@ -13,8 +14,8 @@ public class Employee extends ElevatorUser {
      * @param priority
      * @param numberOfFloors
      */
-    public Employee (int CAPACITY, int priority, int numberOfFloors,int seed) {
-        super("EMP_", seed, CAPACITY, numberOfFloors, priority);
+    public Employee (int CAPACITY, int priority, int numberOfFloors, Random random) {
+        super("EMP_", random, CAPACITY, numberOfFloors, priority);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(randomGenerator.nextInt(numberOfFloors));
     }

@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import view.ElevatorView;
 
+import java.util.Random;
+
 /**
  * Created by IPREMGI on 06/05/2017.
  */
@@ -18,13 +20,14 @@ public class BuildingControllerTest {
     private static BuildingController controller;
     private static ElevatorView view;
     private static Building building;
+    private Random random = new Random(1);
 
     @Before
     public void setUp(){
 
         building = new Building(4,4);
         view = new ElevatorView(new Simulation(null));
-        controller = new BuildingController(view, building, 0.005,1);
+        controller = new BuildingController(view, building, 0.005,random);
     }
 
 
@@ -35,9 +38,9 @@ public class BuildingControllerTest {
      */
     @Test
     public void testUsedCapacity(){
-        ElevatorUser c = new Client(1,0,4,50);
-        ElevatorUser e = new Employee(1,1,4,50);
-        ElevatorUser d = new Developer(Company.MUGTOMES,2,1,4,50);
+        ElevatorUser c = new Client(1,0,4,random);
+        ElevatorUser e = new Employee(1,1,4,random);
+        ElevatorUser d = new Developer(Company.MUGTOMES,2,1,4,random);
 
 
         controller.addPersonToElevator(c);
@@ -61,7 +64,7 @@ public class BuildingControllerTest {
     @Test
     public void testCanAddPersonToElevator_1(){
 
-        ElevatorUser c = new Client(1,0,4,50);
+        ElevatorUser c = new Client(1,0,4,random);
         controller.openElevatorDoor();
 
         Assert.assertTrue(controller.canAddPersonToElevator(c));
@@ -76,7 +79,7 @@ public class BuildingControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_2(){
-        ElevatorUser c = new Client(1,0,4,50);
+        ElevatorUser c = new Client(1,0,4,random);
 
         Assert.assertTrue(!controller.canAddPersonToElevator(c));
     }
@@ -90,8 +93,8 @@ public class BuildingControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_3(){
-        ElevatorUser mc = new MaintenanceCrew(4,0,4,50);
-        ElevatorUser c = new Client(4,0,4,50);
+        ElevatorUser mc = new MaintenanceCrew(4,0,4,random);
+        ElevatorUser c = new Client(4,0,4,random);
 
         controller.openElevatorDoor();
 
@@ -109,8 +112,8 @@ public class BuildingControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_4(){
-        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,50);
-        ElevatorUser d2 = new Developer(Company.MUGTOMES,1,0,4,50);
+        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,random);
+        ElevatorUser d2 = new Developer(Company.MUGTOMES,1,0,4,random);
 
         controller.openElevatorDoor();
 
@@ -128,8 +131,8 @@ public class BuildingControllerTest {
      */
     @Test
     public void testCanAddPersonToElevator_5(){
-        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,50);
-        ElevatorUser d2 = new Developer(Company.GOGGLES,1,0,4,50);
+        ElevatorUser d1 = new Developer(Company.MUGTOMES, 1, 1,4,random);
+        ElevatorUser d2 = new Developer(Company.GOGGLES,1,0,4,random);
 
         controller.openElevatorDoor();
 
@@ -147,13 +150,13 @@ public class BuildingControllerTest {
      */
     @Test
     public void testLeaveElevator(){
-        ElevatorUser c = new Developer(Company.MUGTOMES,1,0,4,50);
+        ElevatorUser c = new Developer(Company.MUGTOMES,1,0,4,random);
         c.setDestFloor(2);
 
-        ElevatorUser d = new Developer(Company.MUGTOMES, 1, 0, 4,50);
+        ElevatorUser d = new Developer(Company.MUGTOMES, 1, 0, 4,random);
         d.setDestFloor(2);
 
-        ElevatorUser e = new Employee(1,0,4,50);
+        ElevatorUser e = new Employee(1,0,4,random);
 
         e.setDestFloor(4);
 
@@ -192,13 +195,13 @@ public class BuildingControllerTest {
     public void testCalculateNextFloor(){
         building.getElevator().setDirection(Direction.UP);
 
-        ElevatorUser e  = new Employee(1,0,6,50);
+        ElevatorUser e  = new Employee(1,0,6,random);
         e.setDestFloor(6); // setting the destination for person
 
-        ElevatorUser d1 = new Developer(Company.GOGGLES, 1,0,6,50);
+        ElevatorUser d1 = new Developer(Company.GOGGLES, 1,0,6,random);
         d1.setDestFloor(5);
 
-        ElevatorUser d2 = new Developer(Company.GOGGLES, 1,0,6,50);
+        ElevatorUser d2 = new Developer(Company.GOGGLES, 1,0,6,random);
 
         d2.setDestFloor(2);
 

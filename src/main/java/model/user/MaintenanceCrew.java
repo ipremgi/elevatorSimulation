@@ -2,14 +2,15 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Aishwarya on 05/05/2017.
  */
 public class MaintenanceCrew extends Leaves {
 
-    public MaintenanceCrew (int CAPACITY, int numberOfFloors, int priority, int seed) {
-        super("MAIN_CREW_", seed, CAPACITY, numberOfFloors, priority);
+    public MaintenanceCrew (int CAPACITY, int numberOfFloors, int priority, Random random) {
+        super("MAIN_CREW_", random, CAPACITY, numberOfFloors, priority);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(getFloorsAccessible().get(0));
         this.setTickDuration(randomGenerator.nextInt(121)+120);

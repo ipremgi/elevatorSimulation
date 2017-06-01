@@ -2,6 +2,7 @@ package model.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Aishwarya on 05/05/2017.
@@ -14,8 +15,8 @@ public class Client extends Leaves {
     private boolean waiting = false;
     private boolean complained=false;
 
-    public Client(int CAPACITY, int priority, int numberOfFloors,int seed) {
-        super("CLIENT_", seed, CAPACITY, numberOfFloors, priority);
+    public Client(int CAPACITY, int priority, int numberOfFloors, Random random) {
+        super("CLIENT_", random, CAPACITY, numberOfFloors, priority);
         this.setFloorsAccessible(determineFloorsAccessible());
         this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt((this.getFloorsAccessible().size()))));
         this.setTickDuration(randomGenerator.nextInt(31)+60);//other classes
