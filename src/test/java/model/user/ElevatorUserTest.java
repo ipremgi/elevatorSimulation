@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 /**
  * Created by HWILKHU on 18/05/2017.
@@ -13,17 +14,18 @@ import java.util.PriorityQueue;
 public class ElevatorUserTest {
 
     ElevatorUser user;
+    private Random random = new Random(1);
 
     @Before
     public void setup(){
-        user = new Employee(1,1,10,10);
+        user = new Employee(1,1,10,random);
     }
 
     @Test
     public void priorityComparison() throws InterruptedException {
-        ElevatorUser client = new Client(1,2,10,10);
-        ElevatorUser employeeA = new Employee(1,1,10,10);
-        ElevatorUser employeeB = new Employee(1,1,10,10);
+        ElevatorUser client = new Client(1,2,10,random);
+        ElevatorUser employeeA = new Employee(1,1,10,random);
+        ElevatorUser employeeB = new Employee(1,1,10,random);
 
         PriorityQueue<ElevatorUser> priorityQueue = new PriorityQueue<ElevatorUser>();
 
@@ -44,8 +46,8 @@ public class ElevatorUserTest {
     @Test
     public void equals(){
 
-        ElevatorUser user1 = new Client(1,2,10,10);
-        ElevatorUser user2 = new Employee(1,1,10,10);
+        ElevatorUser user1 = new Client(1,2,10,random);
+        ElevatorUser user2 = new Employee(1,1,10,random);
 
         Assert.assertTrue(user1 == user1);
         Assert.assertTrue(user2 == user2);

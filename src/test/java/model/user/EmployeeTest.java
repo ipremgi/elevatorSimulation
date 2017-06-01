@@ -4,15 +4,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 /**
  * Created by HWILKHU on 20/05/2017.
  */
 public class EmployeeTest {
     private Employee employee;
+    private Random random = new Random(1);
 
     @Before
     public void setup(){
-        employee = new Employee(1,1,10,10);
+        employee = new Employee(1,1,10,random);
     }
 
     @Test

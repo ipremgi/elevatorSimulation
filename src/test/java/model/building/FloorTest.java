@@ -6,11 +6,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 /**
  * Created by HWILKHU on 18/05/2017.
  */
 public class FloorTest {
     private Floor floor;
+    private Random random = new Random(1);
 
     @Before
     public void setup(){
@@ -19,7 +22,7 @@ public class FloorTest {
 
     @Test
     public void addUserGetWaitingForLift(){
-        ElevatorUser user = new Employee(1,1,10,10);
+        ElevatorUser user = new Employee(1,1,10,random);
         floor.addUser(user);
 
         Assert.assertEquals(user,floor.getWaitingForLift().peek());

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by HWILKHU on 20/05/2017.
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class ElevatorTest {
 
     private Elevator elevator;
+    private Random random = new Random(1);
 
     @Before
     public void setup(){
@@ -48,7 +50,7 @@ public class ElevatorTest {
 
     @Test
     public void elevatorOccupantOperations(){
-        ElevatorUser employee = new Employee(1,1,10,1);
+        ElevatorUser employee = new Employee(1,1,10,random);
         ArrayList<ElevatorUser> elevatorOccupants = new ArrayList<ElevatorUser>();
 
         elevator.addUser(employee);

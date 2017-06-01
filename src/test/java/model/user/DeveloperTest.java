@@ -5,16 +5,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by HWILKHU on 21/05/2017.
  */
 public class DeveloperTest {
     private Developer developer;
+    private Random random = new Random(1);
 
     @Before
     public void setup(){
-        developer = new Developer(Company.MUGTOMES,1,1,10,10);
+        developer = new Developer(Company.MUGTOMES,1,1,10,random);
     }
 
     @Test

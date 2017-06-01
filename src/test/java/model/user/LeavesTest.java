@@ -4,15 +4,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Random;
+
 /**
  * Created by HWILKHU on 20/05/2017.
  */
 public class LeavesTest {
     private Leaves client;
+    private Random random = new Random(1);
 
     @Before
     public void setup(){
-        client = new Client(1,1,10,10);
+        client = new Client(1,1,10,random);
     }
 
     @Test
