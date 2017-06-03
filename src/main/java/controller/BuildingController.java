@@ -32,6 +32,10 @@ public class BuildingController {
         this.random = random;
     }
 
+    /**
+     * adds users to the building sd they are a part of the simulation
+     * @param elevatorUser
+     */
     public void addElevatorUser(ElevatorUser elevatorUser){
         buildingOccupants.add(elevatorUser);
     }
