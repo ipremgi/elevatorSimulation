@@ -22,10 +22,19 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     private long timeAddedToQueue;
     private List<Integer> floorsAccessible = new ArrayList<Integer>();
 
+
     // used to calc avg waiting time
     private int enterTick = 0 ; // time entered into the queue
     private int leaveTick = 0; // time when left the queue
-
+    
+    /**
+     * Each type of user gets an ID assigned in order to keep a count of the number of each types of user in the elevator at a given time.
+     * @param className - types of users: Client, Developer, Employee and MaintenanceCrew
+     * @param random - random generator to move floors
+     * @param CAPACITY -  how many people are allowed in the elevator
+     * @param numberOfFloors - number of floors in the building
+     * @param priority - users priority
+     * */
     public ElevatorUser(String className, Random random, int CAPACITY, int numberOfFloors, int priority ){
         ID = className + nextID.incrementAndGet();
         this.CAPACITY = CAPACITY;
@@ -90,13 +99,18 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
 
     protected abstract List<Integer> determineFloorsAccessible();
 
+
     public void moveFloor() {
 
         do{
             this.setDestFloor(this.getFloorsAccessible().get(randomGenerator.nextInt(this.getFloorsAccessible().size())));
         }while (getCurrentFloor() == getDestFloor());
-        //only work in the top half of the building. Developers may randomly decide to move to another floor in the top half.
+
     }
+
+    /**
+     *
+     * */
 
     @Override
     public int compareTo(ElevatorUser otherUser){

@@ -101,8 +101,12 @@ public class ElevatorSimulator implements ISimulator,Runnable {
 
     public void nextTick(Building building, Elevator elevator){
         if (simulatorTick.getCount() < ticks ){
-            if (elevator.getDoorStatus() == DoorStatus.CLOSED){
+            if (elevator.getDoorStatus() == DoorStatus.CLOSED && (!buildingController.getRequests().isEmpty() || elevator.getFloor() != 0)){
                 buildingController.openElevatorDoor();
+                eachTick(building.getFloors().size());
+                simulatorTick.nextCount();
+                buildingController.updateView(simulatorTick.getCount());
+            }else {
                 eachTick(building.getFloors().size());
                 simulatorTick.nextCount();
                 buildingController.updateView(simulatorTick.getCount());
