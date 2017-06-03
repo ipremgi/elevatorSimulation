@@ -21,8 +21,10 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     protected Random randomGenerator;
     private long timeAddedToQueue;
     private List<Integer> floorsAccessible = new ArrayList<Integer>();
-    private int enter = 0 ;
-    private int leave = 0;
+
+    // used to calc avg waiting time
+    private int enterTick = 0 ; // time entered into the queue
+    private int leaveTick = 0; // time when left the queue
 
     public ElevatorUser(String className, Random random, int CAPACITY, int numberOfFloors, int priority ){
         ID = className + nextID.incrementAndGet();
@@ -132,21 +134,21 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         return Objects.equals(this.ID,user.ID);
     }
 
-    public int getEnter() {
-        return enter;
+    public int getEnterTick() {
+        return enterTick;
     }
 
-    public void setEnter(int enter) {
-       // System.out.println(this.getID() + " ENTERED " + enter);
-        this.enter = enter;
+    public void setEnterTick(int enterTick) {
+       // System.out.println(this.getID() + " ENTERED " + enterTick);
+        this.enterTick = enterTick;
     }
 
-    public int getLeave() {
-        return leave;
+    public int getLeaveTick() {
+        return leaveTick;
     }
 
-    public void setLeave(int leave) {
-       // System.out.println(this.getID() + " LEVEING " + leave);
-        this.leave = leave;
+    public void setLeaveTick(int leaveTick) {
+       // System.out.println(this.getID() + " LEVEING " + leaveTick);
+        this.leaveTick = leaveTick;
     }
 }

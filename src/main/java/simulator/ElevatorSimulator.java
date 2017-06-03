@@ -12,7 +12,6 @@ import model.counter.IncrementCounter;
 import model.user.*;
 import view.ElevatorView;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -36,15 +35,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private final int seed;
     private GUIInputs inputs;
 
-    private Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
-
-    private List<Integer> cTime = new ArrayList<Integer>();
-    private List<Integer> eTime = new ArrayList<Integer>();
-    private List<Integer> mcTime = new ArrayList<Integer>();
-    private List<Integer> dmTime = new ArrayList<Integer>();
-    private List<Integer> dgTime = new ArrayList<Integer>();
-
-
+    private Map<String, List<Integer>> waitingTime = new HashMap<String, List<Integer>>();
 
     public ElevatorSimulator(GUIInputs inputs) {
         this.inputs = inputs;
@@ -63,11 +54,11 @@ public class ElevatorSimulator implements ISimulator,Runnable {
             random = new Random();
         }
 
-        map.put("Client", new ArrayList<Integer>());
-        map.put("Emp", new ArrayList<Integer>());
-        map.put("MC", new ArrayList<Integer>());
-        map.put("DevMug", new ArrayList<Integer>());
-        map.put("DevGog", new ArrayList<Integer>());
+        waitingTime.put("Client", new ArrayList<Integer>());
+        waitingTime.put("Employee", new ArrayList<Integer>());
+        waitingTime.put("Maintenance Crew", new ArrayList<Integer>());
+        waitingTime.put("Developers Mugtomes", new ArrayList<Integer>());
+        waitingTime.put("Developers Goggles", new ArrayList<Integer>());
     }
 
     public void simulate() {
@@ -104,14 +95,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
             nextTick(building,elevator);
         }
 
-        System.out.println("AVG TIME FOR CLIENT : " + calcAvgTime(cTime));
-        System.out.println("AVG TIME FOR EMP : " + calcAvgTime(eTime));
-        System.out.println("AVG TIME FOR MC : " + calcAvgTime(mcTime));
-        System.out.println("AVG TIME FOR DM : " + calcAvgTime(dmTime));
-        System.out.println("AVG TIME FOR DG : " + calcAvgTime(dgTime));
-
-
-
+        calcAvgTime();
     }
 
 
@@ -132,7 +116,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
 
                 for (ElevatorUser person : tmpWaitingList){
                     if (buildingController.canAddPersonToElevator(person)){
-                        person.setLeave(simulatorTick.getCount());
+                        person.setLeaveTick(simulatorTick.getCount());
                         buildingController.addPersonToElevator(person);
                         addToMap(person);
                     }
@@ -211,42 +195,52 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         simulate();
     }
 
+    /**
+     * Adding the waiting time for each person onto HashMap
+     * @param user - user to enter time for
+     */
     private void addToMap(ElevatorUser user){
-        int time = user.getLeave() - user.getEnter();
-        System.out.println("TIME " +time);
-
-        map.put("Client", new ArrayList<Integer>());
-        map.put("Emp", new ArrayList<Integer>());
-        map.put("MC", new ArrayList<Integer>());
-        map.put("DevMug", new ArrayList<Integer>());
-        map.put("DevGog", new ArrayList<Integer>());
-
+        int time = user.getLeaveTick() - user.getEnterTick();
 
         if(user instanceof Client){
-            cTime.add(time);
+            waitingTime.get("Client").add(time);
         } else if (user instanceof Employee){
-            eTime.add(time);
+            waitingTime.get("Employee").add(time);
         } else if (user instanceof MaintenanceCrew){
-            mcTime.add(time);
+            waitingTime.get("Maintenance Crew").add(time);
         } else if (user instanceof Developer && ((Developer) user).getCompany() == Company.MUGTOMES){
-            dmTime.add(time);
+            waitingTime.get("Developers Mugtomes").add(time);
         } else if (user instanceof Developer && ((Developer) user).getCompany() == Company.GOGGLES){
-            dgTime.add(time);
+            waitingTime.get("Developers Goggles").add(time);
         }
     }
 
-    private double calcAvgTime(List<Integer> times){
 
-        int sumTime = 0;
-            for(Integer time : times){
-                sumTime += time;
-            }
+    /**
+     * Calculate the Average waiting time for all different users once simulation has ended
+     * Note: Time is in tick format
+     */
+    private void calcAvgTime(){
+        Set<String> keys = waitingTime.keySet();
+        List<Integer> times;
+        int sumTime;
+        double avgTime;
+
+        for (String key: keys){
+            sumTime = 0;
+            times = waitingTime.get(key);
 
             if(times.size() == 0){
-                return -1;
+                System.out.println("No average time for " + key + " as they did not exist in the simulation");
             } else {
-                return sumTime / times.size();
-            }
 
+                for (Integer time : waitingTime.get(key)) {
+                    sumTime += time;
+                }
+
+                avgTime = sumTime / times.size();
+                System.out.println("Average waiting time for " + key + " is " + avgTime);
+            }
+        }
     }
 }

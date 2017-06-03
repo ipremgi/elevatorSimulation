@@ -170,7 +170,7 @@ public class BuildingController {
 
         for (ElevatorUser occupant : buildingOccupants){
             if (occupant.getCurrentFloor() == 0 && occupant.getDestFloor() != 0) {
-                occupant.setEnter(ticks);
+                occupant.setEnterTick(ticks);
                 requestElevator(occupant);
                 if (occupant instanceof Client){
                     ((Client) occupant).setWaiting(true);
@@ -178,7 +178,7 @@ public class BuildingController {
             }else if (occupant instanceof Employee || occupant instanceof Developer){
                 if (random.nextDouble() <= p){
                     occupant.moveFloor();
-                    occupant.setEnter(ticks);
+                    occupant.setEnterTick(ticks);
                     requestElevator(occupant);
                 }
             }
