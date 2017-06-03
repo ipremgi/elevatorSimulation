@@ -239,4 +239,8 @@ public class BuildingController {
         }
     }
 
+    public ArrayList<Integer> getRequests() {
+        return requests;
+    }
+
 }

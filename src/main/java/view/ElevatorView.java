@@ -33,7 +33,6 @@ public class ElevatorView {
 //            System.out.println(occupant.getID() + " dest floor " + occupant.getDestFloor());
 //        }
 //        System.out.println("\n**************************************************************");
-
     }
 
 }
