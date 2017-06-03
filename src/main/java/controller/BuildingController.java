@@ -20,7 +20,7 @@ public class BuildingController {
     private double p;
     private Random random;
     private ArrayList<Integer> requests = new ArrayList<Integer>();
-    private int delay = 100;
+    private int delay = 80;
 
 
     public BuildingController(ElevatorView elevatorView, Building building, double p, Random random) {
