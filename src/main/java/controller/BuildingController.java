@@ -20,6 +20,7 @@ public class BuildingController {
     private double p;
     private Random random;
     private ArrayList<Integer> requests = new ArrayList<Integer>();
+    private int delay = 100;
 
 
     public BuildingController(ElevatorView elevatorView, Building building, double p, Random random) {
@@ -208,7 +209,7 @@ public class BuildingController {
     public void updateView(int tick){
         elevatorView.updateView(elevator.getFloor(),elevator.getDoorStatus(),elevator.getUsers(),tick,elevator.getDirection(), building.getNoOfComplaints());
         try {
-            Thread.sleep(750);
+            Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -236,6 +237,10 @@ public class BuildingController {
                 }
             }
         }
+    }
+
+    public ArrayList<Integer> getRequests() {
+        return requests;
     }
 
 }
