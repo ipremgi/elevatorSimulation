@@ -12,8 +12,7 @@ import model.counter.IncrementCounter;
 import model.user.*;
 import view.ElevatorView;
 
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by IPREMGI on 02/05/2017.
@@ -36,6 +35,8 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private final int seed;
     private GUIInputs inputs;
 
+    private Map<String, List<Integer>> waitingTime = new HashMap<String, List<Integer>>();
+
     public ElevatorSimulator(GUIInputs inputs) {
         this.inputs = inputs;
         this.numberOfGoggle = inputs.getNumberOfGoggles();
@@ -52,6 +53,12 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         } else {
             random = new Random();
         }
+
+        waitingTime.put("Client", new ArrayList<Integer>());
+        waitingTime.put("Employee", new ArrayList<Integer>());
+        waitingTime.put("Maintenance Crew", new ArrayList<Integer>());
+        waitingTime.put("Developers Mugtomes", new ArrayList<Integer>());
+        waitingTime.put("Developers Goggles", new ArrayList<Integer>());
     }
 
     public void simulate() {
@@ -88,6 +95,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
             nextTick(building,elevator);
         }
 
+        calcAvgTime();
     }
 
 
@@ -112,7 +120,9 @@ public class ElevatorSimulator implements ISimulator,Runnable {
 
                 for (ElevatorUser person : tmpWaitingList){
                     if (buildingController.canAddPersonToElevator(person)){
+                        person.setLeaveTick(simulatorTick.getCount());
                         buildingController.addPersonToElevator(person);
+                        addToMap(person);
                     }
                 }
 
@@ -178,7 +188,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         //creates clients and maintenance crews
         createRandomElevatorUsers(numberOfFloors);
         //checks for new requests
-        buildingController.checkForRequests();
+        buildingController.checkForRequests(simulatorTick.getCount());
         buildingController.checkForComplaints();
     }
 
@@ -187,5 +197,54 @@ public class ElevatorSimulator implements ISimulator,Runnable {
      */
     public void run() {
         simulate();
+    }
+
+    /**
+     * Adding the waiting time for each person onto HashMap
+     * @param user - user to enter time for
+     */
+    private void addToMap(ElevatorUser user){
+        int time = user.getLeaveTick() - user.getEnterTick();
+
+        if(user instanceof Client){
+            waitingTime.get("Client").add(time);
+        } else if (user instanceof Employee){
+            waitingTime.get("Employee").add(time);
+        } else if (user instanceof MaintenanceCrew){
+            waitingTime.get("Maintenance Crew").add(time);
+        } else if (user instanceof Developer && ((Developer) user).getCompany() == Company.MUGTOMES){
+            waitingTime.get("Developers Mugtomes").add(time);
+        } else if (user instanceof Developer && ((Developer) user).getCompany() == Company.GOGGLES){
+            waitingTime.get("Developers Goggles").add(time);
+        }
+    }
+
+
+    /**
+     * Calculate the Average waiting time for all different users once simulation has ended
+     * Note: Time is in tick format
+     */
+    private void calcAvgTime(){
+        Set<String> keys = waitingTime.keySet();
+        List<Integer> times;
+        int sumTime;
+        double avgTime;
+
+        for (String key: keys){
+            sumTime = 0;
+            times = waitingTime.get(key);
+
+            if(times.size() == 0){
+                System.out.println("No average time for " + key + " as they did not exist in the simulation");
+            } else {
+
+                for (Integer time : waitingTime.get(key)) {
+                    sumTime += time;
+                }
+
+                avgTime = sumTime / times.size();
+                System.out.println("Average waiting time for " + key + " is " + avgTime);
+            }
+        }
     }
 }
