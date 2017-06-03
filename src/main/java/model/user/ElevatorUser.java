@@ -21,6 +21,8 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
     protected Random randomGenerator;
     private long timeAddedToQueue;
     private List<Integer> floorsAccessible = new ArrayList<Integer>();
+    private int enter = 0 ;
+    private int leave = 0;
 
     public ElevatorUser(String className, Random random, int CAPACITY, int numberOfFloors, int priority ){
         ID = className + nextID.incrementAndGet();
@@ -128,5 +130,23 @@ public abstract class ElevatorUser implements Comparable<ElevatorUser> {
         ElevatorUser user = (ElevatorUser) o;
 
         return Objects.equals(this.ID,user.ID);
+    }
+
+    public int getEnter() {
+        return enter;
+    }
+
+    public void setEnter(int enter) {
+       // System.out.println(this.getID() + " ENTERED " + enter);
+        this.enter = enter;
+    }
+
+    public int getLeave() {
+        return leave;
+    }
+
+    public void setLeave(int leave) {
+       // System.out.println(this.getID() + " LEVEING " + leave);
+        this.leave = leave;
     }
 }

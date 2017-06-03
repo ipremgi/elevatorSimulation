@@ -164,12 +164,13 @@ public class BuildingController {
 
     }
 
-    public void checkForRequests(){
+    public void checkForRequests(int ticks){
 
         ArrayList<ElevatorUser> buildingOccupants = new ArrayList<ElevatorUser>(this.buildingOccupants);
 
         for (ElevatorUser occupant : buildingOccupants){
             if (occupant.getCurrentFloor() == 0 && occupant.getDestFloor() != 0) {
+                occupant.setEnter(ticks);
                 requestElevator(occupant);
                 if (occupant instanceof Client){
                     ((Client) occupant).setWaiting(true);
@@ -177,6 +178,7 @@ public class BuildingController {
             }else if (occupant instanceof Employee || occupant instanceof Developer){
                 if (random.nextDouble() <= p){
                     occupant.moveFloor();
+                    occupant.setEnter(ticks);
                     requestElevator(occupant);
                 }
             }

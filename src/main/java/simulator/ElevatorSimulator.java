@@ -12,8 +12,8 @@ import model.counter.IncrementCounter;
 import model.user.*;
 import view.ElevatorView;
 
-import java.util.PriorityQueue;
-import java.util.Random;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by IPREMGI on 02/05/2017.
@@ -36,6 +36,16 @@ public class ElevatorSimulator implements ISimulator,Runnable {
     private final int seed;
     private GUIInputs inputs;
 
+    private Map<String, List<Integer>> map = new HashMap<String, List<Integer>>();
+
+    private List<Integer> cTime = new ArrayList<Integer>();
+    private List<Integer> eTime = new ArrayList<Integer>();
+    private List<Integer> mcTime = new ArrayList<Integer>();
+    private List<Integer> dmTime = new ArrayList<Integer>();
+    private List<Integer> dgTime = new ArrayList<Integer>();
+
+
+
     public ElevatorSimulator(GUIInputs inputs) {
         this.inputs = inputs;
         this.numberOfGoggle = inputs.getNumberOfGoggles();
@@ -52,6 +62,12 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         } else {
             random = new Random();
         }
+
+        map.put("Client", new ArrayList<Integer>());
+        map.put("Emp", new ArrayList<Integer>());
+        map.put("MC", new ArrayList<Integer>());
+        map.put("DevMug", new ArrayList<Integer>());
+        map.put("DevGog", new ArrayList<Integer>());
     }
 
     public void simulate() {
@@ -88,6 +104,14 @@ public class ElevatorSimulator implements ISimulator,Runnable {
             nextTick(building,elevator);
         }
 
+        System.out.println("AVG TIME FOR CLIENT : " + calcAvgTime(cTime));
+        System.out.println("AVG TIME FOR EMP : " + calcAvgTime(eTime));
+        System.out.println("AVG TIME FOR MC : " + calcAvgTime(mcTime));
+        System.out.println("AVG TIME FOR DM : " + calcAvgTime(dmTime));
+        System.out.println("AVG TIME FOR DG : " + calcAvgTime(dgTime));
+
+
+
     }
 
 
@@ -108,7 +132,9 @@ public class ElevatorSimulator implements ISimulator,Runnable {
 
                 for (ElevatorUser person : tmpWaitingList){
                     if (buildingController.canAddPersonToElevator(person)){
+                        person.setLeave(simulatorTick.getCount());
                         buildingController.addPersonToElevator(person);
+                        addToMap(person);
                     }
                 }
 
@@ -174,7 +200,7 @@ public class ElevatorSimulator implements ISimulator,Runnable {
         //creates clients and maintenance crews
         createRandomElevatorUsers(numberOfFloors);
         //checks for new requests
-        buildingController.checkForRequests();
+        buildingController.checkForRequests(simulatorTick.getCount());
         buildingController.checkForComplaints();
     }
 
@@ -183,5 +209,44 @@ public class ElevatorSimulator implements ISimulator,Runnable {
      */
     public void run() {
         simulate();
+    }
+
+    private void addToMap(ElevatorUser user){
+        int time = user.getLeave() - user.getEnter();
+        System.out.println("TIME " +time);
+
+        map.put("Client", new ArrayList<Integer>());
+        map.put("Emp", new ArrayList<Integer>());
+        map.put("MC", new ArrayList<Integer>());
+        map.put("DevMug", new ArrayList<Integer>());
+        map.put("DevGog", new ArrayList<Integer>());
+
+
+        if(user instanceof Client){
+            cTime.add(time);
+        } else if (user instanceof Employee){
+            eTime.add(time);
+        } else if (user instanceof MaintenanceCrew){
+            mcTime.add(time);
+        } else if (user instanceof Developer && ((Developer) user).getCompany() == Company.MUGTOMES){
+            dmTime.add(time);
+        } else if (user instanceof Developer && ((Developer) user).getCompany() == Company.GOGGLES){
+            dgTime.add(time);
+        }
+    }
+
+    private double calcAvgTime(List<Integer> times){
+
+        int sumTime = 0;
+            for(Integer time : times){
+                sumTime += time;
+            }
+
+            if(times.size() == 0){
+                return -1;
+            } else {
+                return sumTime / times.size();
+            }
+
     }
 }
