@@ -24,9 +24,8 @@ public class BuildingControllerTest {
 
     @Before
     public void setUp(){
-
         building = new Building(4,4);
-        view = new ElevatorView(new Simulation(null));
+        view = new ElevatorView(null);
         controller = new BuildingController(view, building, 0.005,random);
     }
 
